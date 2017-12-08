@@ -6,8 +6,8 @@
 
 A friendlier trycatch for R, based on {purrr} mappers.
 
-Example
--------
+try catch
+---------
 
 You can write a try catch with these params :
 
@@ -25,22 +25,31 @@ library(trycatchthis)
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
-#> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
 
 try_catch(log("a"), 
           .e = ~ print(.x), 
           .w = ~ print(.x))
-#> <simpleError in log("a"): argument non numérique pour une fonction mathématique>
+#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
 
 try_catch(matrix(1:3, nrow= 2), 
           .e = ~ print(.x), 
           .w = ~ print(.x))
-#> <simpleWarning in matrix(1:3, nrow = 2): la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]>
+#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
 
 try_catch(2 + 2 , 
           .f = ~ print("Using R for addition... ok I'm out!"))
-#> [1] "Using R for addition... ok I'm out!"
-#> [1] 4
+#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+```
+
+As usual, the handlers are set only if you call them :
+
+``` r
+try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
+#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+
+try_catch(matrix(1:3, nrow = 2), .w = ~ print("warning"))
+#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
 ```
 
 ### Traditionnal way
@@ -60,10 +69,7 @@ try_catch(log("a"),
             print(paste("log saved on log.txt at", time))
             print("let's move on now")
           })
-#> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
-#> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-08 09:20:31"
-#> [1] "let's move on now"
+#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
 ```
 
 You can even mix both:
@@ -74,9 +80,124 @@ try_catch(log("a"),
             paste0("There is an error: ", e)
           },
           .f = ~ print("I'm not sure you can do that pal !"))
-#> [1] "I'm not sure you can do that pal !"
-#> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
 ```
+
+try\_that
+---------
+
+`try_that` is a wrapper around base `try` that allows you to insert a
+custom messsage on error.
+
+``` r
+try_that(log("a"), msg = "Nop !")
+```
+
+You can make it verbose (i.e. returning the expression):
+
+``` r
+try_that(log("a"), msg = "Nop !", verbose = TRUE)
+```
+
+warnings and messages
+---------------------
+
+The `stop_if`, `warn_if` and `message_if` are easy to use functions that
+send an error, a warning or a message if a condition is met. Each
+function has its counterpart with `_not`. That returns a message if the
+condition is not met.
+
+`stop_if_not` is quite the same as `assert_that` from the {assertthat}
+package, except that it can takes mappers. It is not the same as base
+`stopifnot()`, as it doesn’t take a list of expression.
+
+These functions are also flexible as you can pass base predicates
+(is.numeric, is.character…), a custom one built with mappers, or even
+your own testing function.
+
+You can either choose a custom message or just let the built-in messages
+be printed:
+
+``` r
+x <- 12
+# Stop if .x is numeric
+stop_if(.x = x, 
+        .p = is.numeric)
+#> Error: Test `is.numeric` on `x` returned an error.
+
+y <- "20"
+# stop if .x is not numeric
+stop_if_not(.x = y, 
+            .p = is.numeric, 
+            msg = "y should be numeric")
+#> Error in negate(as_mapper(.p)): impossible de trouver la fonction "negate"
+
+a  <- "this is not numeric"
+# Warn if .x is charcter
+warn_if(.x = a, 
+        .p = is.character)
+#> Warning: Test `is.character` on `a` returned a warning.
+
+b  <- 20
+# Warn if .x is not equal to 10
+warn_if_not(.x = b, 
+        .p = ~ .x == 10 , 
+        msg = "b should be 10")
+#> Error in negate(as_mapper(.p)): impossible de trouver la fonction "negate"
+
+c <- "a"
+# Message if c is a character
+message_if(.x = c, 
+           .p = is.character, 
+           msg = "You entered a character element")
+#> You entered a character element
+
+# Build more complex predicates
+d <- 100
+message_if(.x = d, 
+           .p = ~ sqrt(.x) < 42, 
+           msg = "The square root of your element must be more than 42")
+#> The square root of your element must be more than 42
+
+# Or, if you're kind of old school, you can still pass classic functions
+
+e <- 30
+message_if(.x = e, 
+           .p = function(vec){
+             return(sqrt(vec) < 42)
+           }, 
+           msg = "The square root of your element must be more than 42")
+#> The square root of your element must be more than 42
+```
+
+That can come really handy inside a function :
+
+``` r
+my_fun <- function(x){
+  warn_if(x, 
+          ~ ! is.character(.x), 
+          msg =  "x is not a character vector. \nThe output may not be what you're expecting.")
+  paste(x, "is the value you choose")
+}
+
+my_fun(head(iris))
+#> Warning: x is not a character vector. 
+#> The output may not be what you're expecting.
+#> [1] "c(5.1, 4.9, 4.7, 4.6, 5, 5.4) is the value you choose"  
+#> [2] "c(3.5, 3, 3.2, 3.1, 3.6, 3.9) is the value you choose"  
+#> [3] "c(1.4, 1.4, 1.3, 1.5, 1.4, 1.7) is the value you choose"
+#> [4] "c(0.2, 0.2, 0.2, 0.2, 0.2, 0.4) is the value you choose"
+#> [5] "c(1, 1, 1, 1, 1, 1) is the value you choose"
+```
+
+### Contact
+
+Questions and feedbacks [welcome](mailto:contact@colinfay.me)!
+
+You want to contribute ? Open a
+[PR](https://github.com/ColinFay/trycatchthis/pulls) :) If you encounter
+a bug or want to suggest an enhancement, please [open an
+issue](https://github.com/ColinFay/trycatchthis/issues).
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CONDUCT.md). By participating in this project you agree to

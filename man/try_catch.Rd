@@ -4,10 +4,10 @@
 \alias{try_catch}
 \title{Try Catch}
 \usage{
-try_catch(..., .e = ~NULL, .w = ~NULL, .f = ~NULL)
+try_catch(expr, .e = NULL, .w = NULL, .f = NULL)
 }
 \arguments{
-\item{...}{the expression to be evaluated}
+\item{expr}{the expression to be evaluated}
 
 \item{.e}{a one side formula or a function evaluated when an error occurs}
 
