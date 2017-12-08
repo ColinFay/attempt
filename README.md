@@ -25,33 +25,38 @@ library(trycatchthis)
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
-#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+#> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 
 try_catch(log("a"), 
           .e = ~ print(.x), 
           .w = ~ print(.x))
-#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+#> <simpleError in log("a"): argument non numérique pour une fonction mathématique>
 
 try_catch(matrix(1:3, nrow= 2), 
           .e = ~ print(.x), 
           .w = ~ print(.x))
-#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+#> <simpleWarning in matrix(1:3, nrow = 2): la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]>
 
 try_catch(2 + 2 , 
           .f = ~ print("Using R for addition... ok I'm out!"))
-#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+#> [1] "Using R for addition... ok I'm out!"
+#> [1] 4
 ```
 
 As usual, the handlers are set only if you call them :
 
 ``` r
 try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
-#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+#> Warning in matrix(1:3, nrow = 2): la longueur des données [3] n'est pas un
+#> diviseur ni un multiple du nombre de lignes [2]
+#>      [,1] [,2]
+#> [1,]    1    3
+#> [2,]    2    1
 ```
 
 ``` r
 try_catch(matrix(1:3, nrow = 2), .w = ~ print("warning"))
-#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+#> [1] "warning"
 ```
 
 ### Traditionnal way
@@ -71,7 +76,10 @@ try_catch(log("a"),
             print(paste("log saved on log.txt at", time))
             print("let's move on now")
           })
-#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+#> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+#> [1] "Ok, let's save this"
+#> [1] "log saved on log.txt at 2017-12-08 22:34:25"
+#> [1] "let's move on now"
 ```
 
 You can even mix both:
@@ -82,7 +90,8 @@ try_catch(log("a"),
             paste0("There is an error: ", e)
           },
           .f = ~ print("I'm not sure you can do that pal !"))
-#> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+#> [1] "I'm not sure you can do that pal !"
+#> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 ```
 
 try\_that
@@ -134,7 +143,7 @@ y <- "20"
 stop_if_not(.x = y, 
             .p = is.numeric, 
             msg = "y should be numeric")
-#> Error in negate(as_mapper(.p)): impossible de trouver la fonction "negate"
+#> Error: y should be numeric
 
 a  <- "this is not numeric"
 # Warn if .x is charcter
@@ -147,7 +156,7 @@ b  <- 20
 warn_if_not(.x = b, 
         .p = ~ .x == 10 , 
         msg = "b should be 10")
-#> Error in negate(as_mapper(.p)): impossible de trouver la fonction "negate"
+#> Warning: b should be 10
 
 c <- "a"
 # Message if c is a character
