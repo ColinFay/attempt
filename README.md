@@ -4,7 +4,7 @@
 {trycatchthis}
 ==============
 
-A friendlier trycatch for R, based on {purrr} mappers.
+A friendlier error handler for R, based on {purrr} mappers and {rlang}.
 
 try catch
 ---------
@@ -47,7 +47,9 @@ As usual, the handlers are set only if you call them :
 ``` r
 try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
 #> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
+```
 
+``` r
 try_catch(matrix(1:3, nrow = 2), .w = ~ print("warning"))
 #> Error in enexpr(expr): impossible de trouver la fonction "enexpr"
 ```
@@ -91,12 +93,14 @@ custom messsage on error.
 
 ``` r
 try_that(log("a"), msg = "Nop !")
+#> Error : Nop !
 ```
 
 You can make it verbose (i.e. returning the expression):
 
 ``` r
 try_that(log("a"), msg = "Nop !", verbose = TRUE)
+#> Error in log("a") : Nop !
 ```
 
 warnings and messages
