@@ -58,15 +58,15 @@ try_catch(log("a"),
             a <- paste("+ At",time, ", \nError:",e)
             # write(a, "log.txt", append = TRUE) # commented to prevent from log.txt creation on your machine
             print(paste("log saved on log.txt at", time))
-          }, 
-          .f = ~ print("let's move on now"))
+            print("let's move on now")
+          })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-08 09:14:52"
+#> [1] "log saved on log.txt at 2017-12-08 09:20:31"
 #> [1] "let's move on now"
 ```
 
-Or even mix both:
+You can even mix both:
 
 ``` r
 try_catch(log("a"), 
