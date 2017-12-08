@@ -45,8 +45,7 @@ try_catch(2 + 2 ,
 
 ### Traditionnal way
 
-{trycatchthis} offers a flexibility in the way you can specify your
-arguments.
+{trycatchthis} is flexible in how you can specify your arguments.
 
 You can, as you do with {base} `tryCatch`, use a plain old function:
 
@@ -63,7 +62,7 @@ try_catch(log("a"),
           .f = ~ print("let's move on now"))
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-08 09:11:36"
+#> [1] "log saved on log.txt at 2017-12-08 09:14:52"
 #> [1] "let's move on now"
 ```
 

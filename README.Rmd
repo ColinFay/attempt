@@ -52,7 +52,7 @@ try_catch(2 + 2 ,
 
 ### Traditionnal way 
 
-{trycatchthis} offers a flexibility in the way you can specify your arguments. 
+{trycatchthis} is flexible in how you can specify your arguments. 
 
 You can, as you do with {base} `tryCatch`, use a plain old function: 
 
