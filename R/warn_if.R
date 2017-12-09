@@ -20,13 +20,13 @@
 #' stop_if_not(x, is.character)
 #'
 #' a  <- "this is not numeric"
-#' warn_if( is.numeric(a) )
-#' warn_if_not( ! is.numeric(a) )
+#' warn_if(a,  is.character )
+#' warn_if_not(a, is.numeric )
 #' b  <- 20
-#' warn_if( b > 10 ,
+#' warn_if(b ,  ~ . > 10 ,
 #'          msg = "Wow, that's a lot of b")
 #'c <- "a"
-#' message_if( is.character(c),
+#' message_if(c, is.character,
 #'          msg = "You entered a character element")
 #' }
 
@@ -86,7 +86,6 @@ warn_if_not <- function(.x, .p, msg = NULL){
       warning(msg, call. = FALSE, immediate. = TRUE)
     }
 }
-
 #'@export
 #'@rdname messagehandler
 
