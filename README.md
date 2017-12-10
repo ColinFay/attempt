@@ -1,6 +1,13 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
+[![Travis build
+status](https://travis-ci.org/ColinFay/trycatchthis.svg?branch=master)](https://travis-ci.org/ColinFay/trycatchthis)
+[![Coverage
+status](https://codecov.io/gh/ColinFay/trycatchthis/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/trycatchthis?branch=master)
+[![AppVeyor Build
+Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/trycatchthis?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/trycatchthis)
+
 {trycatchthis}
 ==============
 
@@ -78,7 +85,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-10 21:27:43"
+#> [1] "log saved on log.txt at 2017-12-10 22:13:12"
 #> [1] "let's move on now"
 ```
 
