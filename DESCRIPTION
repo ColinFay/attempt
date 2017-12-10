@@ -6,9 +6,11 @@ Description: A friendlier trycatch for R, based on 'purrr' mappers.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Suggests: testthat,
+Suggests: 
+    testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    covr
 VignetteBuilder: knitr
 Imports: 
     purrr,
