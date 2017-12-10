@@ -3,7 +3,8 @@ library(devtools)
 
 use_testthat()
 use_test("trycatch")
-use_vignette("trycatchthis")
+use_test("warn")
+use_test("utils")
 use_vignette("trycatchthis")
 use_mit_license()
 use_readme_rmd()
@@ -18,4 +19,4 @@ use_package("tibble")
 
 use_travis()
 use_coverage()
-
+use_appveyor()

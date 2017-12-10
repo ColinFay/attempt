@@ -10,13 +10,9 @@
 #' @usage lhs \%>\% rhs
 NULL
 
-#' @importFrom purrr as_mapper
-
 build_and_eval <- function(f, args) {
   as_mapper(f)(args)
 }
-
-#' @importFrom rlang lang splice
 
 try_catch_builder <- function(arg, fun, ...){
   a <- lang(fun, splice(list(arg)))
