@@ -11,7 +11,7 @@ try catch
 
 You can write a try catch with these params :
 
--   `...` the expression to be evaluated
+-   `expr` the expression to be evaluated
 -   `.e` a one side formula or a function evaluated when an error occurs
 -   `.w` a one side formula or a function evaluated when a warning
     occurs
@@ -78,7 +78,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-10 21:24:10"
+#> [1] "log saved on log.txt at 2017-12-10 21:27:43"
 #> [1] "let's move on now"
 ```
 
@@ -139,7 +139,7 @@ res_success$value
 ### map try\_catch
 
 `map_try_catch` and `map_try_catch_df` allow you to map on a list of
-arguments, to be evaluated by the function in f.
+arguments `l`, to be evaluated by the function in `fun`.
 
 ``` r
 map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
@@ -282,8 +282,8 @@ predicate.
 stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors")
 #> Error: Factors here. This might be due to stringsAsFactors
 
-warn_if_none(1:10, ~ .x < 0, msg = "You need at least one number under zero")
-#> Warning: You need at least one number under zero
+warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero")
+#> Warning: You need to have at least one number under zero
 
 message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This may take some time to compute.")
 #> All your number are above 1e2. This may take some time to compute.
