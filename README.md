@@ -78,7 +78,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-08 22:34:25"
+#> [1] "log saved on log.txt at 2017-12-10 21:24:10"
 #> [1] "let's move on now"
 ```
 
@@ -92,6 +92,74 @@ try_catch(log("a"),
           .f = ~ print("I'm not sure you can do that pal !"))
 #> [1] "I'm not sure you can do that pal !"
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+```
+
+### try\_catch\_df
+
+`try_catch_df` returns a tibble with the call, the error message if any,
+the warning message if any, and the value of the evaluated expression or
+“error”.
+
+``` r
+res_log <- try_catch_df(log("a"))
+res_log
+#> # A tibble: 1 x 4
+#>           call                                                 error
+#>          <chr>                                                 <chr>
+#> 1 "log(\"a\")" argument non numérique pour une fonction mathématique
+#> # ... with 2 more variables: warning <chr>, value <list>
+res_log$value
+#> [[1]]
+#> [1] "error"
+
+res_matrix <- try_catch_df(matrix(1:3, nrow = 2))
+res_matrix
+#> # A tibble: 1 x 4
+#>                    call error
+#>                   <chr> <chr>
+#> 1 matrix(1:3, nrow = 2)  <NA>
+#> # ... with 2 more variables: warning <chr>, value <list>
+res_matrix$value
+#> [[1]]
+#>      [,1] [,2]
+#> [1,]    1    3
+#> [2,]    2    1
+
+res_success <- try_catch_df(log(1))
+res_success
+#> # A tibble: 1 x 4
+#>     call error warning     value
+#>    <chr> <chr>   <chr>    <list>
+#> 1 log(1)  <NA>    <NA> <dbl [1]>
+res_success$value
+#> [[1]]
+#> [1] 0
+```
+
+### map try\_catch
+
+`map_try_catch` and `map_try_catch_df` allow you to map on a list of
+arguments, to be evaluated by the function in f.
+
+``` r
+map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
+#> [[1]]
+#> [1] 0
+#> 
+#> [[2]]
+#> [1] 1.098612
+#> 
+#> [[3]]
+#> <simpleError in .Primitive("log")("a"): argument non numérique pour une fonction mathématique>
+
+map_try_catch_df(list(1,3,"a"), log)
+#> # A tibble: 3 x 4
+#>                           call
+#>                          <chr>
+#> 1     ".Primitive(\"log\")(1)"
+#> 2     ".Primitive(\"log\")(3)"
+#> 3 ".Primitive(\"log\")(\"a\")"
+#> # ... with 3 more variables: error <chr>, warning <chr>, value <list>
 ```
 
 try\_that
@@ -190,20 +258,39 @@ my_fun <- function(x){
   warn_if(x, 
           ~ ! is.character(.x), 
           msg =  "x is not a character vector. \nThe output may not be what you're expecting.")
-  paste(x, "is the value you choose")
+  paste(x, "is the value.")
 }
 
 my_fun(head(iris))
 #> Warning: x is not a character vector. 
 #> The output may not be what you're expecting.
-#> [1] "c(5.1, 4.9, 4.7, 4.6, 5, 5.4) is the value you choose"  
-#> [2] "c(3.5, 3, 3.2, 3.1, 3.6, 3.9) is the value you choose"  
-#> [3] "c(1.4, 1.4, 1.3, 1.5, 1.4, 1.7) is the value you choose"
-#> [4] "c(0.2, 0.2, 0.2, 0.2, 0.2, 0.4) is the value you choose"
-#> [5] "c(1, 1, 1, 1, 1, 1) is the value you choose"
+#> [1] "c(5.1, 4.9, 4.7, 4.6, 5, 5.4) is the value."  
+#> [2] "c(3.5, 3, 3.2, 3.1, 3.6, 3.9) is the value."  
+#> [3] "c(1.4, 1.4, 1.3, 1.5, 1.4, 1.7) is the value."
+#> [4] "c(0.2, 0.2, 0.2, 0.2, 0.2, 0.4) is the value."
+#> [5] "c(1, 1, 1, 1, 1, 1) is the value."
 ```
 
-### Contact
+### none, all, any
+
+`stop_if`, `warn_if` and `message_if` all have complementary tests with
+`_all`, `_any` and `_none`. They take a list as first argument, and a
+predicate. They test if any, all or none of the elements validate the
+predicate.
+
+``` r
+stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors")
+#> Error: Factors here. This might be due to stringsAsFactors
+
+warn_if_none(1:10, ~ .x < 0, msg = "You need at least one number under zero")
+#> Warning: You need at least one number under zero
+
+message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This may take some time to compute.")
+#> All your number are above 1e2. This may take some time to compute.
+```
+
+Contact
+-------
 
 Questions and feedbacks [welcome](mailto:contact@colinfay.me)!
 

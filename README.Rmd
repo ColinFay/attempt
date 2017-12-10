@@ -91,6 +91,35 @@ try_catch(log("a"),
           .f = ~ print("I'm not sure you can do that pal !"))
 ```
 
+### try_catch_df 
+
+`try_catch_df` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". 
+
+```{r}
+res_log <- try_catch_df(log("a"))
+res_log
+res_log$value
+
+res_matrix <- try_catch_df(matrix(1:3, nrow = 2))
+res_matrix
+res_matrix$value
+
+res_success <- try_catch_df(log(1))
+res_success
+res_success$value
+```
+
+### map try_catch
+
+`map_try_catch` and `map_try_catch_df` allow you to map on a list of arguments, to be evaluated by the function in f. 
+
+```{r}
+map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
+
+map_try_catch_df(list(1,3,"a"), log)
+```
+
+
 ## try_that 
 
 `try_that` is a wrapper around base `try` that allows you to insert a custom messsage on error. 
@@ -169,13 +198,26 @@ my_fun <- function(x){
   warn_if(x, 
           ~ ! is.character(.x), 
           msg =  "x is not a character vector. \nThe output may not be what you're expecting.")
-  paste(x, "is the value you choose")
+  paste(x, "is the value.")
 }
 
 my_fun(head(iris))
 ```
 
-### Contact
+### none, all, any
+
+`stop_if`, `warn_if` and `message_if` all have complementary tests with `_all`, `_any` and `_none`. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate. 
+
+```{r}
+stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors")
+
+warn_if_none(1:10, ~ .x < 0, msg = "You need at least one number under zero")
+
+message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This may take some time to compute.")
+```
+
+
+## Contact
 
 Questions and feedbacks [welcome](mailto:contact@colinfay.me)!
 

@@ -17,7 +17,7 @@ try_that(expr, msg = NULL, verbose = FALSE)
 A wrapper around base try that allows you to set a custom message when an error occurs
 }
 \examples{
-
+\dontrun{
 try_that(log("a"), msg = "Nop !")
-
+}
 }

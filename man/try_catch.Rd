@@ -2,23 +2,42 @@
 % Please edit documentation in R/try_catch.R
 \name{try_catch}
 \alias{try_catch}
+\alias{try_catch_df}
+\alias{map_try_catch}
+\alias{map_try_catch_df}
 \title{Try Catch}
 \usage{
 try_catch(expr, .e = NULL, .w = NULL, .f = NULL)
+
+try_catch_df(expr)
+
+map_try_catch(l, fun, .e = NULL, .w = NULL, .f = NULL)
+
+map_try_catch_df(l, fun)
 }
 \arguments{
-\item{expr}{the expression to be evaluated}
+\item{expr}{for simple try catch, the expression to be evaluated}
 
 \item{.e}{a one side formula or a function evaluated when an error occurs}
 
 \item{.w}{a one side formula or a function evaluated when a warning occurs}
 
 \item{.f}{a one side formula or an expression evaluated before returning or exiting}
+
+\item{l}{for map_* function, a list of arguments}
+
+\item{fun}{for map_* function, a function to try with the list \code{l}}
 }
 \description{
-A friendlier try catch function
+Friendlier try catch functions
+}
+\details{
+try_catch handles errors and warning the way you specify. try_catch_df
+returns a tibble with the call, the error message if any, the warning message if
+any, and the value of the evaluated expression.
 }
 \examples{
-
+\dontrun{
 try_catch(log("a"), .e = ~ paste0("There was an error: ", .x))
+}
 }

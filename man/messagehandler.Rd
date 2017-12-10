@@ -2,22 +2,49 @@
 % Please edit documentation in R/warn_if.R
 \name{stop_if}
 \alias{stop_if}
+\alias{stop_if_any}
+\alias{stop_if_all}
+\alias{stop_if_none}
 \alias{stop_if_not}
 \alias{warn_if}
+\alias{warn_if_any}
+\alias{warn_if_all}
+\alias{warn_if_none}
 \alias{warn_if_not}
 \alias{message_if}
+\alias{message_if_any}
+\alias{message_if_all}
+\alias{message_if_none}
 \alias{message_if_not}
 \title{Warn if}
 \usage{
 stop_if(.x, .p, msg = NULL)
 
+stop_if_any(.l, .p, msg = NULL)
+
+stop_if_all(.l, .p, msg = NULL)
+
+stop_if_none(.l, .p, msg = NULL)
+
 stop_if_not(.x, .p, msg = NULL)
 
 warn_if(.x, .p, msg = NULL)
 
+warn_if_any(.l, .p, msg = NULL)
+
+warn_if_all(.l, .p, msg = NULL)
+
+warn_if_none(.l, .p, msg = NULL)
+
 warn_if_not(.x, .p, msg = NULL)
 
 message_if(.x, .p, msg = NULL)
+
+message_if_any(.l, .p, msg = NULL)
+
+message_if_all(.l, .p, msg = NULL)
+
+message_if_none(.l, .p, msg = NULL)
 
 message_if_not(.x, .p, msg = NULL)
 }
@@ -27,6 +54,8 @@ message_if_not(.x, .p, msg = NULL)
 \item{.p}{the predicate with the condition to test on \code{.x}.}
 
 \item{msg}{the message to return. If NULL (default), the built-in message is printed.}
+
+\item{.l}{the list of elements to evaluate}
 }
 \description{
 Friendlier messaging functions
@@ -38,13 +67,13 @@ stop_if(x, is.numeric)
 stop_if_not(x, is.character)
 
 a  <- "this is not numeric"
-warn_if( is.numeric(a) )
-warn_if_not( ! is.numeric(a) )
+warn_if(a,  is.character )
+warn_if_not(a, is.numeric )
 b  <- 20
-warn_if( b > 10 ,
+warn_if(b ,  ~ . > 10 ,
          msg = "Wow, that's a lot of b")
 c <- "a"
-message_if( is.character(c),
+message_if(c, is.character,
          msg = "You entered a character element")
 }
 }

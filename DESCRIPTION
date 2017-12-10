@@ -10,6 +10,9 @@ Suggests: testthat,
     knitr,
     rmarkdown
 VignetteBuilder: knitr
-Imports: purrr,
-    rlang
+Imports: 
+    purrr,
+    rlang,
+    tibble,
+    magrittr
 RoxygenNote: 6.0.1
