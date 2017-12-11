@@ -70,8 +70,7 @@ test_that("map_try_catch works", {
 context("try_that")
 
 test_that("try_that works", {
-  a <- try_that(log("a"))
-  expect_null(a)
   a <- try_that(log(1))
   expect_equal(a, 0)
+  expect_warning(try_that(matrix(1:3, 2)))
 })
