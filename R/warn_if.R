@@ -39,7 +39,7 @@ stop_if <- function(.x, .p, msg = NULL){
     if (is_null(msg)) {
       stop(paste0( "Test `", test, "` on `", quo_text(x), "` returned an error."), call. = FALSE)
     } else {
-      stop(msg, call. = FALSE, immediate. = TRUE)
+      stop(msg, call. = FALSE)
     }
 }
 
@@ -113,7 +113,7 @@ warn_if <- function(.x, .p, msg = NULL){
     if (is_null(msg)) {
       warning(paste0( "Test `", test, "` on `", quo_text(x), "` returned a warning."), call. = FALSE, immediate. = TRUE)
     } else {
-      warning(msg, call. = FALSE, immediate. = TRUE)
+      warning(msg, call. = FALSE)
     }
 }
 
