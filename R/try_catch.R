@@ -15,7 +15,7 @@
 #' @param .w a one side formula or a function evaluated when a warning occurs
 #' @param .f a one side formula or an expression evaluated before returning or exiting
 #'
-#' @importFrom purrr as_mapper map map_df
+#' @importFrom purrr as_mapper map
 #' @importFrom rlang eval_tidy quo f_rhs enexpr lang is_formula splice chr_along
 #' @importFrom tibble tibble
 
@@ -85,8 +85,9 @@ map_try_catch <- function(l, fun, .e = NULL, .w = NULL, .f = NULL) {
 #' @export
 
 map_try_catch_df <- function(l, fun) {
-
-  map_df(l, ~ eval(try_catch_df_builder(.x, fun)))
+  # map_df requires dplyr, which is not imported
+  # that creates an error on travis
+  do.call(rbind, lapply(l, function(x) eval(try_catch_df_builder(x, fun))))
 
 }
 
