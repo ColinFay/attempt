@@ -226,7 +226,7 @@ stop_if(., curl::has_internet, msg = "You shouldn't have internet to do that")
 warn_if(., curl::has_internet, 
             msg = "You shouldn't have internet to do that")
 
-warn_if(., curl::has_internet, 
+message_if(., curl::has_internet, 
             msg = "Huray, you have internet \\o/")
 ```
 

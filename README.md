@@ -105,7 +105,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-15 23:08:20"
+#> [1] "log saved on log.txt at 2017-12-15 23:09:40"
 #> [1] "let's move on now"
 ```
 
@@ -300,9 +300,9 @@ warn_if(., curl::has_internet,
             msg = "You shouldn't have internet to do that")
 #> Warning: You shouldn't have internet to do that
 
-warn_if(., curl::has_internet, 
+message_if(., curl::has_internet, 
             msg = "Huray, you have internet \\o/")
-#> Warning: Huray, you have internet \o/
+#> Huray, you have internet \o/
 ```
 
 That can come really handy inside a function :
