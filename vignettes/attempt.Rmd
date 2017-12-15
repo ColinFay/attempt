@@ -21,7 +21,14 @@ knitr::opts_chunk$set(
 
 A Friendlier Condition Handler for R, based on {purrr} mappers and {rlang}.
 
-{attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. For example, if you attempt to run a `log(a)`, or attempt to connect to an web API without the internet.
+{attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. For example : 
+
++ attempt to run a `log("a")` (error)
++ attempt to connect to a web API without an internet connexion running (error)
++ attempt to `paste()` `"good morning` and `iris` (message/warning)
++ ... 
+
+{attempt} provides several condition handlers, from try catch to simple message printing. 
 
 ## try catch
 
@@ -137,7 +144,7 @@ try_that(log("a"), msg = "Nop !", verbose = TRUE)
 #> Error in log("a") : Nop !
 ```
 
-## try_that 
+## silently 
 
 `silently` does the same job as `try`, except it doesn't return the value if the condition is verified.
 
@@ -202,7 +209,6 @@ message_if(.x = e,
 ```
 
 If you have a function with no arguments, you can pass a dot `.` as first argument : 
-
 ```{r}
 false <- function() return(FALSE)
 true <- function() return(TRUE)

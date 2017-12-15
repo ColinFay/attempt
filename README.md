@@ -26,6 +26,13 @@ attempts to do something it shouldn’t. For example :
 {attempt} provides several condition handlers, from try catch to simple
 message printing.
 
+Install
+-------
+
+``` r
+devtools::install_github("ColinFay/attempt")
+```
+
 try catch
 ---------
 
@@ -98,7 +105,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-15 23:04:38"
+#> [1] "log saved on log.txt at 2017-12-15 23:08:20"
 #> [1] "let's move on now"
 ```
 
@@ -200,8 +207,8 @@ try_that(log("a"), msg = "Nop !", verbose = TRUE)
 #> Error in log("a") : Nop !
 ```
 
-try\_that
----------
+silently
+--------
 
 `silently` does the same job as `try`, except it doesn’t return the
 value if the condition is verified.
@@ -243,7 +250,7 @@ y <- "20"
 stop_if_not(.x = y, 
             .p = is.numeric, 
             msg = "y should be numeric")
-#> Error: Can't convert a logical vector to function
+#> Error: y should be numeric
 a  <- "this is not numeric"
 # Warn if .x is charcter
 warn_if(.x = a, 
@@ -255,7 +262,7 @@ b  <- 20
 warn_if_not(.x = b, 
         .p = ~ .x == 10 , 
         msg = "b should be 10")
-#> Error: Can't convert a logical vector to function
+#> Warning: b should be 10
 
 c <- "a"
 # Message if c is a character

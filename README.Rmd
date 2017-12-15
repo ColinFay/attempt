@@ -33,6 +33,13 @@ A Friendlier Condition Handler for R, based on {purrr} mappers and {rlang}.
 
 {attempt} provides several condition handlers, from try catch to simple message printing. 
 
+## Install
+
+```{r eval = FALSE}
+devtools::install_github("ColinFay/attempt")
+```
+
+
 ## try catch
 
 You can write a try catch with these params : 
@@ -147,7 +154,7 @@ try_that(log("a"), msg = "Nop !", verbose = TRUE)
 #> Error in log("a") : Nop !
 ```
 
-## try_that 
+## silently 
 
 `silently` does the same job as `try`, except it doesn't return the value if the condition is verified.
 
