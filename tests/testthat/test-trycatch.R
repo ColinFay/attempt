@@ -87,3 +87,11 @@ test_that("try_that works", {
   expect_warning(try_that(matrix(1:3, 2), msg = "lol"))
   expect_warning(try_that(matrix(1:3, 2), msg = "nop", verbose = TRUE))
 })
+
+context("silently")
+
+test_that("silently works", {
+  expect_is(silently(log("1")), "error")
+  expect_is(silently(warning("plop")), "warning")
+  expect_null(silently(log(1)))
+})

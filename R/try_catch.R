@@ -111,20 +111,41 @@ map_try_catch_df <- function(l, fun) {
 try_that <- function(expr, msg = NULL, verbose = FALSE){
   call <- quo_text(enquo(expr))
   tryCatch(expr,
-            error = function(e) {
-              if(is_null(msg)) {
-                if (verbose) {
-                  msg <- paste("Error in", call, ":", conditionMessage(e))
-                } else {
-                  msg <- paste("Error :", conditionMessage(e))
-                }
-              } else {
-                if (verbose) {
-                  msg <- paste("Error in", call, ":", msg)
-                } else {
-                  msg <- paste("Error :", msg)
-                }
-              }
-              cat(msg, file = getOption("try.outFile", default = stderr()))
-            })
+           error = function(e) {
+             if(is_null(msg)) {
+               if (verbose) {
+                 msg <- paste("Error in", call, ":", conditionMessage(e))
+               } else {
+                 msg <- paste("Error :", conditionMessage(e))
+               }
+             } else {
+               if (verbose) {
+                 msg <- paste("Error in", call, ":", msg)
+               } else {
+                 msg <- paste("Error :", msg)
+               }
+             }
+             cat(msg, file = getOption("try.outFile", default = stderr()))
+           })
 }
+
+#' Silently
+#'
+#' silently returns an error or a warning if any,
+#' else returns nothing.
+#'
+#' @param expr the expression to be evaluated
+#'
+#' @return an error if any, a warning if any.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' silently(warn("nop!"))
+#' }
+
+silently <- function(expr){
+  res <- try_catch(expr, .e = ~ .x, .w = ~.x)
+  if (any(class(res) == "error") | any(class(res) == "warning")) return(res)
+}
+

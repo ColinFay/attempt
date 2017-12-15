@@ -11,7 +11,12 @@
 NULL
 
 build_and_eval <- function(f, args) {
-  as_mapper(f)(args)
+  args <- enquo(args)
+  if (quo_text(args) == ".") {
+    as_mapper(f)()
+  } else {
+    as_mapper(f)(eval_tidy(args))
+  }
 }
 
 try_catch_builder <- function(arg, fun, ...){

@@ -49,7 +49,7 @@ message_if_none(.l, .p, msg = NULL)
 message_if_not(.x, .p, msg = NULL)
 }
 \arguments{
-\item{.x}{the element to evaluate}
+\item{.x}{the element to evaluate. If dot \code{.}, the}
 
 \item{.p}{the predicate with the condition to test on \code{.x}.}
 

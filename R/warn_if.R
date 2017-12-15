@@ -4,7 +4,7 @@
 #'
 #' @export
 #'
-#' @param .x the element to evaluate
+#' @param .x the element to evaluate. If dot \code{.}, the
 #' @param .l the list of elements to evaluate
 #' @param .p the predicate with the condition to test on \code{.x}.
 #' @param msg the message to return. If NULL (default), the built-in message is printed.
@@ -35,12 +35,19 @@
 stop_if <- function(.x, .p, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
-  if ( (as_mapper(.p)(.x)) )
-    if (is_null(msg)) {
+  if (quo_text(x) == ".") {
+    res <- as_mapper(.p)()
+  } else {
+    res <- as_mapper(.p)(.x)
+  }
+  if ( res ) {
+    if (rlang::is_null(msg)) {
       stop(paste0( "Test `", test, "` on `", quo_text(x), "` returned an error."), call. = FALSE)
     } else {
       stop(msg, call. = FALSE)
     }
+  }
+
 }
 
 #'@export
@@ -57,6 +64,7 @@ stop_if_any <- function(.l, .p, msg = NULL){
       stop(msg, call. = FALSE)
     }
 }
+
 
 #'@export
 #'@rdname messagehandler
@@ -94,14 +102,19 @@ stop_if_none <- function(.l, .p, msg = NULL){
 stop_if_not <- function(.x, .p, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
-  if ( negate(as_mapper(.p))(.x)  )
+  if (quo_text(x) == ".") {
+    res <- negate(as_mapper(.p)())
+  } else {
+    res <- negate(as_mapper(.p)(.x))
+  }
+  if ( res ) {
     if (is_null(msg)) {
       stop(paste0( "Test `", test, "` on `", quo_text(x), "` returned an error."), call. = FALSE)
     } else {
       stop(msg, call. = FALSE)
     }
+  }
 }
-
 
 #'@export
 #'@rdname messagehandler
@@ -109,7 +122,12 @@ stop_if_not <- function(.x, .p, msg = NULL){
 warn_if <- function(.x, .p, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
-  if ( (as_mapper(.p)(.x)) )
+  if (quo_text(x) == ".") {
+    res <- as_mapper(.p)()
+  } else {
+    res <- as_mapper(.p)(.x)
+  }
+  if ( res )
     if (is_null(msg)) {
       warning(paste0( "Test `", test, "` on `", quo_text(x), "` returned a warning."), call. = FALSE, immediate. = TRUE)
     } else {
@@ -168,8 +186,12 @@ warn_if_none <- function(.l, .p, msg = NULL){
 warn_if_not <- function(.x, .p, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
-
-  if ( negate(as_mapper(.p))(.x) )
+  if (quo_text(x) == ".") {
+    res <- negate(as_mapper(.p)())
+  } else {
+    res <- negate(as_mapper(.p)(.x))
+  }
+  if ( res )
     if (is_null(msg)) {
       warning(paste0( "Test `", test, "` on `", quo_text(x), "` returned a warning."), call. = FALSE, immediate. = TRUE)
     } else {
@@ -182,8 +204,13 @@ warn_if_not <- function(.x, .p, msg = NULL){
 
 message_if <- function(.x, .p, msg = NULL){
   test <- quo_text(enquo(.p))
-  x <- quo_text(enquo(.x))
-  if ( (as_mapper(.p)(.x)) )
+  x <- enquo(.x)
+  if (quo_text(x) == ".") {
+    res <- as_mapper(.p)()
+  } else {
+    res <- as_mapper(.p)(.x)
+  }
+  if ( res )
     if (is_null(msg)) {
       message(paste("Test `", test, "` on `", x, "` returned an alert."))
     } else {
@@ -243,8 +270,13 @@ message_if_none <- function(.l, .p, msg = NULL){
 
 message_if_not <- function(.x, .p, msg = NULL){
   test <- quo_text(enquo(.p))
-  x <- quo_text(enquo(.x))
-  if ( negate(as_mapper(.p))(.x) )
+  x <- enquo(.x)
+  if (quo_text(x) == ".") {
+    res <- negate(as_mapper(.p)())
+  } else {
+    res <- negate(as_mapper(.p)(.x))
+  }
+  if ( res )
     if (is_null(msg)) {
       message(paste("Test `", test, "` on `", x, "` returned an alert."))
     } else {

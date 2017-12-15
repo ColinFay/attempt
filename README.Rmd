@@ -138,6 +138,16 @@ try_that(log("a"), msg = "Nop !", verbose = TRUE)
 #> Error in log("a") : Nop !
 ```
 
+## try_that 
+
+`silently` does the same job as `try`, except it doesn't return the value if the condition is verified.
+
+```{r}
+silently(log("a"))
+silently(log(1))
+```
+
+
 ## warnings and messages
 
 The `stop_if`, `warn_if` and `message_if` are easy to use functions that send an error, a warning or a message if a condition is met. Each function has its counterpart with `_not`. That returns a message if the condition is not met.
@@ -159,7 +169,6 @@ y <- "20"
 stop_if_not(.x = y, 
             .p = is.numeric, 
             msg = "y should be numeric")
-
 a  <- "this is not numeric"
 # Warn if .x is charcter
 warn_if(.x = a, 
@@ -191,6 +200,14 @@ message_if(.x = e,
              return(sqrt(vec) < 42)
            }, 
            msg = "The square root of your element must be more than 42")
+```
+
+If you have a function with no arguments, you can pass a dot `.` as first argument : 
+
+```{r}
+stop_if(., curl::has_internet, msg = "You shouldn't have internet to do that")
+
+stop_if(., curl::has_internet, msg = "You shouldn't have internet to do that")
 ```
 
 That can come really handy inside a function : 
