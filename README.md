@@ -15,9 +15,12 @@ A Friendlier Condition Handler for R, based on {purrr} mappers and
 {rlang}.
 
 {attempt} is designed to handle the cases when something / someone
-attempts to do something it shouldn’t. For example, if you attempt to
-run a `log(a)`, or attempt to connect to an web API without the
-internet.
+attempts to do something it shouldn’t. For example, if you : + attempt
+to run a `log("a")` + attempt to connect to a web API without an
+internet connexion running
+
+{attempt} provides several condition handlers, from try catch to message
+printing.
 
 try catch
 ---------
@@ -91,7 +94,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-15 22:48:54"
+#> [1] "log saved on log.txt at 2017-12-15 22:51:58"
 #> [1] "let's move on now"
 ```
 

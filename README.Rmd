@@ -24,7 +24,11 @@ knitr::opts_chunk$set(
 
 A Friendlier Condition Handler for R, based on {purrr} mappers and {rlang}.
 
-{attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. For example, if you attempt to run a `log(a)`, or attempt to connect to an web API without the internet.
+{attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. For example, if you : 
++ attempt to run a `log("a")` 
++ attempt to connect to a web API without an internet connexion running
+
+{attempt} provides several condition handlers, from try catch to message printing. 
 
 ## try catch
 
