@@ -2,16 +2,22 @@
 [![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
 
 [![Travis build
-status](https://travis-ci.org/ColinFay/trycatchthis.svg?branch=master)](https://travis-ci.org/ColinFay/trycatchthis)
+status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travis-ci.org/ColinFay/attempt)
 [![Coverage
-status](https://codecov.io/gh/ColinFay/trycatchthis/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/trycatchthis?branch=master)
+status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/attempt?branch=master)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/trycatchthis?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/trycatchthis)
+Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)
 
-{trycatchthis}
-==============
+{attempt}
+=========
 
-A friendlier error handler for R, based on {purrr} mappers and {rlang}.
+A Friendlier Condition Handler for R, based on {purrr} mappers and
+{rlang}.
+
+{attempt} is designed to handle the cases when something / someone
+attempts to do something it shouldn’t. For example, if you attempt to
+run a `log(a)`, or attempt to connect to an web API without the
+internet.
 
 try catch
 ---------
@@ -28,7 +34,7 @@ You can write a try catch with these params :
 ### With mappers
 
 ``` r
-library(trycatchthis)
+library(attempt)
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
@@ -68,7 +74,7 @@ try_catch(matrix(1:3, nrow = 2), .w = ~ print("warning"))
 
 ### Traditionnal way
 
-{trycatchthis} is flexible in how you can specify your arguments.
+{attempt} is flexible in how you can specify your arguments.
 
 You can, as you do with {base} `tryCatch`, use a plain old function:
 
@@ -85,7 +91,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-10 22:13:12"
+#> [1] "log saved on log.txt at 2017-12-15 22:48:54"
 #> [1] "let's move on now"
 ```
 
@@ -187,6 +193,18 @@ try_that(log("a"), msg = "Nop !", verbose = TRUE)
 #> Error in log("a") : Nop !
 ```
 
+try\_that
+---------
+
+`silently` does the same job as `try`, except it doesn’t return the
+value if the condition is verified.
+
+``` r
+silently(log("a"))
+#> <simpleError in log("a"): argument non numérique pour une fonction mathématique>
+silently(log(1))
+```
+
 warnings and messages
 ---------------------
 
@@ -218,8 +236,7 @@ y <- "20"
 stop_if_not(.x = y, 
             .p = is.numeric, 
             msg = "y should be numeric")
-#> Error: y should be numeric
-
+#> Error: Can't convert a logical vector to function
 a  <- "this is not numeric"
 # Warn if .x is charcter
 warn_if(.x = a, 
@@ -231,7 +248,7 @@ b  <- 20
 warn_if_not(.x = b, 
         .p = ~ .x == 10 , 
         msg = "b should be 10")
-#> Warning: b should be 10
+#> Error: Can't convert a logical vector to function
 
 c <- "a"
 # Message if c is a character
@@ -256,6 +273,22 @@ message_if(.x = e,
            }, 
            msg = "The square root of your element must be more than 42")
 #> The square root of your element must be more than 42
+```
+
+If you have a function with no arguments, you can pass a dot `.` as
+first argument :
+
+``` r
+stop_if(., curl::has_internet, msg = "You shouldn't have internet to do that")
+#> Error: You shouldn't have internet to do that
+
+warn_if(., curl::has_internet, 
+            msg = "You shouldn't have internet to do that")
+#> Warning: You shouldn't have internet to do that
+
+warn_if(., curl::has_internet, 
+            msg = "Huray, you have internet \\o/")
+#> Warning: Huray, you have internet \o/
 ```
 
 That can come really handy inside a function :
@@ -296,15 +329,20 @@ message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This m
 #> All your number are above 1e2. This may take some time to compute.
 ```
 
+Acknowledgment
+--------------
+
+Thank to [Romain](http://romain.rbind.io/) for the name suggestion.
+
 Contact
 -------
 
 Questions and feedbacks [welcome](mailto:contact@colinfay.me)!
 
 You want to contribute ? Open a
-[PR](https://github.com/ColinFay/trycatchthis/pulls) :) If you encounter
-a bug or want to suggest an enhancement, please [open an
-issue](https://github.com/ColinFay/trycatchthis/issues).
+[PR](https://github.com/ColinFay/attempt/pulls) :) If you encounter a
+bug or want to suggest an enhancement, please [open an
+issue](https://github.com/ColinFay/attempt/issues).
 
 Please note that this project is released with a [Contributor Code of
 Conduct](CONDUCT.md). By participating in this project you agree to

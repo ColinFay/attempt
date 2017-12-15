@@ -41,12 +41,12 @@ test_that("stop, warn and message works", {
 
   expect_message(message_if_not(.x = 30,
              .p = function(vec){
-               return(sqrt(vec) < 42)
+               return(sqrt(vec) == 42)
              },
-             msg = "The square root of your element must be more than 42"))
+             msg = "The square root of your element must be 42"))
   expect_message(message_if_not(.x = 30,
              .p = function(vec){
-               return(sqrt(vec) < 42)
+               return(sqrt(vec) == 42)
              }))
 })
 

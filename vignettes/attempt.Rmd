@@ -1,10 +1,10 @@
 ---
-title: "trycatchthis"
+title: "attempt"
 author: "Colin Fay"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{trycatchthis}
+  %\VignetteIndexEntry{attempt}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,15 +17,17 @@ knitr::opts_chunk$set(
 )
 ```
 
-# {trycatchthis}
+# {attempt}
 
-A friendlier error handler for R, based on {purrr} mappers and {rlang}.
+A Friendlier Condition Handler for R, based on {purrr} mappers and {rlang}.
+
+{attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. For example, if you attempt to run a `log(a)`, or attempt to connect to an web API without the internet.
 
 ## try catch
 
 You can write a try catch with these params : 
 
-+ `...` the expression to be evaluated 
++ `expr` the expression to be evaluated 
 + `.e` a one side formula or a function evaluated when an error occurs
 + `.w` a one side formula or a function evaluated when a warning occurs
 + `.f` a one side formula or an expression which is always evaluated before returning or exiting
@@ -33,7 +35,7 @@ You can write a try catch with these params :
 ### With mappers 
 
 ```{r}
-library(trycatchthis)
+library(attempt)
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
@@ -63,7 +65,7 @@ try_catch(matrix(1:3, nrow = 2), .w = ~ print("warning"))
 
 ### Traditionnal way 
 
-{trycatchthis} is flexible in how you can specify your arguments. 
+{attempt} is flexible in how you can specify your arguments. 
 
 You can, as you do with {base} `tryCatch`, use a plain old function: 
 
@@ -110,7 +112,7 @@ res_success$value
 
 ### map try_catch
 
-`map_try_catch` and `map_try_catch_df` allow you to map on a list of arguments, to be evaluated by the function in f. 
+`map_try_catch` and `map_try_catch_df` allow you to map on a list of arguments `l`, to be evaluated by the function in `fun`. 
 
 ```{r}
 map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
@@ -135,6 +137,16 @@ try_that(log("a"), msg = "Nop !", verbose = TRUE)
 #> Error in log("a") : Nop !
 ```
 
+## try_that 
+
+`silently` does the same job as `try`, except it doesn't return the value if the condition is verified.
+
+```{r}
+silently(log("a"))
+silently(log(1))
+```
+
+
 ## warnings and messages
 
 The `stop_if`, `warn_if` and `message_if` are easy to use functions that send an error, a warning or a message if a condition is met. Each function has its counterpart with `_not`. That returns a message if the condition is not met.
@@ -156,7 +168,6 @@ y <- "20"
 stop_if_not(.x = y, 
             .p = is.numeric, 
             msg = "y should be numeric")
-
 a  <- "this is not numeric"
 # Warn if .x is charcter
 warn_if(.x = a, 
@@ -190,6 +201,20 @@ message_if(.x = e,
            msg = "The square root of your element must be more than 42")
 ```
 
+If you have a function with no arguments, you can pass a dot `.` as first argument : 
+
+```{r}
+false <- function() return(FALSE)
+true <- function() return(TRUE)
+stop_if(., true, msg = "Nop")
+
+warn_if_not(., false, 
+            msg = "Carefull!")
+
+message_if(., true, 
+            msg = "Huray \\o/")
+```
+
 That can come really handy inside a function : 
 
 ```{r}
@@ -210,14 +235,20 @@ my_fun(head(iris))
 ```{r}
 stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors")
 
-warn_if_none(1:10, ~ .x < 0, msg = "You need at least one number under zero")
+warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero")
 
 message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This may take some time to compute.")
 ```
 
 
+## Acknowledgment
+
+Thank to [Romain](http://romain.rbind.io/) for the name suggestion. 
+
 ## Contact
 
 Questions and feedbacks [welcome](mailto:contact@colinfay.me)!
 
-You want to contribute ? Open a [PR](https://github.com/ColinFay/trycatchthis/pulls) :) If you encounter a bug or want to suggest an enhancement, please [open an issue](https://github.com/ColinFay/trycatchthis/issues).
+You want to contribute ? Open a [PR](https://github.com/ColinFay/attempt/pulls) :) If you encounter a bug or want to suggest an enhancement, please [open an issue](https://github.com/ColinFay/attempt/issues).
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

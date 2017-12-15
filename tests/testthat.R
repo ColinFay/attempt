@@ -1,4 +1,4 @@
 library(testthat)
-library(trycatchthis)
+library(attempt)
 
-test_check("trycatchthis")
+test_check("attempt")
