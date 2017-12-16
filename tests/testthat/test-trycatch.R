@@ -76,22 +76,33 @@ test_that("map_try_catch works", {
   expect_equal(c$value[[1]], "plop")
 })
 
-context("try_that")
+context("attempt")
 
-test_that("try_that works", {
-  a <- try_that(log(1))
+test_that("attempt works", {
+  a <- attempt(log(1))
   expect_equal(a, 0)
-  expect_null(try_that(log("a"), msg = "lol"))
-  expect_null(try_that(log("a"), msg = "lol", verbose = TRUE))
-  expect_warning(try_that(matrix(1:3, 2)))
-  expect_warning(try_that(matrix(1:3, 2), msg = "lol"))
-  expect_warning(try_that(matrix(1:3, 2), msg = "nop", verbose = TRUE))
+  expect_error(attempt(log("a"), msg = "lol"))
+  expect_error(attempt(log("a"), msg = "lol", verbose = TRUE))
+  expect_warning(attempt(matrix(1:3, 2)))
+  expect_warning(attempt(matrix(1:3, 2), msg = "lol"))
+  expect_warning(attempt(matrix(1:3, 2), msg = "nop", verbose = TRUE))
 })
 
 context("silently")
 
 test_that("silently works", {
-  expect_is(silently(log("1")), "error")
-  expect_is(silently(warning("plop")), "warning")
-  expect_null(silently(log(1)))
-})
+  a <- silently(log)
+  expect_error(a("a"))
+  expect_is(a(1), "NULL")
+  a <- silently(matrix)
+  expect_warning(a(1:3, 2))
+  expect_is(a(1:4, 2), "NULL")}
+  )
+
+test_that("silent_attempt works", {
+  expect_is(silent_attempt(log(1)), "NULL")
+  expect_warning(silent_attempt(matrix(1:3, 2)))
+  expect_error(silent_attempt(log("a")))
+  }
+)
+

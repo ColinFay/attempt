@@ -4,10 +4,10 @@
 \alias{silently}
 \title{Silently}
 \usage{
-silently(expr)
+silently(.f)
 }
 \arguments{
-\item{expr}{the expression to be evaluated}
+\item{.f}{the function to silence}
 }
 \value{
 an error if any, a warning if any.
@@ -18,6 +18,8 @@ else returns nothing.
 }
 \examples{
 \dontrun{
-silently(warn("nop!"))
+silent_log <- silently(log)
+silent_log(1)
+silent_log("a")
 }
 }

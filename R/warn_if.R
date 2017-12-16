@@ -56,44 +56,28 @@ stop_if <- function(.x, .p, msg = NULL){
 stop_if_any <- function(.l, .p, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% any()
-  if (res)
-    if (is_null(msg)) {
-      stop(paste0( "Test `", quo_text(test), "` on `", quo_text(x), "` returned an error."), call. = FALSE)
-    } else {
-      stop(msg, call. = FALSE)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_any(.l, .p, ~ stop(msg, call. = FALSE))
 }
-
 
 #'@export
 #'@rdname messagehandler
 
 stop_if_all <- function(.l, .p, msg = NULL){
-  test <- enexpr(.p)
+  test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% all()
-  if (res)
-    if (is_null(msg)) {
-      stop(paste0( "Test `", quo_text(test), "` on `", quo_text(x), "` returned an error."), call. = FALSE)
-    } else {
-      stop(msg, call. = FALSE)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_all(.l, .p, ~ stop(msg, call. = FALSE))
 }
 
 #'@export
 #'@rdname messagehandler
 
 stop_if_none <- function(.l, .p, msg = NULL){
-  test <- enexpr(.p)
+  test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(negate(.p), .x)) %>% all()
-  if (res)
-    if (is_null(msg)) {
-      stop(paste0( "Test `", quo_text(test), "` on `", quo_text(x), "` returned an error."), call. = FALSE)
-    } else {
-      stop(msg, call. = FALSE)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_none(.l, .p, ~ stop(msg, call. = FALSE))
 }
 
 #'@export
@@ -145,13 +129,8 @@ warn_if <- function(.x, .p, msg = NULL){
 warn_if_any <- function(.l, .p, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% any()
-  if (res)
-    if (rlang::is_null(msg)) {
-      warning(paste0( "Test `", quo_text(test), "` on `", quo_text(x), "` returned a warning."), call. = FALSE, immediate. = TRUE)
-    } else {
-      warning(msg, call. = FALSE, immediate. = TRUE)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_any(.l, .p, ~ warning(msg, call. = FALSE))
 }
 
 #'@export
@@ -160,13 +139,8 @@ warn_if_any <- function(.l, .p, msg = NULL){
 warn_if_all <- function(.l, .p, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% all()
-  if (res)
-    if (rlang::is_null(msg)) {
-      warning(paste0( "Test `", quo_text(test), "` on `", quo_text(x), "` returned a warning."), call. = FALSE, immediate. = TRUE)
-    } else {
-      warning(msg, call. = FALSE, immediate. = TRUE)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_all(.l, .p, ~ warning(msg, call. = FALSE))
 }
 
 #'@export
@@ -175,13 +149,8 @@ warn_if_all <- function(.l, .p, msg = NULL){
 warn_if_none <- function(.l, .p, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(negate(.p), .x)) %>% all()
-  if (res)
-    if (rlang::is_null(msg)) {
-      warning(paste0( "Test `", quo_text(test), "` on `", quo_text(x), "` returned a warning."), call. = FALSE, immediate. = TRUE)
-    } else {
-      warning(msg, call. = FALSE, immediate. = TRUE)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_none(.l, .p, ~ warning(msg, call. = FALSE))
 }
 
 #'@export
@@ -231,13 +200,8 @@ message_if <- function(.x, .p, msg = NULL){
 message_if_any <- function(.l, .p, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% any()
-  if (res)
-    if (rlang::is_null(msg)) {
-      message(paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert."))
-    } else {
-      message(msg)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_any(.l, .p, ~ message(msg))
 }
 
 
@@ -248,13 +212,8 @@ message_if_any <- function(.l, .p, msg = NULL){
 message_if_all <- function(.l, .p, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% all()
-  if (res)
-    if (rlang::is_null(msg)) {
-      message(paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert."))
-    } else {
-      message(msg)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_all(.l, .p, ~ message(msg))
 }
 
 #'@export
@@ -263,13 +222,8 @@ message_if_all <- function(.l, .p, msg = NULL){
 message_if_none <- function(.l, .p, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
-  res <- map_lgl(.l, ~ build_and_eval(negate(.p), .x)) %>% all()
-  if (res)
-    if (rlang::is_null(msg)) {
-      message(paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert."))
-    } else {
-      message(msg)
-    }
+  if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
+  if_none(.l, .p, ~ message(msg))
 }
 
 #'@export

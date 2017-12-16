@@ -30,6 +30,33 @@ A Friendlier Condition Handler for R, based on {purrr} mappers and {rlang}.
 
 {attempt} provides several condition handlers, from try catch to simple message printing. 
 
+# Install
+
+```{r eval = FALSE}
+devtools::install_github("ColinFay/attempt")
+```
+
+# Reference 
+
+## attempt 
+
+`attempt` is a wrapper around base `try` that allows you to insert a custom messsage on error. 
+
+```{r eval = FALSE}
+library(attempt)
+attempt(log("a"), msg = "Nop !")
+#> Error : Nop !
+```
+
+You can make it verbose (i.e. returning the expression): 
+
+```{r eval = FALSE}
+attempt(log("a"), msg = "Nop !", verbose = TRUE)
+#> Error in log("a") : Nop !
+```
+
+
+
 ## try catch
 
 You can write a try catch with these params : 
@@ -42,7 +69,6 @@ You can write a try catch with these params :
 ### With mappers 
 
 ```{r}
-library(attempt)
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
@@ -127,30 +153,14 @@ map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
 map_try_catch_df(list(1,3,"a"), log)
 ```
 
-
-## try_that 
-
-`try_that` is a wrapper around base `try` that allows you to insert a custom messsage on error. 
-
-```{r eval = FALSE}
-try_that(log("a"), msg = "Nop !")
-#> Error : Nop !
-```
-
-You can make it verbose (i.e. returning the expression): 
-
-```{r eval = FALSE}
-try_that(log("a"), msg = "Nop !", verbose = TRUE)
-#> Error in log("a") : Nop !
-```
-
 ## silently 
 
-`silently` does the same job as `try`, except it doesn't return the value if the condition is verified.
+`silently` transforms a function so that when you call this new function, it returns nothing unless there is an error or a warning (contrary to `attempt` that returns the result). In a sense, the new function stay silent unless error or warning.
 
 ```{r}
-silently(log("a"))
-silently(log(1))
+silent_log <- silently(log)
+silent_log(1)
+silent_log("a")
 ```
 
 
@@ -209,6 +219,7 @@ message_if(.x = e,
 ```
 
 If you have a function with no arguments, you can pass a dot `.` as first argument : 
+
 ```{r}
 false <- function() return(FALSE)
 true <- function() return(TRUE)
@@ -247,7 +258,9 @@ message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This m
 ```
 
 
-## Acknowledgment
+# Misc
+
+## Acknowledgments
 
 Thank to [Romain](http://romain.rbind.io/) for the name suggestion. 
 
@@ -256,5 +269,3 @@ Thank to [Romain](http://romain.rbind.io/) for the name suggestion.
 Questions and feedbacks [welcome](mailto:contact@colinfay.me)!
 
 You want to contribute ? Open a [PR](https://github.com/ColinFay/attempt/pulls) :) If you encounter a bug or want to suggest an enhancement, please [open an issue](https://github.com/ColinFay/attempt/issues).
-
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

@@ -92,9 +92,11 @@ map_try_catch_df <- function(l, fun) {
 }
 
 
-#' Try that
+#' Attempt
 #'
-#' A wrapper around base try that allows you to set a custom message when an error occurs
+#' Wrappers around base try that allows you to set a custom message when an error/warning occurs.
+#' \code{attempt} returns the value if there is no error nor message. \code{silent_attempt} stays
+#' silent unless error or warning.
 #'
 #' @param expr the expression to be evaluated
 #' @param msg the message to return if an error occurs
@@ -102,31 +104,27 @@ map_try_catch_df <- function(l, fun) {
 #'
 #' @importFrom rlang is_null
 #'
+#' @rdname attempt
+#'
 #' @examples
 #'\dontrun{
-#' try_that(log("a"), msg = "Nop !")
+#' attempt(log("a"), msg = "Nop !")
 #'}
 #' @export
 
-try_that <- function(expr, msg = NULL, verbose = FALSE){
-  call <- quo_text(enquo(expr))
-  tryCatch(expr,
-           error = function(e) {
-             if(is_null(msg)) {
-               if (verbose) {
-                 msg <- paste("Error in", call, ":", conditionMessage(e))
-               } else {
-                 msg <- paste("Error :", conditionMessage(e))
-               }
-             } else {
-               if (verbose) {
-                 msg <- paste("Error in", call, ":", msg)
-               } else {
-                 msg <- paste("Error :", msg)
-               }
-             }
-             cat(msg, file = getOption("try.outFile", default = stderr()))
-           })
+attempt <- function(expr, msg = NULL, verbose = FALSE){
+  res <- try_catch(expr,
+                   .e = ~ return(.x),
+                   .w = ~ return(.x))
+  if (! rlang::is_null(msg)) {
+    if(any(class(res) %in% c("error", "warning"))) res$message <- msg
+  }
+  if (! verbose) {
+    if(any(class(res) %in% c("error", "warning"))) res$call <- NULL
+  }
+  if_any(class(res), ~ .x == "error", ~ stop(res))
+  if_any(class(res), ~ .x == "warning", ~ warning(res))
+  res
 }
 
 #' Silently
@@ -134,18 +132,42 @@ try_that <- function(expr, msg = NULL, verbose = FALSE){
 #' silently returns an error or a warning if any,
 #' else returns nothing.
 #'
-#' @param expr the expression to be evaluated
+#' @param .f the function to silence
 #'
 #' @return an error if any, a warning if any.
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' silently(warn("nop!"))
+#' silent_log <- silently(log)
+#' silent_log(1)
+#' silent_log("a")
 #' }
 
-silently <- function(expr){
-  res <- try_catch(expr, .e = ~ .x, .w = ~.x)
-  if (any(class(res) == "error") | any(class(res) == "warning")) return(res)
+silently <- function (.f) {
+  .f <- as_mapper(.f)
+  function(...) {
+    res <- try_catch(!! .f(...),
+              ~ return(.x),
+              ~ return(.x))
+    if_any(class(res),
+           ~ .x %in% c("error", "warning"),
+           ~ return(res))
+    }
 }
 
+#' Silently attempt
+#'
+#' A wrapper around silently and attempt
+#'
+#' @param ... the expression to evaluate
+#'
+#' @return an error if any, a warning if any.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' silent_attempt(warn("nop!"))
+#' }
+
+silent_attempt <- silently(attempt)

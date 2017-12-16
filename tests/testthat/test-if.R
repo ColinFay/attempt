@@ -1,0 +1,16 @@
+context("if")
+
+test_that("if works", {
+  a <- if_all(1:10, is.numeric, ~ return(letters[1:10]))
+  expect_is(a, "character")
+  expect_length(a, 10)
+  expect_equal(a, letters[1:10])
+  a <- if_any(1:10, is.numeric, ~ return(letters[1:10]))
+  expect_is(a, "character")
+  expect_length(a, 10)
+  expect_equal(a, letters[1:10])
+  a <- if_none(1:10, is.character, ~ return(letters[1:10]))
+  expect_is(a, "character")
+  expect_length(a, 10)
+  expect_equal(a, letters[1:10])
+})

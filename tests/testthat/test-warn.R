@@ -38,15 +38,20 @@ test_that("stop, warn and message works", {
              msg = "The square root of your element must be more than 42"))
   expect_message(message_if(.x = 100,
              .p = ~ sqrt(.x) < 42))
+  expect_message(message_if_not(.x = 100,
+             .p = ~ sqrt(.x) > 42))
+  expect_message(message_if_not(.x = 100,
+             .p = ~ sqrt(.x) > 42,
+             msg = "Your sqrt should be less than 30"))
 
   expect_message(message_if_not(.x = 30,
              .p = function(vec){
-               return(sqrt(vec) == 42)
+               return(vec > 30)
              },
-             msg = "The square root of your element must be 42"))
+             msg = "Your element should be less that 30"))
   expect_message(message_if_not(.x = 30,
              .p = function(vec){
-               return(sqrt(vec) == 42)
+               return(vec > 30)
              }))
 })
 
