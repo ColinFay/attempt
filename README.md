@@ -55,12 +55,14 @@ You can make it verbose (i.e. returning the expression):
 
 ``` r
 attempt(log("a"), msg = "Nop !", verbose = TRUE)
+#> Error in log("a"): Nop !
 ```
 
 Of course the result is returned if there is one:
 
 ``` r
 attempt(log(1), msg = "Nop !", verbose = TRUE)
+#> [1] 0
 ```
 
 silent\_attempt
@@ -148,7 +150,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-16 16:38:41"
+#> [1] "log saved on log.txt at 2017-12-16 17:38:29"
 #> [1] "let's move on now"
 ```
 

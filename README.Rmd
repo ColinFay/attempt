@@ -54,13 +54,13 @@ attempt(log("a"), msg = "Nop !")
 
 You can make it verbose (i.e. returning the expression): 
 
-```{r eval = FALSE}
+```{r}
 attempt(log("a"), msg = "Nop !", verbose = TRUE)
 ```
 
 Of course the result is returned if there is one: 
 
-```{r eval = FALSE}
+```{r}
 attempt(log(1), msg = "Nop !", verbose = TRUE)
 ```
 
