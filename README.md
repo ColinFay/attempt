@@ -27,10 +27,54 @@ attempts to do something it shouldn’t. For example :
 message printing.
 
 Install
--------
+=======
 
 ``` r
 devtools::install_github("ColinFay/attempt")
+```
+
+Reference
+=========
+
+attempt
+-------
+
+`attempt` is a wrapper around base `try` that allows you to insert a
+custom messsage on error.
+
+``` r
+library(attempt)
+attempt(log("a"))
+#> Error: argument non numérique pour une fonction mathématique
+
+attempt(log("a"), msg = "Nop !")
+#> Error: Nop !
+```
+
+You can make it verbose (i.e. returning the expression):
+
+``` r
+attempt(log("a"), msg = "Nop !", verbose = TRUE)
+```
+
+Of course the result is returned if there is one:
+
+``` r
+attempt(log(1), msg = "Nop !", verbose = TRUE)
+```
+
+silent\_attempt
+---------------
+
+`silent_attempt` is a wrapper around `silently` (see further down for
+more info) and `attempt`. It attempts to run the expr, stays silent if
+the expression succeeds, and returns error or warnings if any.
+
+``` r
+silent_attempt(log("a"))
+#> Error in silent_attempt(log("a")): impossible de trouver la fonction "silent_attempt"
+silent_attempt(log(1))
+#> Error in silent_attempt(log(1)): impossible de trouver la fonction "silent_attempt"
 ```
 
 try catch
@@ -48,16 +92,15 @@ You can write a try catch with these params :
 ### With mappers
 
 ``` r
-library(attempt)
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 
 try_catch(log("a"), 
-          .e = ~ print(.x), 
-          .w = ~ print(.x))
-#> <simpleError in log("a"): argument non numérique pour une fonction mathématique>
+          .e = ~ stop(.x), 
+          .w = ~ warning(.x))
+#> Error in log("a"): argument non numérique pour une fonction mathématique
 
 try_catch(matrix(1:3, nrow= 2), 
           .e = ~ print(.x), 
@@ -105,7 +148,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-15 23:09:40"
+#> [1] "log saved on log.txt at 2017-12-16 16:38:41"
 #> [1] "let's move on now"
 ```
 
@@ -189,34 +232,34 @@ map_try_catch_df(list(1,3,"a"), log)
 #> # ... with 3 more variables: error <chr>, warning <chr>, value <list>
 ```
 
-try\_that
----------
-
-`try_that` is a wrapper around base `try` that allows you to insert a
-custom messsage on error.
-
-``` r
-try_that(log("a"), msg = "Nop !")
-#> Error : Nop !
-```
-
-You can make it verbose (i.e. returning the expression):
-
-``` r
-try_that(log("a"), msg = "Nop !", verbose = TRUE)
-#> Error in log("a") : Nop !
-```
-
 silently
 --------
 
-`silently` does the same job as `try`, except it doesn’t return the
-value if the condition is verified.
+`silently` transforms a function so that when you call this new
+function, it returns nothing unless there is an error or a warning
+(contrary to `attempt` that returns the result). In a sense, the new
+function stay silent unless error or warning.
 
 ``` r
-silently(log("a"))
-#> <simpleError in log("a"): argument non numérique pour une fonction mathématique>
-silently(log(1))
+silent_log <- silently(log)
+silent_log(1)
+silent_log("a")
+#> Error in log(x = x, base = base): argument non numérique pour une fonction mathématique
+```
+
+`if_` confitions
+----------------
+
+if\_none, if\_any and if\_all test the elements of the list.
+
+``` r
+if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
+#>  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"
+
+if_any(1:10, is.numeric, ~ print("Yay!"))
+#> [1] "Yay!"
+
+if_none(1:10, is.numeric, ~ rnorm(10))
 ```
 
 warnings and messages
@@ -309,15 +352,18 @@ That can come really handy inside a function :
 
 ``` r
 my_fun <- function(x){
+  stop_if_not(., 
+              curl::has_internet, 
+              msg = "You should have internet to do that")
   warn_if(x, 
           ~ ! is.character(.x), 
-          msg =  "x is not a character vector. \nThe output may not be what you're expecting.")
+          msg =  "x is not a character vector. The output may not be what you're expecting.")
   paste(x, "is the value.")
 }
 
 my_fun(head(iris))
-#> Warning: x is not a character vector. 
-#> The output may not be what you're expecting.
+#> Warning: x is not a character vector. The output may not be what you're
+#> expecting.
 #> [1] "c(5.1, 4.9, 4.7, 4.6, 5, 5.4) is the value."  
 #> [2] "c(3.5, 3, 3.2, 3.1, 3.6, 3.9) is the value."  
 #> [3] "c(1.4, 1.4, 1.3, 1.5, 1.4, 1.7) is the value."
@@ -328,23 +374,27 @@ my_fun(head(iris))
 ### none, all, any
 
 `stop_if`, `warn_if` and `message_if` all have complementary tests with
-`_all`, `_any` and `_none`. They take a list as first argument, and a
-predicate. They test if any, all or none of the elements validate the
-predicate.
+`_all`, `_any` and `_none`, which combine the `if_*` and the `warn_*`,
+`stop_*` and `message_*` seen before. They take a list as first
+argument, and a predicate. They test if any, all or none of the elements
+validate the predicate.
 
 ``` r
-stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors")
-#> Error: Factors here. This might be due to stringsAsFactors
+stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors.")
+#> Error: Factors here. This might be due to stringsAsFactors.
 
-warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero")
-#> Warning: You need to have at least one number under zero
+warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero.")
+#> Warning: You need to have at least one number under zero.
 
-message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This may take some time to compute.")
-#> All your number are above 1e2. This may take some time to compute.
+message_if_all(1:1000, is.numeric, msg = "That makes a lot of numbers.")
+#> That makes a lot of numbers.
 ```
 
-Acknowledgment
---------------
+Misc
+====
+
+Acknowledgments
+---------------
 
 Thank to [Romain](http://romain.rbind.io/) for the name suggestion.
 
