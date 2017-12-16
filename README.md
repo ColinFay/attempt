@@ -74,9 +74,8 @@ the expression succeeds, and returns error or warnings if any.
 
 ``` r
 silent_attempt(log("a"))
-#> Error in silent_attempt(log("a")): impossible de trouver la fonction "silent_attempt"
+#> Error: argument non numérique pour une fonction mathématique
 silent_attempt(log(1))
-#> Error in silent_attempt(log(1)): impossible de trouver la fonction "silent_attempt"
 ```
 
 try catch
@@ -150,7 +149,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-16 17:38:29"
+#> [1] "log saved on log.txt at 2017-12-16 17:44:55"
 #> [1] "let's move on now"
 ```
 
