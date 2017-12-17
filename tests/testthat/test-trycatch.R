@@ -1,7 +1,7 @@
 context("trycatch")
 
 test_that("errors catching", {
-  a <- try_catch(log("a"), .e = ~ paste0("There was an error: ", .x))
+  a <- try_catch(log("a"), .e = ~ return(paste0("There was an error: ", .x)))
   expect_is(a, "character")
   expect_match(a, "There was an error:")
   a <- try_catch(log(1), .e = ~ paste0("There was an error: ", .x))
@@ -11,7 +11,8 @@ test_that("errors catching", {
     attempt(log("a"))
     return(12)
   }
-  expect_equal(plop(), 12)
+  a <- plop()
+  expect_equal(a, 12)
 })
 
 test_that("warning catching", {
@@ -87,11 +88,20 @@ context("attempt")
 test_that("attempt works", {
   a <- attempt(log(1))
   expect_equal(a, 0)
-  expect_error(attempt(log("a"), msg = "lol"))
-  expect_error(attempt(log("a"), msg = "lol", verbose = TRUE))
-  expect_warning(attempt(matrix(1:3, 2)))
-  expect_warning(attempt(matrix(1:3, 2), msg = "lol"))
-  expect_warning(attempt(matrix(1:3, 2), msg = "nop", verbose = TRUE))
+  b <- attempt(log("a"), msg = "lol")
+  expect_is(b, "try-error")
+  expect_match(b$message, "lol")
+  c <- attempt(log("a"), msg = "lol", verbose = TRUE)
+  expect_is(c, "try-error")
+  expect_match(c$message, "lol")
+  expect_match(as.character(c$call)[1], "log")
+  d <- attempt(matrix(1:3, 2))
+  expect_is(d, "try-error")
+  e <- attempt(matrix(1:3, 2), msg = "lol")
+  expect_is(e, "try-error")
+  f <- attempt(matrix(1:3, 2), msg = "nop", verbose = TRUE)
+  expect_is(f, "try-error")
+  expect_match(as.character(f$call)[1], "matrix")
 })
 
 context("silently")

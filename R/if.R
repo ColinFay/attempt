@@ -1,5 +1,15 @@
-library(rlang)
-library(purrr)
+#' If this, then do that
+#'
+#' @param .x the object to test
+#' @param .p the predicate for testing
+#' @param .f what to do if TRUE
+#'
+#' @return the result in .f
+#' @export
+#'
+#' @examples
+#' a <- if_then(1, is.numeric, ~ return("Yay"))
+
 if_then <- function(.x, .p, .f) {
   if (is_formula(.f)){
     .f <- as_mapper(.f)

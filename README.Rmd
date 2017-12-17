@@ -200,7 +200,7 @@ sure_log("a")
 
 ## `if_` conditions
 
-if_none, if_any and if_all test the elements of the list. 
+`if_none`, `if_any` and `if_all` test the elements of the list. 
 
 ```{r}
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
@@ -208,6 +208,12 @@ if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
 if_any(1:10, is.numeric, ~ print("Yay!"))
 
 if_none(1:10, is.character, ~ rnorm(10))
+```
+
+`if_then` performs a simple "if this then do that":
+
+```{r}
+if_then(1, is.numeric, ~ return("lol"))
 ```
 
 

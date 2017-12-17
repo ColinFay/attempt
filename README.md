@@ -158,7 +158,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-17 22:05:04"
+#> [1] "log saved on log.txt at 2017-12-17 22:19:23"
 #> [1] "let's move on now"
 ```
 
@@ -277,7 +277,7 @@ sure_log("a")
 `if_` conditions
 ----------------
 
-if\_none, if\_any and if\_all test the elements of the list.
+`if_none`, `if_any` and `if_all` test the elements of the list.
 
 ``` r
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
@@ -287,8 +287,15 @@ if_any(1:10, is.numeric, ~ print("Yay!"))
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1]  1.1169099  0.8051344 -1.8823347 -0.3057661 -1.4248279  0.9399530
-#>  [7]  0.4737694 -1.2492571 -1.1840439  0.2733809
+#>  [1] -0.6793058 -0.5950809 -0.6235973 -0.3106525 -1.0531099 -1.0190476
+#>  [7]  2.3444017  2.3129823 -1.3823676  0.6387456
+```
+
+`if_then` performs a simple “if this then do that”:
+
+``` r
+if_then(1, is.numeric, ~ return("lol"))
+#> Error in if_then(1, is.numeric, ~return("lol")): impossible de trouver la fonction "if_then"
 ```
 
 warnings and messages
