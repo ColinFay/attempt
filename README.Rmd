@@ -64,6 +64,13 @@ Of course the result is returned if there is one:
 attempt(log(1), msg = "Nop !", verbose = TRUE)
 ```
 
+As with `try`, the result cant be saved as an error object : 
+
+```{r}
+a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
+a
+```
+
 ## silent_attempt 
 
 `silent_attempt` is a wrapper around `silently` (see further down for more info) and `attempt`. It attempts to run the expr, stays silent if the expression succeeds, and returns error or warnings if any. 
@@ -144,7 +151,7 @@ try_catch(log("a"),
 
 ### try_catch_df 
 
-`try_catch_df` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". 
+`try_catch_df` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". The values will always be contained in a list-column.
 
 ```{r}
 res_log <- try_catch_df(log("a"))
@@ -180,6 +187,16 @@ silent_log(1)
 silent_log("a")
 ```
 
+## surely 
+
+`surely` also transforms a function so that when you call this new function, it returns calls `attempt()` - i.e. in the code below, calling `sure_log(1)` is the same as calling `attempt(log(1))`. In a sense, you're sure this new function will always work.
+
+```{r}
+sure_log <- surely(log)
+sure_log(1)
+sure_log("a")
+```
+
 
 ## `if_` conditions
 
@@ -190,7 +207,7 @@ if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
 
 if_any(1:10, is.numeric, ~ print("Yay!"))
 
-if_none(1:10, is.numeric, ~ rnorm(10))
+if_none(1:10, is.character, ~ rnorm(10))
 ```
 
 
@@ -285,7 +302,7 @@ stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAs
 
 warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero.")
 
-message_if_all(1:1000, is.numeric, msg = "That makes a lot of numbers.")
+message_if_all(1:100, is.numeric, msg = "That makes a lot of numbers.")
 ```
 
 

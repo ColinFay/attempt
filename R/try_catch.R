@@ -122,9 +122,14 @@ attempt <- function(expr, msg = NULL, verbose = FALSE){
   if (! verbose) {
     if(any(class(res) %in% c("error", "warning"))) res$call <- NULL
   }
-  if_any(class(res), ~ .x == "error", ~ stop(res))
-  if_any(class(res), ~ .x == "warning", ~ warning(res))
-  res
+  cond <- map_lgl(class(res), ~ .x %in% c("error", "warning")) %>% any()
+  if (cond) {
+    cat(paste(res), file = getOption("try.outFile", default = stderr()))
+    return(invisible(structure(res, class = "try-error")))
+  } else {
+    res
+  }
+
 }
 
 #' Silently
@@ -153,6 +158,13 @@ silently <- function (.f) {
     if_any(class(res),
            ~ .x %in% c("error", "warning"),
            ~ return(res))
+    }
+}
+
+surely <- function (.f) {
+  .f <- as_mapper(.f)
+  function(...) {
+    attempt(.f(...))
     }
 }
 

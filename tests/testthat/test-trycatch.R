@@ -6,6 +6,12 @@ test_that("errors catching", {
   expect_match(a, "There was an error:")
   a <- try_catch(log(1), .e = ~ paste0("There was an error: ", .x))
   expect_equal(a, 0)
+  plop <- function(){
+    try(log("a"))
+    attempt(log("a"))
+    return(12)
+  }
+  expect_equal(plop(), 12)
 })
 
 test_that("warning catching", {

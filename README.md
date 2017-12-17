@@ -65,6 +65,15 @@ attempt(log(1), msg = "Nop !", verbose = TRUE)
 #> [1] 0
 ```
 
+As with `try`, the result cant be saved as an error object :
+
+``` r
+a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
+#> Error in log("a"): Nop !
+a
+#> Error in eval(expr, envir, enclos): objet 'a' introuvable
+```
+
 silent\_attempt
 ---------------
 
@@ -149,7 +158,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-17 11:29:59"
+#> [1] "log saved on log.txt at 2017-12-17 22:05:04"
 #> [1] "let's move on now"
 ```
 
@@ -169,7 +178,7 @@ try_catch(log("a"),
 
 `try_catch_df` returns a tibble with the call, the error message if any,
 the warning message if any, and the value of the evaluated expression or
-“error”.
+“error”. The values will always be contained in a list-column.
 
 ``` r
 res_log <- try_catch_df(log("a"))
@@ -248,6 +257,23 @@ silent_log("a")
 #> Error in log(x = x, base = base): argument non numérique pour une fonction mathématique
 ```
 
+surely
+------
+
+`surely` also transforms a function so that when you call this new
+function, it returns calls `attempt()` - i.e. in the code below, calling
+`sure_log(1)` is the same as calling `attempt(log(1))`. In a sense,
+you’re sure this new function will always work.
+
+``` r
+sure_log <- surely(log)
+#> Error in surely(log): impossible de trouver la fonction "surely"
+sure_log(1)
+#> Error in sure_log(1): impossible de trouver la fonction "sure_log"
+sure_log("a")
+#> Error in sure_log("a"): impossible de trouver la fonction "sure_log"
+```
+
 `if_` conditions
 ----------------
 
@@ -260,7 +286,9 @@ if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
 if_any(1:10, is.numeric, ~ print("Yay!"))
 #> [1] "Yay!"
 
-if_none(1:10, is.numeric, ~ rnorm(10))
+if_none(1:10, is.character, ~ rnorm(10))
+#>  [1]  1.1169099  0.8051344 -1.8823347 -0.3057661 -1.4248279  0.9399530
+#>  [7]  0.4737694 -1.2492571 -1.1840439  0.2733809
 ```
 
 warnings and messages
@@ -387,7 +415,7 @@ stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAs
 warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero.")
 #> Warning: You need to have at least one number under zero.
 
-message_if_all(1:1000, is.numeric, msg = "That makes a lot of numbers.")
+message_if_all(1:100, is.numeric, msg = "That makes a lot of numbers.")
 #> That makes a lot of numbers.
 ```
 
