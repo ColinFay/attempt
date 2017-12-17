@@ -139,7 +139,7 @@ attempt <- function(expr, msg = NULL, verbose = FALSE){
 #'
 #' @param .f the function to silence
 #'
-#' @return an error if any, a warning if any.
+#' @return an error if any, a warning if any. The result is never returned.
 #' @export
 #'
 #' @examples
@@ -149,17 +149,33 @@ attempt <- function(expr, msg = NULL, verbose = FALSE){
 #' silent_log("a")
 #' }
 
+
 silently <- function (.f) {
   .f <- as_mapper(.f)
   function(...) {
-    res <- try_catch(!! .f(...),
-              ~ return(.x),
-              ~ return(.x))
-    if_any(class(res),
-           ~ .x %in% c("error", "warning"),
-           ~ return(res))
+    res <- attempt(.f(...))
+    if (class(res) == "try-error") {
+      cat(paste(res), file = getOption("try.outFile", default = stderr()))
+      return(invisible(structure(res, class = "try-error")))
     }
+  }
 }
+
+#' surely
+#'
+#' Wrap a function in a try
+#'
+#' @param .f the function to wrap
+#'
+#' @return an error if any, a warning if any, the result if any
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' sure_log <- surely(log)
+#' sure_log(1)
+#' sure_log("a")
+#' }
 
 surely <- function (.f) {
   .f <- as_mapper(.f)

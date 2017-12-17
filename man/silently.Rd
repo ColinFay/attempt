@@ -10,7 +10,7 @@ silently(.f)
 \item{.f}{the function to silence}
 }
 \value{
-an error if any, a warning if any.
+an error if any, a warning if any. The result is never returned.
 }
 \description{
 silently returns an error or a warning if any,

@@ -107,18 +107,25 @@ test_that("attempt works", {
 context("silently")
 
 test_that("silently works", {
-  a <- silently(log)
-  expect_error(a("a"))
-  expect_is(a(1), "NULL")
-  a <- silently(matrix)
-  expect_warning(a(1:3, 2))
-  expect_is(a(1:4, 2), "NULL")}
-  )
+  silent_log <- silently(log)
+  a <- silent_log("a")
+  expect_is(a, "try-error")
+  }
+)
+
+test_that("surely works", {
+  sure_log <- surely(log)
+  b <- sure_log("a")
+  expect_is(b, "try-error")
+  expect_length(b, 1)
+})
 
 test_that("silent_attempt works", {
   expect_is(silent_attempt(log(1)), "NULL")
-  expect_warning(silent_attempt(matrix(1:3, 2)))
-  expect_error(silent_attempt(log("a")))
+  a <- silent_attempt(matrix(1:3, 2))
+  expect_is(a, "try-error")
+  b <- silent_attempt(log("a"))
+  expect_is(b, "try-error")
   }
 )
 

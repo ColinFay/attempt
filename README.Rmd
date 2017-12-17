@@ -187,6 +187,14 @@ silent_log(1)
 silent_log("a")
 ```
 
+With `silently`, the result is never returned.
+
+```{r}
+silent_matrix <- silently(matrix)
+silent_matrix(1:3, 2)
+```
+
+
 ## surely 
 
 `surely` also transforms a function so that when you call this new function, it returns calls `attempt()` - i.e. in the code below, calling `sure_log(1)` is the same as calling `attempt(log(1))`. In a sense, you're sure this new function will always work.
