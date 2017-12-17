@@ -149,7 +149,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-16 17:44:55"
+#> [1] "log saved on log.txt at 2017-12-17 11:29:59"
 #> [1] "let's move on now"
 ```
 
@@ -248,7 +248,7 @@ silent_log("a")
 #> Error in log(x = x, base = base): argument non numérique pour une fonction mathématique
 ```
 
-`if_` confitions
+`if_` conditions
 ----------------
 
 if\_none, if\_any and if\_all test the elements of the list.

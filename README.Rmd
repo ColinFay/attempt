@@ -181,7 +181,7 @@ silent_log("a")
 ```
 
 
-## `if_` confitions
+## `if_` conditions
 
 if_none, if_any and if_all test the elements of the list. 
 
