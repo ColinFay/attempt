@@ -125,7 +125,7 @@ attempt <- function(expr, msg = NULL, verbose = FALSE){
   cond <- map_lgl(class(res), ~ .x %in% c("error", "warning")) %>% any()
   if (cond) {
     cat(paste(res), file = getOption("try.outFile", default = stderr()))
-    return(invisible(structure(res, class = "try-error")))
+    return(invisible(structure(paste(res), class = "try-error", condition = res)))
   } else {
     res
   }
@@ -156,7 +156,7 @@ silently <- function (.f) {
     res <- attempt(.f(...))
     if (class(res) == "try-error") {
       cat(paste(res), file = getOption("try.outFile", default = stderr()))
-      return(invisible(structure(res, class = "try-error")))
+      return(invisible(structure(paste(res), class = "try-error", condition = res)))
     }
   }
 }
