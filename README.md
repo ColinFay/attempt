@@ -67,14 +67,11 @@ As with `try`, the result cant be saved as an error object :
 ``` r
 a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
 a
-#> $message
-#> [1] "Nop !"
-#> 
-#> $call
-#> log("a")
-#> 
+#> [1] "Error in log(\"a\"): Nop !\n"
 #> attr(,"class")
 #> [1] "try-error"
+#> attr(,"condition")
+#> <simpleError in log("a"): Nop !>
 ```
 
 silent\_attempt
@@ -86,11 +83,6 @@ the expression succeeds, and returns error or warnings if any.
 
 ``` r
 silent_attempt(log("a"))
-#> $message
-#> [1] "argument non numérique pour une fonction mathématique"
-#> 
-#> attr(,"class")
-#> [1] "try-error"
 silent_attempt(log(1))
 ```
 
@@ -165,7 +157,7 @@ try_catch(log("a"),
           })
 #> [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 #> [1] "Ok, let's save this"
-#> [1] "log saved on log.txt at 2017-12-17 22:51:20"
+#> [1] "log saved on log.txt at 2017-12-19 22:03:02"
 #> [1] "let's move on now"
 ```
 
@@ -261,7 +253,6 @@ function stay silent unless error or warning.
 silent_log <- silently(log)
 silent_log(1)
 silent_log("a")
-#> Error in log(x = x, base = base): argument non numérique pour une fonction mathématique
 ```
 
 With `silently`, the result is never returned.
@@ -269,8 +260,6 @@ With `silently`, the result is never returned.
 ``` r
 silent_matrix <- silently(matrix)
 silent_matrix(1:3, 2)
-#> Warning in .f(...): la longueur des données [3] n'est pas un diviseur ni un
-#> multiple du nombre de lignes [2]
 ```
 
 surely
@@ -301,8 +290,17 @@ if_any(1:10, is.numeric, ~ print("Yay!"))
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1]  0.07656904 -0.05880726  0.40847237  0.92266497  0.89316602
-#>  [6]  0.11943980  0.21217369  0.95416660  0.90198293  0.40271390
+#>  [1]  0.2221842  0.6464873  0.1092486  0.3281256 -1.0388040  0.1902147
+#>  [7]  0.4093021  0.2863160  1.5075957  0.7107353
+```
+
+The defaut for all `.p` is `isTRUE`. So you can:
+
+``` r
+a <- c(FALSE, TRUE, TRUE, TRUE)
+
+if_any(a, .f = ~ print("lol"))
+#> [1] "lol"
 ```
 
 `if_then` performs a simple “if this then do that”:
@@ -398,6 +396,16 @@ message_if(., curl::has_internet,
 #> Huray, you have internet \o/
 ```
 
+If you don’t specify a `.p`, the default test is `isTRUE`.
+
+``` r
+a <- is.na(airquality$Ozone)
+message_if_any(a, msg = "NA found")
+#> NA found
+```
+
+### In function
+
 That can come really handy inside a function :
 
 ``` r
@@ -446,7 +454,7 @@ Misc
 Acknowledgments
 ---------------
 
-Thank to [Romain](http://romain.rbind.io/) for the name suggestion.
+Thanks to [Romain](http://romain.rbind.io/) for the name suggestion.
 
 Contact
 -------
