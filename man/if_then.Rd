@@ -4,12 +4,12 @@
 \alias{if_then}
 \title{If this, then do that}
 \usage{
-if_then(.x, .p, .f)
+if_then(.x, .p = isTRUE, .f)
 }
 \arguments{
 \item{.x}{the object to test}
 
-\item{.p}{the predicate for testing}
+\item{.p}{the predicate for testing. Defaut is \code{isTRUE}}
 
 \item{.f}{what to do if TRUE}
 }

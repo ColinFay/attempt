@@ -6,11 +6,11 @@
 \alias{if_none}
 \title{Test for all, any or none}
 \usage{
-if_all(.l, .p, .f)
+if_all(.l, .p = isTRUE, .f)
 
-if_any(.l, .p, .f)
+if_any(.l, .p = isTRUE, .f)
 
-if_none(.l, .p, .f)
+if_none(.l, .p = isTRUE, .f)
 }
 \arguments{
 \item{.l}{the list to test}

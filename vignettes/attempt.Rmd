@@ -16,7 +16,6 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-
 # {attempt}
 
 A Friendlier Condition Handler for R, based on {purrr} mappers and {rlang}.
@@ -42,19 +41,40 @@ devtools::install_github("ColinFay/attempt")
 
 `attempt` is a wrapper around base `try` that allows you to insert a custom messsage on error. 
 
-```{r eval = FALSE}
+```{r}
 library(attempt)
+attempt(log("a"))
+
 attempt(log("a"), msg = "Nop !")
-#> Error : Nop !
 ```
 
 You can make it verbose (i.e. returning the expression): 
 
-```{r eval = FALSE}
+```{r}
 attempt(log("a"), msg = "Nop !", verbose = TRUE)
-#> Error in log("a") : Nop !
 ```
 
+Of course the result is returned if there is one: 
+
+```{r}
+attempt(log(1), msg = "Nop !", verbose = TRUE)
+```
+
+As with `try`, the result cant be saved as an error object : 
+
+```{r}
+a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
+a
+```
+
+## silent_attempt 
+
+`silent_attempt` is a wrapper around `silently` (see further down for more info) and `attempt`. It attempts to run the expr, stays silent if the expression succeeds, and returns error or warnings if any. 
+
+```{r}
+silent_attempt(log("a"))
+silent_attempt(log(1))
+```
 
 
 ## try catch
@@ -74,8 +94,8 @@ try_catch(log("a"),
           .w = ~ paste0("This is a warning: ", .x))
 
 try_catch(log("a"), 
-          .e = ~ print(.x), 
-          .w = ~ print(.x))
+          .e = ~ stop(.x), 
+          .w = ~ warning(.x))
 
 try_catch(matrix(1:3, nrow= 2), 
           .e = ~ print(.x), 
@@ -127,7 +147,7 @@ try_catch(log("a"),
 
 ### try_catch_df 
 
-`try_catch_df` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". 
+`try_catch_df` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". The values will always be contained in a list-column.
 
 ```{r}
 res_log <- try_catch_df(log("a"))
@@ -161,6 +181,52 @@ map_try_catch_df(list(1,3,"a"), log)
 silent_log <- silently(log)
 silent_log(1)
 silent_log("a")
+```
+
+With `silently`, the result is never returned.
+
+```{r}
+silent_matrix <- silently(matrix)
+silent_matrix(1:3, 2)
+```
+
+
+## surely 
+
+`surely` also transforms a function so that when you call this new function, it returns calls `attempt()` - i.e. in the code below, calling `sure_log(1)` is the same as calling `attempt(log(1))`. In a sense, you're sure this new function will always work.
+
+```{r}
+sure_log <- surely(log)
+sure_log(1)
+sure_log("a")
+```
+
+
+## `if_` conditions
+
+`if_none`, `if_any` and `if_all` test the elements of the list. 
+
+```{r}
+if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
+
+if_any(1:10, is.numeric, ~ print("Yay!"))
+
+if_none(1:10, is.character, ~ rnorm(10))
+```
+
+The defaut for all `.p` is `isTRUE`. So you can: 
+
+```{r}
+a <- c(FALSE, TRUE, TRUE, TRUE)
+
+if_any(a, .f = ~ print("lol"))
+```
+
+
+`if_then` performs a simple "if this then do that":
+
+```{r}
+if_then(1, is.numeric, ~ return("lol"))
 ```
 
 
@@ -221,24 +287,35 @@ message_if(.x = e,
 If you have a function with no arguments, you can pass a dot `.` as first argument : 
 
 ```{r}
-false <- function() return(FALSE)
-true <- function() return(TRUE)
-stop_if(., true, msg = "Nop")
+stop_if(., curl::has_internet, msg = "You shouldn't have internet to do that")
 
-warn_if_not(., false, 
-            msg = "Carefull!")
+warn_if(., curl::has_internet, 
+            msg = "You shouldn't have internet to do that")
 
-message_if(., true, 
-            msg = "Huray \\o/")
+message_if(., curl::has_internet, 
+            msg = "Huray, you have internet \\o/")
 ```
+
+If you don't specify a `.p`, the default test is `isTRUE`.
+
+```{r}
+a <- is.na(airquality$Ozone)
+message_if_any(a, msg = "NA found")
+```
+
+
+### In function
 
 That can come really handy inside a function : 
 
 ```{r}
 my_fun <- function(x){
+  stop_if_not(., 
+              curl::has_internet, 
+              msg = "You should have internet to do that")
   warn_if(x, 
           ~ ! is.character(.x), 
-          msg =  "x is not a character vector. \nThe output may not be what you're expecting.")
+          msg =  "x is not a character vector. The output may not be what you're expecting.")
   paste(x, "is the value.")
 }
 
@@ -247,14 +324,14 @@ my_fun(head(iris))
 
 ### none, all, any
 
-`stop_if`, `warn_if` and `message_if` all have complementary tests with `_all`, `_any` and `_none`. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate. 
+`stop_if`, `warn_if` and `message_if` all have complementary tests with `_all`, `_any` and `_none`, which combine the `if_*` and the `warn_*`, `stop_*` and `message_*` seen before. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate. 
 
 ```{r}
-stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors")
+stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors.")
 
-warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero")
+warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero.")
 
-message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This may take some time to compute.")
+message_if_all(1:100, is.numeric, msg = "That makes a lot of numbers.")
 ```
 
 
@@ -262,7 +339,7 @@ message_if_all(1e3:1e4, ~ .x > 1e2, msg = "All your number are above 1e2. This m
 
 ## Acknowledgments
 
-Thank to [Romain](http://romain.rbind.io/) for the name suggestion. 
+Thanks to [Romain](http://romain.rbind.io/) for the name suggestion. 
 
 ## Contact
 

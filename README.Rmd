@@ -218,6 +218,15 @@ if_any(1:10, is.numeric, ~ print("Yay!"))
 if_none(1:10, is.character, ~ rnorm(10))
 ```
 
+The defaut for all `.p` is `isTRUE`. So you can: 
+
+```{r}
+a <- c(FALSE, TRUE, TRUE, TRUE)
+
+if_any(a, .f = ~ print("lol"))
+```
+
+
 `if_then` performs a simple "if this then do that":
 
 ```{r}
@@ -291,6 +300,16 @@ message_if(., curl::has_internet,
             msg = "Huray, you have internet \\o/")
 ```
 
+If you don't specify a `.p`, the default test is `isTRUE`.
+
+```{r}
+a <- is.na(airquality$Ozone)
+message_if_any(a, msg = "NA found")
+```
+
+
+### In function
+
 That can come really handy inside a function : 
 
 ```{r}
@@ -324,7 +343,7 @@ message_if_all(1:100, is.numeric, msg = "That makes a lot of numbers.")
 
 ## Acknowledgments
 
-Thank to [Romain](http://romain.rbind.io/) for the name suggestion. 
+Thanks to [Romain](http://romain.rbind.io/) for the name suggestion. 
 
 ## Contact
 

@@ -1,7 +1,7 @@
 #' If this, then do that
 #'
 #' @param .x the object to test
-#' @param .p the predicate for testing
+#' @param .p the predicate for testing. Defaut is \code{isTRUE}
 #' @param .f what to do if TRUE
 #'
 #' @return the result in .f
@@ -10,7 +10,7 @@
 #' @examples
 #' a <- if_then(1, is.numeric, ~ return("Yay"))
 
-if_then <- function(.x, .p, .f) {
+if_then <- function(.x, .p = isTRUE, .f) {
   if (is_formula(.f)){
     .f <- as_mapper(.f)
   } else {
@@ -36,7 +36,7 @@ if_then <- function(.x, .p, .f) {
 #' if_any(1:10, is.numeric, ~ return(letters[1:10]))
 #' if_none(1:10, is.numeric, ~ return(letters[1:10]))
 
-if_all <- function(.l, .p, .f){
+if_all <- function(.l, .p = isTRUE, .f){
   res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% all()
   if(res) as_mapper(.f)()
 }
@@ -45,7 +45,7 @@ if_all <- function(.l, .p, .f){
 #'
 #' @rdname if
 
-if_any <- function(.l, .p, .f){
+if_any <- function(.l, .p = isTRUE, .f){
   res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% any()
   if(res) as_mapper(.f)()
 }
@@ -54,7 +54,7 @@ if_any <- function(.l, .p, .f){
 #'
 #' @rdname if
 
-if_none <- function(.l, .p, .f){
+if_none <- function(.l, .p = isTRUE, .f){
   res <- map_lgl(.l, ~ build_and_eval(negate(.p), .x)) %>% all()
   if(res) as_mapper(.f)()
 }

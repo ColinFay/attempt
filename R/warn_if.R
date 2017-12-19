@@ -6,7 +6,7 @@
 #'
 #' @param .x the element to evaluate. If dot \code{.}, the
 #' @param .l the list of elements to evaluate
-#' @param .p the predicate with the condition to test on \code{.x}.
+#' @param .p the predicate with the condition to test on \code{.x} or \code{.l}. Default is isTRUE.
 #' @param msg the message to return. If NULL (default), the built-in message is printed.
 #'
 #' @importFrom rlang quo_text enquo is_null
@@ -32,7 +32,7 @@
 #' }
 
 
-stop_if <- function(.x, .p, msg = NULL){
+stop_if <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
@@ -53,7 +53,7 @@ stop_if <- function(.x, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-stop_if_any <- function(.l, .p, msg = NULL){
+stop_if_any <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -63,7 +63,7 @@ stop_if_any <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-stop_if_all <- function(.l, .p, msg = NULL){
+stop_if_all <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -73,7 +73,7 @@ stop_if_all <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-stop_if_none <- function(.l, .p, msg = NULL){
+stop_if_none <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -83,7 +83,7 @@ stop_if_none <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-stop_if_not <- function(.x, .p, msg = NULL){
+stop_if_not <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
@@ -104,7 +104,7 @@ stop_if_not <- function(.x, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if <- function(.x, .p, msg = NULL){
+warn_if <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
@@ -126,7 +126,7 @@ warn_if <- function(.x, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if_any <- function(.l, .p, msg = NULL){
+warn_if_any <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -136,7 +136,7 @@ warn_if_any <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if_all <- function(.l, .p, msg = NULL){
+warn_if_all <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -146,7 +146,7 @@ warn_if_all <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if_none <- function(.l, .p, msg = NULL){
+warn_if_none <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -156,7 +156,7 @@ warn_if_none <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if_not <- function(.x, .p, msg = NULL){
+warn_if_not <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
@@ -177,7 +177,7 @@ warn_if_not <- function(.x, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-message_if <- function(.x, .p, msg = NULL){
+message_if <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
@@ -197,7 +197,7 @@ message_if <- function(.x, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-message_if_any <- function(.l, .p, msg = NULL){
+message_if_any <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -209,7 +209,7 @@ message_if_any <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-message_if_all <- function(.l, .p, msg = NULL){
+message_if_all <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -219,7 +219,7 @@ message_if_all <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-message_if_none <- function(.l, .p, msg = NULL){
+message_if_none <- function(.l, .p = isTRUE, msg = NULL){
   test <- enquo(.p)
   x <- enquo(.l)
   if (rlang::is_null(msg)) msg <- paste("Test `", quo_text(test), "` on `", quo_text(x), "` returned an alert.")
@@ -229,7 +229,7 @@ message_if_none <- function(.l, .p, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-message_if_not <- function(.x, .p, msg = NULL){
+message_if_not <- function(.x,  .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {

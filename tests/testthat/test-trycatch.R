@@ -90,19 +90,27 @@ test_that("attempt works", {
   expect_equal(a, 0)
   b <- attempt(log("a"), msg = "lol")
   expect_is(b, "try-error")
-  expect_match(b$message, "lol")
+  expect_match(b, "lol")
   c <- attempt(log("a"), msg = "lol", verbose = TRUE)
   expect_is(c, "try-error")
-  expect_match(c$message, "lol")
-  expect_match(as.character(c$call)[1], "log")
+  expect_match(c, "lol")
   d <- attempt(matrix(1:3, 2))
   expect_is(d, "try-error")
   e <- attempt(matrix(1:3, 2), msg = "lol")
   expect_is(e, "try-error")
   f <- attempt(matrix(1:3, 2), msg = "nop", verbose = TRUE)
   expect_is(f, "try-error")
-  expect_match(as.character(f$call)[1], "matrix")
 })
+
+test_that("attempt and try work the same way", {
+  a <- try(log("a"))
+  b <- attempt(log("a"))
+  c <- attempt(log("a"), verbose = TRUE)
+  expect_equal(class(a), class(b))
+  expect_equal(length(a), length(b))
+  expect_equal(attr(a, "condition"), attr(c, "condition"))
+})
+
 
 context("silently")
 
