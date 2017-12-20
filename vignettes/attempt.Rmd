@@ -44,7 +44,6 @@ devtools::install_github("ColinFay/attempt")
 ```{r}
 library(attempt)
 attempt(log("a"))
-
 attempt(log("a"), msg = "Nop !")
 ```
 

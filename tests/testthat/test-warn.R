@@ -7,12 +7,18 @@ test_that("stop, warn and message works", {
   expect_error(stop_if(.x = 12,
           .p = is.numeric,
           msg = "plop"))
+  expect_error(stop_if(.,
+          .p = function(x) TRUE,
+          msg = "plop"))
 
   expect_error(stop_if_not(.x = "20",
               .p = is.numeric))
   expect_error(stop_if_not(.x = "20",
               .p = is.numeric,
               msg = "y should be numeric"))
+  expect_error(stop_if_not(.,
+                       .p = function(x) FALSE,
+                       msg = "plop"))
 
 
   expect_warning(warn_if(.x = "this is not numeric",
@@ -20,18 +26,29 @@ test_that("stop, warn and message works", {
   expect_warning(warn_if(.x = "this is not numeric",
           .p = is.character,
           msg = "lol"))
+  expect_warning(warn_if(.,
+                       .p = function(x) TRUE,
+                       msg = "plop"))
 
   expect_warning(warn_if_not(.x = 20,
               .p = ~ .x == 10))
   expect_warning(warn_if_not(.x = 20,
               .p = ~ .x == 10 ,
               msg = "b should be 10"))
+  expect_warning(warn_if_not(.,
+                           .p = function(x) FALSE,
+                           msg = "plop"))
+
 
   expect_message(message_if(.x = "a",
              .p = is.character))
   expect_message(message_if(.x = "a",
              .p = is.character,
              msg = "You entered a character element"))
+  expect_message(message_if(.,
+                         .p = function(x) TRUE,
+                         msg = "plop"))
+
 
   expect_message(message_if(.x = 100,
              .p = ~ sqrt(.x) < 42,
@@ -43,6 +60,9 @@ test_that("stop, warn and message works", {
   expect_message(message_if_not(.x = 100,
              .p = ~ sqrt(.x) > 42,
              msg = "Your sqrt should be less than 30"))
+  expect_message(message_if_not(.,
+                             .p = function(x) FALSE,
+                             msg = "plop"))
 
   expect_message(message_if_not(.x = 30,
              .p = function(vec){
@@ -112,6 +132,10 @@ test_that("any, all and none works", {
                is.numeric(vec)
              },
              msg = "No numeric here"))
+  expect_message(message_if_none(.l = letters,
+             .p = function(vec){
+               is.numeric(vec)
+             }))
 })
 
 
