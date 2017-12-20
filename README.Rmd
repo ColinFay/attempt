@@ -226,11 +226,18 @@ a <- c(FALSE, TRUE, TRUE, TRUE)
 if_any(a, .f = ~ print("lol"))
 ```
 
-
 `if_then` performs a simple "if this then do that":
 
 ```{r}
 if_then(1, is.numeric, ~ return("lol"))
+```
+
+
+And `if_else` is a wrapper around `base::ifelse()` : 
+
+```{r}
+a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
+a
 ```
 
 
