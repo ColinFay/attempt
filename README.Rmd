@@ -16,14 +16,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-[![lifecycle](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://img.shields.io/badge/lifecycle-experimental-orange.svg)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 
 [![Travis build status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travis-ci.org/ColinFay/attempt)   [![Coverage status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/attempt?branch=master)  [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)
 
 
-# {attempt}
+# {attempt} 0.1.0
 
-A Friendlier Condition Handler for R, based on {purrr} mappers and {rlang}.
+A Friendlier Condition Handler for R, inspired by {purrr} mappers and based on {rlang}.
 
 {attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. For example : 
 
@@ -257,13 +257,13 @@ The defaut for all `.p` is `isTRUE`. So you can:
 ```{r eval=TRUE}
 a <- c(FALSE, TRUE, TRUE, TRUE)
 
-if_any(a, .f = ~ print("lol"))
+if_any(a, .f = ~ print("nop!"))
 ```
 
 `if_then` performs a simple "if this then do that":
 
 ```{r eval=TRUE}
-if_then(1, is.numeric, ~ return("lol"))
+if_then(1, is.numeric, ~ return("nop!"))
 ```
 
 And `if_else` is a wrapper around `base::ifelse()` : 

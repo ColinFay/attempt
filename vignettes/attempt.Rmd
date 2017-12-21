@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
+
 # {attempt}
 
 A Friendlier Condition Handler for R, based on {purrr} mappers and {rlang}.
@@ -44,19 +45,24 @@ devtools::install_github("ColinFay/attempt")
 ```{r}
 library(attempt)
 attempt(log("a"))
+# Error: argument non numérique pour une fonction mathématique
+
 attempt(log("a"), msg = "Nop !")
+# Error: Nop !
 ```
 
 You can make it verbose (i.e. returning the expression): 
 
 ```{r}
 attempt(log("a"), msg = "Nop !", verbose = TRUE)
+# Error in log("a"): Nop !
 ```
 
 Of course the result is returned if there is one: 
 
 ```{r}
 attempt(log(1), msg = "Nop !", verbose = TRUE)
+# [1] 0
 ```
 
 As with `try`, the result cant be saved as an error object : 
@@ -64,6 +70,11 @@ As with `try`, the result cant be saved as an error object :
 ```{r}
 a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
 a
+# [1] "Error in log(\"a\"): Nop !\n"
+# attr(,"class")
+# [1] "try-error"
+# attr(,"condition")
+# <simpleError in log("a"): Nop !>
 ```
 
 ## silent_attempt 
@@ -72,6 +83,7 @@ a
 
 ```{r}
 silent_attempt(log("a"))
+# Error: argument non numérique pour une fonction mathématique
 silent_attempt(log(1))
 ```
 
@@ -91,27 +103,39 @@ You can write a try catch with these params :
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
+#[1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 
 try_catch(log("a"), 
           .e = ~ stop(.x), 
           .w = ~ warning(.x))
+# Error in log("a") : argument non numérique pour une fonction mathématique
 
 try_catch(matrix(1:3, nrow= 2), 
           .e = ~ print(.x), 
           .w = ~ print(.x))
+#<simpleWarning in matrix(1:3, nrow = 2): la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]>
 
 try_catch(2 + 2 , 
           .f = ~ print("Using R for addition... ok I'm out!"))
+# [1] "Using R for addition... ok I'm out!"
+# [1] 4
 ```
 
 As usual, the handlers are set only if you call them : 
 
 ```{r}
 try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
+#      [,1] [,2]
+# [1,]    1    3
+# [2,]    2    1
+# Warning message:
+# In matrix(1:3, nrow = 2) :
+#   la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
 ```
 
 ```{r}
 try_catch(matrix(1:3, nrow = 2), .w = ~ print("warning"))
+# [1] "warning"
 ```
 
 
@@ -132,6 +156,11 @@ try_catch(log("a"),
             print(paste("log saved on log.txt at", time))
             print("let's move on now")
           })
+
+# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+# [1] "Ok, let's save this"
+# [1] "log saved on log.txt at 2017-12-20 18:24:05"
+# [1] "let's move on now"
 ```
 
 You can even mix both: 
@@ -142,13 +171,15 @@ try_catch(log("a"),
             paste0("There is an error: ", e)
           },
           .f = ~ print("I'm not sure you can do that pal !"))
+# [1] "I'm not sure you can do that pal !"
+# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 ```
 
 ### try_catch_df 
 
 `try_catch_df` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". The values will always be contained in a list-column.
 
-```{r}
+```{r eval = TRUE}
 res_log <- try_catch_df(log("a"))
 res_log
 res_log$value
@@ -166,7 +197,7 @@ res_success$value
 
 `map_try_catch` and `map_try_catch_df` allow you to map on a list of arguments `l`, to be evaluated by the function in `fun`. 
 
-```{r}
+```{r eval = TRUE}
 map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
 
 map_try_catch_df(list(1,3,"a"), log)
@@ -176,10 +207,11 @@ map_try_catch_df(list(1,3,"a"), log)
 
 `silently` transforms a function so that when you call this new function, it returns nothing unless there is an error or a warning (contrary to `attempt` that returns the result). In a sense, the new function stay silent unless error or warning.
 
-```{r}
+```{r eval = TRUE}
 silent_log <- silently(log)
 silent_log(1)
 silent_log("a")
+# Error: argument non numérique pour une fonction mathématique
 ```
 
 With `silently`, the result is never returned.
@@ -187,6 +219,7 @@ With `silently`, the result is never returned.
 ```{r}
 silent_matrix <- silently(matrix)
 silent_matrix(1:3, 2)
+# simpleWarning: la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
 ```
 
 
@@ -197,7 +230,9 @@ silent_matrix(1:3, 2)
 ```{r}
 sure_log <- surely(log)
 sure_log(1)
+# [1] 0
 sure_log("a")
+# Error: argument non numérique pour une fonction mathématique
 ```
 
 
@@ -205,7 +240,7 @@ sure_log("a")
 
 `if_none`, `if_any` and `if_all` test the elements of the list. 
 
-```{r}
+```{r eval=TRUE}
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
 
 if_any(1:10, is.numeric, ~ print("Yay!"))
@@ -215,17 +250,23 @@ if_none(1:10, is.character, ~ rnorm(10))
 
 The defaut for all `.p` is `isTRUE`. So you can: 
 
-```{r}
+```{r eval=TRUE}
 a <- c(FALSE, TRUE, TRUE, TRUE)
 
-if_any(a, .f = ~ print("lol"))
+if_any(a, .f = ~ print("nop!"))
 ```
-
 
 `if_then` performs a simple "if this then do that":
 
-```{r}
-if_then(1, is.numeric, ~ return("lol"))
+```{r eval=TRUE}
+if_then(1, is.numeric, ~ return("nop!"))
+```
+
+And `if_else` is a wrapper around `base::ifelse()` : 
+
+```{r eval=TRUE}
+a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
+a
 ```
 
 
@@ -286,12 +327,14 @@ message_if(.x = e,
 If you have a function with no arguments, you can pass a dot `.` as first argument : 
 
 ```{r}
-stop_if(., curl::has_internet, msg = "You shouldn't have internet to do that")
+true <- as_mapper(~ TRUE)
+false <- as_mapper(~ FALSE)
+stop_if(., true, msg = "You shouldn't have internet to do that")
 
-warn_if(., curl::has_internet, 
+warn_if(., false, 
             msg = "You shouldn't have internet to do that")
 
-message_if(., curl::has_internet, 
+message_if(., true, 
             msg = "Huray, you have internet \\o/")
 ```
 
@@ -310,7 +353,7 @@ That can come really handy inside a function :
 ```{r}
 my_fun <- function(x){
   stop_if_not(., 
-              curl::has_internet, 
+              false, 
               msg = "You should have internet to do that")
   warn_if(x, 
           ~ ! is.character(.x), 

@@ -1,6 +1,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<https://img.shields.io/badge/lifecycle-experimental-orange.svg>
+<https://img.shields.io/badge/lifecycle-maturing-blue.svg>
 
 [![Travis build
 status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travis-ci.org/ColinFay/attempt)
@@ -9,10 +9,10 @@ status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](h
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)
 
-# {attempt}
+# {attempt} 0.1.0
 
-A Friendlier Condition Handler for R, based on {purrr} mappers and
-{rlang}.
+A Friendlier Condition Handler for R, inspired by {purrr} mappers and
+based on {rlang}.
 
 {attempt} is designed to handle the cases when something / someone
 attempts to do something it shouldn’t. For example :
@@ -276,15 +276,15 @@ The defaut for all `.p` is `isTRUE`. So you can:
 ``` r
 a <- c(FALSE, TRUE, TRUE, TRUE)
 
-if_any(a, .f = ~ print("lol"))
-#> Error in if_any(a, .f = ~print("lol")): impossible de trouver la fonction "if_any"
+if_any(a, .f = ~ print("nop!"))
+#> Error in if_any(a, .f = ~print("nop!")): impossible de trouver la fonction "if_any"
 ```
 
 `if_then` performs a simple “if this then do that”:
 
 ``` r
-if_then(1, is.numeric, ~ return("lol"))
-#> Error in if_then(1, is.numeric, ~return("lol")): impossible de trouver la fonction "if_then"
+if_then(1, is.numeric, ~ return("nop!"))
+#> Error in if_then(1, is.numeric, ~return("nop!")): impossible de trouver la fonction "if_then"
 ```
 
 And `if_else` is a wrapper around `base::ifelse()` :

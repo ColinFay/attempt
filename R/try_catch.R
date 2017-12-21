@@ -101,6 +101,7 @@ map_try_catch_df <- function(l, fun) {
 #' @param expr the expression to be evaluated
 #' @param msg the message to return if an error occurs
 #' @param verbose wether or not to return to expression producing the error
+#' @param silent wether or not the error should be kept under silence
 #'
 #' @importFrom rlang is_null
 #'
@@ -112,7 +113,7 @@ map_try_catch_df <- function(l, fun) {
 #'}
 #' @export
 
-attempt <- function(expr, msg = NULL, verbose = FALSE){
+attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
   res <- try_catch(expr,
                    .e = ~ return(.x),
                    .w = ~ return(.x))
@@ -124,7 +125,9 @@ attempt <- function(expr, msg = NULL, verbose = FALSE){
   }
   cond <- map_lgl(class(res), ~ .x %in% c("error", "warning")) %>% any()
   if (cond) {
-    cat(paste(res), file = getOption("try.outFile", default = stderr()))
+    if (! silent) {
+      cat(paste(res), file = getOption("try.outFile", default = stderr()))
+    }
     return(invisible(structure(paste(res), class = "try-error", condition = res)))
   } else {
     res
@@ -153,9 +156,9 @@ attempt <- function(expr, msg = NULL, verbose = FALSE){
 silently <- function (.f) {
   .f <- as_mapper(.f)
   function(...) {
-    res <- attempt(.f(...))
+    res <- try(.f(...), silent = TRUE )
     if (class(res) == "try-error") {
-      cat(paste(res), file = getOption("try.outFile", default = stderr()))
+      #cat(paste(res), file = getOption("try.outFile", default = stderr()))
       return(invisible(structure(paste(res), class = "try-error", condition = res)))
     }
   }

@@ -4,7 +4,7 @@
 \alias{attempt}
 \title{Attempt}
 \usage{
-attempt(expr, msg = NULL, verbose = FALSE)
+attempt(expr, msg = NULL, verbose = FALSE, silent = FALSE)
 }
 \arguments{
 \item{expr}{the expression to be evaluated}
@@ -12,6 +12,8 @@ attempt(expr, msg = NULL, verbose = FALSE)
 \item{msg}{the message to return if an error occurs}
 
 \item{verbose}{wether or not to return to expression producing the error}
+
+\item{silent}{wether or not the error should be kept under silence}
 }
 \description{
 Wrappers around base try that allows you to set a custom message when an error/warning occurs.
