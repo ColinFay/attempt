@@ -13,8 +13,8 @@ silently(.f)
 an error if any, a warning if any. The result is never returned.
 }
 \description{
-silently returns an error or a warning if any,
-else returns nothing.
+silently returns a new function that will returns an error or a warning if any,
+or else returns nothing.
 }
 \examples{
 \dontrun{

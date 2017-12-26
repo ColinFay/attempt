@@ -2,7 +2,7 @@
 % Please edit documentation in R/if.R
 \name{if_else}
 \alias{if_else}
-\title{If this, then do that}
+\title{If this, then that, else that}
 \usage{
 if_else(.x, .p = isTRUE, .f, .else)
 }
@@ -19,7 +19,7 @@ if_else(.x, .p = isTRUE, .f, .else)
 the evalution
 }
 \description{
-If this, then do that
+If this, then that, else that
 }
 \examples{
 a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))

@@ -2,7 +2,7 @@
 % Please edit documentation in R/if.R
 \name{if_then}
 \alias{if_then}
-\title{If this, then do that}
+\title{If this, then that}
 \usage{
 if_then(.x, .p = isTRUE, .f)
 }
@@ -17,7 +17,7 @@ if_then(.x, .p = isTRUE, .f)
 the result in .f
 }
 \description{
-If this, then do that
+If this, then that
 }
 \examples{
 a <- if_then(1, is.numeric, ~ return("Yay"))

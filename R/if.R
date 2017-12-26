@@ -1,4 +1,4 @@
-#' If this, then do that
+#' If this, then that
 #'
 #' @param .x the object to test
 #' @param .p the predicate for testing. Defaut is \code{isTRUE}
@@ -21,7 +21,7 @@ if_then <- function(.x, .p = isTRUE, .f) {
   }
 }
 
-#' If this, then do that
+#' If this, then that, else that
 #'
 #' @param .x the object to test
 #' @param .p the predicate for testing. Defaut is \code{isTRUE}
@@ -68,7 +68,7 @@ if_else <- function(.x, .p = isTRUE, .f, .else) {
 #' if_none(1:10, is.numeric, ~ return(letters[1:10]))
 
 if_all <- function(.l, .p = isTRUE, .f){
-  res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% all()
+  res <- all(map_lgl(.l, ~ build_and_eval(.p, .x)))
   if(res) as_mapper(.f)()
 }
 
@@ -77,7 +77,7 @@ if_all <- function(.l, .p = isTRUE, .f){
 #' @rdname if
 
 if_any <- function(.l, .p = isTRUE, .f){
-  res <- map_lgl(.l, ~ build_and_eval(.p, .x)) %>% any()
+  res <- any(map_lgl(.l, ~ build_and_eval(.p, .x)))
   if(res) as_mapper(.f)()
 }
 
@@ -86,7 +86,7 @@ if_any <- function(.l, .p = isTRUE, .f){
 #' @rdname if
 
 if_none <- function(.l, .p = isTRUE, .f){
-  res <- map_lgl(.l, ~ build_and_eval(negate(.p), .x)) %>% all()
+  res <- all(map_lgl(.l, ~ build_and_eval(negate(.p), .x)))
   if(res) as_mapper(.f)()
 }
 

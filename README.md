@@ -1,8 +1,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<https://img.shields.io/badge/lifecycle-maturing-blue.svg>
-
-[![Travis build
+<https://img.shields.io/badge/lifecycle-maturing-blue.svg> [![Travis
+build
 status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travis-ci.org/ColinFay/attempt)
 [![Coverage
 status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/attempt?branch=master)

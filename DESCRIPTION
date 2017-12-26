@@ -2,7 +2,7 @@ Package: attempt
 Title: A Friendlier Condition Handler for R
 Version: 0.1.0
 Authors@R: person("Colin", "Fay", email = "contact@colinfay.me", role = c("aut", "cre"))
-Description: A Friendlier Condition Handler for R, based on 'purrr' mappers and 'rlang'.
+Description: A Friendlier Condition Handler for R, inspired by 'purrr' mappers and based on 'rlang'.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -15,6 +15,5 @@ VignetteBuilder: knitr
 Imports: 
     purrr,
     rlang,
-    tibble,
-    magrittr
+    tibble
 RoxygenNote: 6.0.1

@@ -137,8 +137,8 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
 
 #' Silently
 #'
-#' silently returns an error or a warning if any,
-#' else returns nothing.
+#' silently returns a new function that will returns an error or a warning if any,
+#' or else returns nothing.
 #'
 #' @param .f the function to silence
 #'

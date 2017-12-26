@@ -1,15 +1,3 @@
-#' @title Pipe operator
-#'
-#' @description See \code{magrittr::\link[magrittr]{\%>\%}} for details.
-#'
-#' @name %>%
-#' @rdname pipe
-#' @keywords internal
-#' @export
-#' @importFrom magrittr %>%
-#' @usage lhs \%>\% rhs
-NULL
-
 build_and_eval <- function(f, args) {
   args <- enquo(args)
   if (quo_text(args) == ".") {
