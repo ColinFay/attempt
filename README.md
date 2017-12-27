@@ -24,8 +24,8 @@ attempts to do something it shouldn’t. For example :
 {attempt} provides several condition handlers, from try catch to simple
 message printing.
 
-{attempt} only dependencies is {rlang}, making it easy to implement in
-other package.
+{attempt} only depends on {rlang}, making it easy to implement in other
+package.
 
 # Install
 
