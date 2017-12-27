@@ -15,10 +15,7 @@
 #' @param .w a one side formula or a function evaluated when a warning occurs
 #' @param .f a one side formula or an expression evaluated before returning or exiting
 #'
-#' @importFrom purrr as_mapper map
-#' @importFrom rlang eval_tidy quo f_rhs enexpr lang is_formula splice chr_along
-#' @importFrom tibble tibble
-
+#' @importFrom rlang eval_tidy quo f_rhs enexpr lang is_formula splice quo_name as_function flatten_lgl
 #' @rdname try_catch
 #'
 #' @examples
@@ -32,13 +29,13 @@ try_catch <- function(expr, .e = NULL, .w = NULL, .f = NULL) {
     if ( ! is_formula(.e) )
       args <- c(args, error = .e)
     else
-      args <- c(args, error = as_mapper(eval(.e)))
+      args <- c(args, error = as_function(eval(.e)))
   }
   if ( !is.null(.w) ) {
     if ( ! is_formula(.w) )
       args <- c(args, warning = .w)
     else
-      args <- c(args, warning = as_mapper(eval(.w)))
+      args <- c(args, warning = as_function(eval(.w)))
   }
   if ( !is.null(.f) ) {
     if ( ! is_formula(.f) )
@@ -54,10 +51,10 @@ try_catch <- function(expr, .e = NULL, .w = NULL, .f = NULL) {
 
 try_catch_df <- function(expr){
   call <- enexpr(expr)
-  default <- tibble::tibble(call = quo_text(call),
-                            error = chr_along(call),
-                            warning = chr_along(call),
-                            value = chr_along(call))
+  default <- list(call = quo_name(call),
+                            error = NA,
+                            warning = NA,
+                            value = NA)
   a <- tryCatch(eval(expr),
                 error = function(err){
                   default$error <<- err$message
@@ -69,7 +66,8 @@ try_catch_df <- function(expr){
                 }
   )
   default$value <- list(a)
-  return(default)
+  structure(default, .Names = c("call", "error", "warning", "value"),
+            class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -1L))
 }
 
 #' @rdname try_catch
@@ -77,7 +75,7 @@ try_catch_df <- function(expr){
 
 map_try_catch <- function(l, fun, .e = NULL, .w = NULL, .f = NULL) {
 
-  map(l, ~ eval(try_catch_builder(.x, fun, .e = .e, .w = .e, .f = .f)))
+  lapply(l, as_function(~ eval(try_catch_builder(.x, fun, .e = .e, .w = .e, .f = .f))))
 
 }
 
@@ -123,7 +121,8 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
   if (! verbose) {
     if(any(class(res) %in% c("error", "warning"))) res$call <- NULL
   }
-  cond <- map_lgl(class(res), ~ .x %in% c("error", "warning")) %>% any()
+  cond <- any( flatten_lgl(lapply(class(res),
+                                  as_function(~ .x %in% c("error", "warning")))) )
   if (cond) {
     if (! silent) {
       cat(paste(res), file = getOption("try.outFile", default = stderr()))
@@ -154,11 +153,11 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
 
 
 silently <- function (.f) {
-  .f <- as_mapper(.f)
+  .f <- as_function(.f)
   function(...) {
     res <- try(.f(...), silent = TRUE )
     if (class(res) == "try-error") {
-      #cat(paste(res), file = getOption("try.outFile", default = stderr()))
+      cat(paste(res), file = getOption("try.outFile", default = stderr()))
       return(invisible(structure(paste(res), class = "try-error", condition = res)))
     }
   }
@@ -181,7 +180,7 @@ silently <- function (.f) {
 #' }
 
 surely <- function (.f) {
-  .f <- as_mapper(.f)
+  .f <- as_function(.f)
   function(...) {
     attempt(.f(...))
     }

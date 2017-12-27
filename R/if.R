@@ -12,11 +12,11 @@
 
 if_then <- function(.x, .p = isTRUE, .f) {
   if (is_formula(.f)){
-    .f <- as_mapper(.f)
+    .f <- as_function(.f)
   } else {
     .f <- enexpr(.f)
   }
-  if ( as_mapper(.p)(.x) ){
+  if ( as_function(.p)(.x) ){
       .f()
   }
 }
@@ -36,16 +36,16 @@ if_then <- function(.x, .p = isTRUE, .f) {
 
 if_else <- function(.x, .p = isTRUE, .f, .else) {
   if (is_formula(.f)){
-    .f <- as_mapper(.f)
+    .f <- as_function(.f)
   } else {
     .f <- enexpr(.f)
   }
   if (is_formula(.else)){
-    .else <- as_mapper(.else)
+    .else <- as_function(.else)
   } else {
     .else <- enexpr(.else)
   }
-  if ( as_mapper(.p)(.x) ){
+  if ( as_function(.p)(.x) ){
       .f()
   } else {
     .else()
@@ -68,8 +68,8 @@ if_else <- function(.x, .p = isTRUE, .f, .else) {
 #' if_none(1:10, is.numeric, ~ return(letters[1:10]))
 
 if_all <- function(.l, .p = isTRUE, .f){
-  res <- all(map_lgl(.l, ~ build_and_eval(.p, .x)))
-  if(res) as_mapper(.f)()
+  res <- all( flatten_lgl(lapply(.l, as_function(~ build_and_eval(.p, .x)))) )
+  if(res) as_function(.f)()
 }
 
 #' @export
@@ -77,8 +77,8 @@ if_all <- function(.l, .p = isTRUE, .f){
 #' @rdname if
 
 if_any <- function(.l, .p = isTRUE, .f){
-  res <- any(map_lgl(.l, ~ build_and_eval(.p, .x)))
-  if(res) as_mapper(.f)()
+  res <- any( flatten_lgl(lapply(.l, as_function(~ build_and_eval(.p, .x)))) )
+  if(res) as_function(.f)()
 }
 
 #' @export
@@ -86,7 +86,7 @@ if_any <- function(.l, .p = isTRUE, .f){
 #' @rdname if
 
 if_none <- function(.l, .p = isTRUE, .f){
-  res <- all(map_lgl(.l, ~ build_and_eval(negate(.p), .x)))
-  if(res) as_mapper(.f)()
+  res <- any( flatten_lgl(lapply(.l,
+                                 as_function(~ build_and_eval(Negate(as_function(.p)), .x)))) )
+  if(res) as_function(.f)()
 }
-

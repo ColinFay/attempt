@@ -154,7 +154,7 @@ try_catch(log("a"),
             print("Ok, let's save this")
             time <- Sys.time()
             a <- paste("+ At",time, ", \nError:",e)
-            # write(a, "log.txt", append = TRUE) # commented to prevent from log.txt creation on your machine
+            # write(a, "log.txt", append = TRUE) # commented to prevent log.txt creation 
             print(paste("log saved on log.txt at", time))
             print("let's move on now")
           })
@@ -227,7 +227,7 @@ silent_matrix(1:3, 2)
 
 ## surely 
 
-`surely` also transforms a function so that when you call this new function, it returns calls `attempt()` - i.e. in the code below, calling `sure_log(1)` is the same as calling `attempt(log(1))`. In a sense, you're sure this new function will always work.
+`surely` transforms a function so that when you call this new function, it calls `attempt()` - i.e. in the code below, calling `sure_log(1)` is the same as calling `attempt(log(1))`. In a sense, you're sure this new function will always work.
 
 ```{r}
 sure_log <- surely(log)

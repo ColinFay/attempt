@@ -49,7 +49,7 @@ test_that("try_catch_df works", {
   expect_is(res_log, "tbl")
   expect_is(res_log, "data.frame")
   expect_match(res_log$call, "log")
-  expect_is(res_log$error, "character")
+  expect_is(res_log$error, "logical")
   expect_is(res_log$value, "list")
   expect_equal(res_log$value[[1]], 0)
 })
@@ -134,6 +134,7 @@ test_that("silent_attempt works", {
   expect_is(a, "try-error")
   b <- silent_attempt(log("a"))
   expect_is(b, "try-error")
+
   }
 )
 

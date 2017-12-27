@@ -9,8 +9,7 @@
 #' @param .p the predicate with the condition to test on \code{.x} or \code{.l}. Default is isTRUE.
 #' @param msg the message to return. If NULL (default), the built-in message is printed.
 #'
-#' @importFrom rlang quo_text enquo is_null
-#' @importFrom purrr as_mapper negate map_lgl
+#' @importFrom rlang quo_text enquo is_null as_function
 #'
 #' @rdname messagehandler
 #'
@@ -36,9 +35,9 @@ stop_if <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
-    res <- as_mapper(.p)()
+    res <- as_function(.p)()
   } else {
-    res <- as_mapper(.p)(.x)
+    res <- as_function(.p)(.x)
   }
   if ( res ) {
     if (rlang::is_null(msg)) {
@@ -87,9 +86,9 @@ stop_if_not <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
-    res <- ! as_mapper(.p)()
+    res <- ! as_function(.p)()
   } else {
-    res <- ! as_mapper(.p)(.x)
+    res <- ! as_function(.p)(.x)
   }
   if ( res ) {
     if (rlang::is_null(msg)) {
@@ -108,9 +107,9 @@ warn_if <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
-    res <- as_mapper(.p)()
+    res <- as_function(.p)()
   } else {
-    res <- as_mapper(.p)(.x)
+    res <- as_function(.p)(.x)
   }
   if ( res ) {
     if (rlang::is_null(msg)) {
@@ -160,9 +159,9 @@ warn_if_not <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
-    res <- !as_mapper(.p)()
+    res <- !as_function(.p)()
   } else {
-    res <- !as_mapper(.p)(.x)
+    res <- !as_function(.p)(.x)
   }
   if ( res ) {
     if (rlang::is_null(msg)) {
@@ -181,9 +180,9 @@ message_if <- function(.x, .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
-    res <- as_mapper(.p)()
+    res <- as_function(.p)()
   } else {
-    res <- as_mapper(.p)(.x)
+    res <- as_function(.p)(.x)
   }
   if ( res ) {
     if (rlang::is_null(msg)) {
@@ -233,9 +232,9 @@ message_if_not <- function(.x,  .p = isTRUE, msg = NULL){
   test <- quo_text(enquo(.p))
   x <- enquo(.x)
   if (quo_text(x) == ".") {
-    res <- !as_mapper(.p)()
+    res <- !as_function(.p)()
   } else {
-    res <- !as_mapper(.p)(.x)
+    res <- !as_function(.p)(.x)
   }
   if ( res ) {
     if (rlang::is_null(msg)) {

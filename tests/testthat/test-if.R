@@ -38,5 +38,9 @@ test_that("map if works", {
   expect_is(d, "character")
   expect_length(d, 10)
   expect_equal(d, letters[1:10])
+  e <- if_none(1:10, ~ .x < 5, ~ return(letters[1:10]))
+  expect_is(e, "character")
+  expect_length(e, 10)
+  expect_equal(e, letters[1:10])
 })
 

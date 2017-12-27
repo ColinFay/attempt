@@ -1,9 +1,9 @@
 build_and_eval <- function(f, args) {
   args <- enquo(args)
   if (quo_text(args) == ".") {
-    as_mapper(f)()
+    as_function(f)()
   } else {
-    as_mapper(f)(eval_tidy(args))
+    as_function(f)(eval_tidy(args))
   }
 }
 

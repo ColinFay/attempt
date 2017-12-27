@@ -1,8 +1,10 @@
 Package: attempt
-Title: A Friendlier Condition Handler for R
+Title: A Friendlier Condition Handler
 Version: 0.1.0
 Authors@R: person("Colin", "Fay", email = "contact@colinfay.me", role = c("aut", "cre"))
-Description: A Friendlier Condition Handler for R, inspired by 'purrr' mappers and based on 'rlang'.
+Description: A friendlier condition Handler for R, inspired by 'purrr' mappers and based on 'rlang'.
+    attempt allows you to handle conditions easily, and offers a consistant grammar throughout all 
+    the package functions.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -14,6 +16,5 @@ Suggests:
 VignetteBuilder: knitr
 Imports: 
     purrr,
-    rlang,
-    tibble
+    rlang
 RoxygenNote: 6.0.1
