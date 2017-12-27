@@ -32,6 +32,8 @@ A Friendlier Condition Handler for R, inspired by {purrr} mappers and based on {
 
 {attempt} provides several condition handlers, from try catch to simple message printing. 
 
+{attempt} only dependencies is {rlang}, making it easy to implement in other package.
+
 # Install
 
 ```{r eval = FALSE}

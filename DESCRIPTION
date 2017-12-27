@@ -15,6 +15,5 @@ Suggests:
     covr
 VignetteBuilder: knitr
 Imports: 
-    purrr,
     rlang
 RoxygenNote: 6.0.1
