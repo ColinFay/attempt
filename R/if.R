@@ -11,13 +11,13 @@
 #' a <- if_then(1, is.numeric, ~ return("Yay"))
 
 if_then <- function(.x, .p = isTRUE, .f) {
-  if (is_formula(.f)){
-    .f <- as_function(.f)
-  } else {
-    .f <- enexpr(.f)
-  }
   if ( as_function(.p)(.x) ){
-      .f()
+    if (is_formula(.f)){
+      .f <- as_function(.f)
+    } else {
+      .f <- enexpr(.f)
+    }
+    .f()
   }
 }
 
@@ -35,19 +35,19 @@ if_then <- function(.x, .p = isTRUE, .f) {
 #' a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
 
 if_else <- function(.x, .p = isTRUE, .f, .else) {
-  if (is_formula(.f)){
-    .f <- as_function(.f)
-  } else {
-    .f <- enexpr(.f)
-  }
-  if (is_formula(.else)){
-    .else <- as_function(.else)
-  } else {
-    .else <- enexpr(.else)
-  }
   if ( as_function(.p)(.x) ){
-      .f()
+    if (is_formula(.f)){
+      .f <- as_function(.f)
+    } else {
+      .f <- enexpr(.f)
+    }
+    .f()
   } else {
+    if (is_formula(.else)){
+      .else <- as_function(.else)
+    } else {
+      .else <- enexpr(.else)
+    }
     .else()
   }
 }

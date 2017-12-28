@@ -38,10 +38,10 @@ try_catch <- function(expr, .e = NULL, .w = NULL, .f = NULL) {
       args <- c(args, warning = as_function(eval(.w)))
   }
   if ( !is.null(.f) ) {
-    if ( ! is_formula(.f) )
+    if ( !is_formula(.f) )
       eval(.f)
     else
-      eval_tidy(quo(!!f_rhs(.f)))
+      eval(as_function(.f))
   }
   eval(lang("tryCatch", splice(args)))
 }
@@ -83,8 +83,6 @@ map_try_catch <- function(l, fun, .e = NULL, .w = NULL, .f = NULL) {
 #' @export
 
 map_try_catch_df <- function(l, fun) {
-  # map_df requires dplyr, which is not imported
-  # that creates an error on travis
   do.call(rbind, lapply(l, function(x) eval(try_catch_df_builder(x, fun))))
 
 }
@@ -115,23 +113,21 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
   res <- try_catch(expr,
                    .e = ~ return(.x),
                    .w = ~ return(.x))
-  if (! rlang::is_null(msg)) {
-    if(any(class(res) %in% c("error", "warning"))) res$message <- msg
-  }
-  if (! verbose) {
-    if(any(class(res) %in% c("error", "warning"))) res$call <- NULL
-  }
-  cond <- any( flatten_lgl(lapply(class(res),
-                                  as_function(~ .x %in% c("error", "warning")))) )
+  cond <- any( class(res) %in% c("error", "warning"))
   if (cond) {
+    if (! rlang::is_null(msg)) {
+      if(any(class(res) %in% c("error", "warning"))) res$message <- msg
+    }
+    if (! verbose) {
+      if(any(class(res) %in% c("error", "warning"))) res$call <- NULL
+    }
     if (! silent) {
       cat(paste(res), file = getOption("try.outFile", default = stderr()))
     }
-    return(invisible(structure(paste(res), class = "try-error", condition = res)))
+    invisible(structure(paste(res), class = "try-error", condition = res))
   } else {
     res
   }
-
 }
 
 #' Silently
