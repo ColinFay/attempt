@@ -13,12 +13,14 @@ A Friendlier Condition Handler for R, inspired by {purrr} mappers and
 based on {rlang}.
 
 {attempt} is designed to handle the cases when something / someone
-attempts to do something it shouldn’t. For example :
+attempts to do something it shouldn’t.
 
-  - attempt to run a `log("a")` (error)
-  - attempt to connect to a web API without an internet connexion
+For example :
+
+  - an attempt to run a `log("a")` (error)
+  - an attempt to connect to a web API without an internet connexion
     running (error)
-  - attempt to `paste()` `"good morning` and `iris` (message/warning)
+  - an attempt to `paste()` `"good morning` and `iris` (message/warning)
   - …
 
 {attempt} provides several condition handlers, from try catch to simple
