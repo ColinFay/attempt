@@ -68,7 +68,7 @@ if_else <- function(.x, .p = isTRUE, .f, .else) {
 #' if_none(1:10, is.numeric, ~ return(letters[1:10]))
 
 if_all <- function(.l, .p = isTRUE, .f){
-  res <- all( flatten_lgl(lapply(.l, as_function(~ build_and_eval(.p, .x)))) )
+  res <- all( sapply(.l, as_function(.p) )  )
   if(res) as_function(.f)()
 }
 
@@ -77,7 +77,7 @@ if_all <- function(.l, .p = isTRUE, .f){
 #' @rdname if
 
 if_any <- function(.l, .p = isTRUE, .f){
-  res <- any( flatten_lgl(lapply(.l, as_function(~ build_and_eval(.p, .x)))) )
+  res <- any( sapply(.l, as_function(.p) )  )
   if(res) as_function(.f)()
 }
 
@@ -86,7 +86,6 @@ if_any <- function(.l, .p = isTRUE, .f){
 #' @rdname if
 
 if_none <- function(.l, .p = isTRUE, .f){
-  res <- any( flatten_lgl(lapply(.l,
-                                 as_function(~ build_and_eval(Negate(as_function(.p)), .x)))) )
+  res <- any( sapply(.l, Negate(as_function(.p)) )  )
   if(res) as_function(.f)()
 }
