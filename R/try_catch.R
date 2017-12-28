@@ -111,8 +111,8 @@ map_try_catch_df <- function(l, fun) {
 
 attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
   res <- try_catch(expr,
-                   .e = ~ return(.x),
-                   .w = ~ return(.x))
+                   .e = function(.x) return(.x),
+                   .w = function(.x) return(.x))
   cond <- any( class(res) %in% c("error", "warning"))
   if (cond) {
     if (! rlang::is_null(msg)) {
