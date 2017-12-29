@@ -9,13 +9,17 @@
 #'
 #' @examples
 #' a <- if_then(1, is.numeric, ~ return("Yay"))
+#' a <- if_then(., ~ return(TRUE), ~ return("Yay"))
 
 if_then <- function(.x, .p = isTRUE, .f) {
-  if ( as_function(.p)(.x) ){
+  if (deparse(substitute(.x)) == ".") {
+    res <- as_function(.p)()
+  } else {
+    res <- as_function(.p)(.x)
+  }
+  if ( res ){
     if (is_formula(.f)){
       .f <- as_function(.f)
-    } else {
-      .f <- enexpr(.f)
     }
     .f()
   }
@@ -32,21 +36,25 @@ if_then <- function(.x, .p = isTRUE, .f) {
 #' @export
 #'
 #' @examples
-#' a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
+#' \dontrun{
+#' a <- if_else(., curl::has_internet, ~ "Yay", ~ "Nay")
+#' }
+#'
 
 if_else <- function(.x, .p = isTRUE, .f, .else) {
-  if ( as_function(.p)(.x) ){
+  if (deparse(substitute(.x)) == ".") {
+    res <- as_function(.p)()
+  } else {
+    res <- as_function(.p)(.x)
+  }
+  if ( res ){
     if (is_formula(.f)){
       .f <- as_function(.f)
-    } else {
-      .f <- enexpr(.f)
     }
     .f()
   } else {
     if (is_formula(.else)){
       .else <- as_function(.else)
-    } else {
-      .else <- enexpr(.else)
     }
     .else()
   }
