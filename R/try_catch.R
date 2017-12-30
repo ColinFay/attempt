@@ -15,7 +15,7 @@
 #' @param .w a one side formula or a function evaluated when a warning occurs
 #' @param .f a one side formula or an expression evaluated before returning or exiting
 #'
-#' @importFrom rlang eval_tidy quo f_rhs enexpr lang is_formula splice quo_name as_function flatten_lgl
+#' @importFrom rlang enexpr lang is_formula splice quo_name as_function
 #' @rdname try_catch
 #'
 #' @examples

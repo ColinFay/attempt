@@ -22,5 +22,8 @@ the evalution
 If this, then that, else that
 }
 \examples{
-a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
+\dontrun{
+a <- if_else(., curl::has_internet, ~ "Yay", ~ "Nay")
+}
+
 }

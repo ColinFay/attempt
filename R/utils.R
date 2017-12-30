@@ -1,3 +1,5 @@
+#' @importFrom rlang eval_tidy quo_text
+
 build_and_eval <- function(f, args) {
   args <- enquo(args)
   if (quo_text(args) == ".") {

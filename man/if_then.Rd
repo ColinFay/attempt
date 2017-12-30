@@ -21,4 +21,5 @@ If this, then that
 }
 \examples{
 a <- if_then(1, is.numeric, ~ return("Yay"))
+a <- if_then(., ~ return(TRUE), ~ return("Yay"))
 }
