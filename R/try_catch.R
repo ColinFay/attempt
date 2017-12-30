@@ -99,8 +99,6 @@ map_try_catch_df <- function(l, fun) {
 #' @param verbose wether or not to return to expression producing the error
 #' @param silent wether or not the error should be kept under silence
 #'
-#' @importFrom rlang is_null
-#'
 #' @rdname attempt
 #'
 #' @examples
@@ -115,7 +113,7 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
                    .w = function(.x) return(.x))
   cond <- any( class(res) %in% c("error", "warning"))
   if (cond) {
-    if (! rlang::is_null(msg)) {
+    if (! is.null(msg)) {
       if(any(class(res) %in% c("error", "warning"))) res$message <- msg
     }
     if (! verbose) {
