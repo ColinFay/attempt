@@ -27,9 +27,17 @@ For example :
 message printing.
 
 {attempt} only depends on {rlang}, making it easy to implement in other
-package.
+functions and packages.
 
 # Install
+
+From CRAN:
+
+``` r
+install.packages("attempt")
+```
+
+The dev version:
 
 ``` r
 devtools::install_github("ColinFay/attempt")
@@ -100,10 +108,12 @@ You can write a try catch with these params :
   - `.f` a one side formula or an expression which is always evaluated
     before returning or exiting
 
+In `.e` and `.f`, the `.x` refers to the error / warning object.
+
 ### With mappers
 
 ``` r
-try_catch(log("a"), 
+try_catch(expr = log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
 #[1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
@@ -118,7 +128,7 @@ try_catch(matrix(1:3, nrow= 2),
           .w = ~ print(.x))
 #<simpleWarning in matrix(1:3, nrow = 2): la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]>
 
-try_catch(2 + 2 , 
+try_catch(expr = 2 + 2 , 
           .f = ~ print("Using R for addition... ok I'm out!"))
 # [1] "Using R for addition... ok I'm out!"
 # [1] 4
@@ -173,6 +183,12 @@ try_catch(log("a"),
             paste0("There is an error: ", e)
           },
           .f = ~ print("I'm not sure you can do that pal !"))
+# [1] "I'm not sure you can do that pal !"
+# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+
+try_catch(log("a"), 
+          .e = ~ paste0("There is an error: ", .x),
+          .f = function() print("I'm not sure you can do that pal !"))
 # [1] "I'm not sure you can do that pal !"
 # [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 ```
@@ -241,7 +257,9 @@ With `silently`, the result is never returned.
 ``` r
 silent_matrix <- silently(matrix)
 silent_matrix(1:3, 2)
-# simpleWarning: la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
+#Warning message:
+#In .f(...) :
+#  la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
 ```
 
 ## surely
@@ -311,8 +329,8 @@ package, except that it can takes mappers. It is not the same as base
 `stopifnot()`, as it doesn’t take a list of expression.
 
 These functions are also flexible as you can pass base predicates
-(is.numeric, is.character…), a custom one built with mappers, or even
-your own testing function.
+(is.numeric, is.character…), a custom predicate built with mappers, or
+even your own testing function.
 
 You can either choose a custom message or just let the built-in messages
 be printed:
@@ -361,17 +379,19 @@ message_if(.x = e,
            msg = "The square root of your element must be more than 42")
 ```
 
-If you have a function with no arguments, you can pass a dot `.` as
-first argument
-:
+If you need to call a function that takes no argument at `.p` (like
+`curl::has_internet()`), you can set `.x` as `NULL`, which is also the
+default. If ever you don’t pass anything to `.x`, don’t forget to name
+the
+arguments.
 
 ``` r
-stop_if(., curl::has_internet, msg = "You shouldn't have internet to do that")
+stop_if(.p = curl::has_internet, msg = "You shouldn't have internet to do that")
 
-warn_if(., curl::has_internet, 
+warn_if(NULL, curl::has_internet, 
             msg = "You shouldn't have internet to do that")
 
-message_if(., curl::has_internet, 
+message_if(.p = curl::has_internet, 
             msg = "Huray, you have internet \\o/")
 ```
 
@@ -388,11 +408,10 @@ That can come really handy inside a function :
 
 ``` r
 my_fun <- function(x){
-  stop_if_not(., 
-              curl::has_internet, 
+  stop_if_not(.p = curl::has_internet, 
               msg = "You should have internet to do that")
-  warn_if(x, 
-          ~ ! is.character(.x), 
+  warn_if_not(x, 
+          is.character, 
           msg =  "x is not a character vector. The output may not be what you're expecting.")
   paste(x, "is the value.")
 }

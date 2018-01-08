@@ -2,7 +2,7 @@
 #'
 #' @description Friendlier try catch functions
 #'
-#' @details try_catch handles errors and warning the way you specify. try_catch_df
+#' @details try_catch handles errors and warnings the way you specify. try_catch_df
 #' returns a tibble with the call, the error message if any, the warning message if
 #' any, and the value of the evaluated expression.
 #'
@@ -15,12 +15,14 @@
 #' @param .w a one side formula or a function evaluated when a warning occurs
 #' @param .f a one side formula or an expression evaluated before returning or exiting
 #'
-#' @importFrom rlang enexpr lang is_formula splice quo_name as_function
+#' @importFrom rlang enexpr lang is_formula splice quo_name as_function eval_tidy UQ
 #' @rdname try_catch
 #'
 #' @examples
 #' \dontrun{
 #' try_catch(log("a"), .e = ~ paste0("There was an error: ", .x))
+#' try_catch(log(1), .f = ~ print("finally"))
+#' try_catch(log(1), .f = function() print("finally"))
 #' }
 
 try_catch <- function(expr, .e = NULL, .w = NULL, .f = NULL) {
@@ -38,10 +40,10 @@ try_catch <- function(expr, .e = NULL, .w = NULL, .f = NULL) {
       args <- c(args, warning = as_function(eval(.w)))
   }
   if ( !is.null(.f) ) {
-    if ( !is_formula(.f) )
-      eval(.f)
+    if ( ! is_formula(.f) )
+      .f()
     else
-      eval(as_function(.f))
+      as_function(.f)()
   }
   eval(lang("tryCatch", splice(args)))
 }
@@ -149,7 +151,7 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
 silently <- function (.f) {
   .f <- as_function(.f)
   function(...) {
-    res <- try(.f(...), silent = TRUE )
+    res <- try(.f(...), silent = TRUE)
     if (class(res) == "try-error") {
       cat(paste(res), file = getOption("try.outFile", default = stderr()))
       return(invisible(structure(paste(res), class = "try-error", condition = res)))
@@ -194,4 +196,4 @@ surely <- function (.f) {
 #' silent_attempt(warn("nop!"))
 #' }
 
-silent_attempt <- silently(attempt)
+silent_attempt <- silently(~ attempt(expr = .x, silent = TRUE))

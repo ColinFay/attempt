@@ -4,12 +4,12 @@
 \alias{if_then}
 \title{If this, then that}
 \usage{
-if_then(.x, .p = isTRUE, .f)
+if_then(.x = NULL, .p = isTRUE, .f)
 }
 \arguments{
-\item{.x}{the object to test}
+\item{.x}{the object to test. If \code{NULL} (the default), only .p is evaluated.}
 
-\item{.p}{the predicate for testing. Defaut is \code{isTRUE}}
+\item{.p}{the predicate for testing. Defaut is \code{isTRUE}.}
 
 \item{.f}{what to do if TRUE}
 }
@@ -19,7 +19,12 @@ the result in .f
 \description{
 If this, then that
 }
+\note{
+If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
+you can set \code{.x} to \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
+forget to name the arguments.
+}
 \examples{
 a <- if_then(1, is.numeric, ~ return("Yay"))
-a <- if_then(., ~ return(TRUE), ~ return("Yay"))
+a <- if_then(.p = ~ return(TRUE), .f = ~ return("Yay"))
 }

@@ -4,10 +4,14 @@
 #'
 #' @export
 #'
-#' @param .x the element to evaluate. If dot \code{.}, the
+#' @param .x the element to evaluate. If \code{NULL} (default), only `.p` is evaluated.
 #' @param .l the list of elements to evaluate
-#' @param .p the predicate with the condition to test on \code{.x} or \code{.l}. Default is isTRUE.
+#' @param .p the predicate with the condition to test on \code{.x} or \code{.l}. Default is \code{isTRUE}.
 #' @param msg the message to return. If NULL (default), the built-in message is printed.
+#'
+#' @note If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
+#' you can set \code{.x} as \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
+#' forget to name the arguments.
 #'
 #' @importFrom rlang quo_text enquo as_function
 #'
@@ -31,17 +35,15 @@
 #' }
 
 
-stop_if <- function(.x, .p = isTRUE, msg = NULL){
-  test <- deparse(substitute(.p))
-  x <- deparse(substitute(.x))
-  if (x == ".") {
+stop_if <- function(.x = NULL, .p = isTRUE, msg = NULL){
+  if ( is.null(.x)) {
     res <- as_function(.p)()
   } else {
     res <- as_function(.p)(.x)
   }
   if ( res ) {
     if (is.null(msg)) {
-      stop(paste0( "Test `", test, "` on `", x, "` returned an error."), call. = FALSE)
+      stop(paste0( "Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned an error."), call. = FALSE)
     } else {
       stop(msg, call. = FALSE)
     }
@@ -76,17 +78,15 @@ stop_if_none <- function(.l, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-stop_if_not <- function(.x, .p = isTRUE, msg = NULL){
-  test <- deparse(substitute(.p))
-  x <- deparse(substitute(.x))
-  if (x == ".") {
+stop_if_not <- function(.x = NULL, .p = isTRUE, msg = NULL){
+  if (is.null(.x)) {
     res <- as_function(.p)()
   } else {
     res <- as_function(.p)(.x)
   }
   if ( ! res ) {
     if (is.null(msg)) {
-      stop(paste0( "Test `", test, "` on `", x, "` returned an error."), call. = FALSE)
+      stop(paste0( "Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned an error."), call. = FALSE)
     } else {
       stop(msg, call. = FALSE)
     }
@@ -96,17 +96,15 @@ stop_if_not <- function(.x, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if <- function(.x, .p = isTRUE, msg = NULL){
-  test <- deparse(substitute(.p))
-  x <- deparse(substitute(.x))
-  if (x == ".") {
+warn_if <- function(.x = NULL, .p = isTRUE, msg = NULL){
+  if (is.null(.x)) {
     res <- as_function(.p)()
   } else {
     res <- as_function(.p)(.x)
   }
   if ( res ) {
     if (is.null(msg)) {
-      warning(paste0( "Test `", test, "` on `", x, "` returned a warning."), call. = FALSE, immediate. = TRUE)
+      warning(paste0( "Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned a warning."), call. = FALSE, immediate. = TRUE)
     } else {
       warning(msg, call. = FALSE)
     }
@@ -142,17 +140,15 @@ warn_if_none <- function(.l, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if_not <- function(.x, .p = isTRUE, msg = NULL){
-  test <- deparse(substitute(.p))
-  x <- deparse(substitute(.x))
-  if (x == ".") {
+warn_if_not <- function(.x = NULL, .p = isTRUE, msg = NULL){
+  if (is.null(.x)) {
     res <- as_function(.p)()
   } else {
     res <- as_function(.p)(.x)
   }
   if ( ! res ) {
     if (is.null(msg)) {
-      warning(paste0( "Test `", test, "` on `", quo_text(x), "` returned a warning."), call. = FALSE, immediate. = TRUE)
+      warning(paste0( "Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned a warning."), call. = FALSE, immediate. = TRUE)
     } else {
       warning(msg, call. = FALSE)
     }
@@ -163,17 +159,15 @@ warn_if_not <- function(.x, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-message_if <- function(.x, .p = isTRUE, msg = NULL){
-  test <- deparse(substitute(.p))
-  x <- deparse(substitute(.x))
-  if (x == ".") {
+message_if <- function(.x = NULL, .p = isTRUE, msg = NULL){
+  if (is.null(.x)) {
     res <- as_function(.p)()
   } else {
     res <- as_function(.p)(.x)
   }
   if ( res ) {
     if (is.null(msg)) {
-      message(paste("Test `", test, "` on `", x, "` returned an alert."))
+      message(paste("Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned an alert."))
     } else {
       message(msg)
     }
@@ -209,17 +203,15 @@ message_if_none <- function(.l, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-message_if_not <- function(.x,  .p = isTRUE, msg = NULL){
-  test <- deparse(substitute(.p))
-  x <- deparse(substitute(.x))
-  if (x == ".") {
+message_if_not <- function(.x = NULL,  .p = isTRUE, msg = NULL){
+  if (is.null(.x)) {
     res <- as_function(.p)()
   } else {
     res <- as_function(.p)(.x)
   }
   if ( ! res ) {
     if (is.null(msg)) {
-      message(paste("Test `", test, "` on `", x, "` returned an alert."))
+      message(paste("Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned an alert."))
     } else {
       message(msg)
     }

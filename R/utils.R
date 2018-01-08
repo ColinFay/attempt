@@ -1,3 +1,5 @@
+#' @importFrom rlang lang splice
+
 try_catch_builder <- function(arg, fun, ...){
   a <- lang(fun, splice(list(arg)))
   lang("try_catch", splice(list(expr = a, ...)))

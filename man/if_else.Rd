@@ -4,12 +4,12 @@
 \alias{if_else}
 \title{If this, then that, else that}
 \usage{
-if_else(.x, .p = isTRUE, .f, .else)
+if_else(.x = NULL, .p = isTRUE, .f, .else)
 }
 \arguments{
-\item{.x}{the object to test}
+\item{.x}{the object to test. If \code{NULL} (the default), only .p is evaluated.}
 
-\item{.p}{the predicate for testing. Defaut is \code{isTRUE}}
+\item{.p}{the predicate for testing. Defaut is \code{isTRUE}.}
 
 \item{.f}{what to do if TRUE}
 
@@ -21,9 +21,14 @@ the evalution
 \description{
 If this, then that, else that
 }
+\note{
+If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
+you can set \code{.x} as \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
+forget to name the arguments.
+}
 \examples{
 \dontrun{
-a <- if_else(., curl::has_internet, ~ "Yay", ~ "Nay")
+a <- if_else(.f = curl::has_internet, ~ "Yay", ~ "Nay")
 }
 
 }

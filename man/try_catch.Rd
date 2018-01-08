@@ -32,12 +32,14 @@ map_try_catch_df(l, fun)
 Friendlier try catch functions
 }
 \details{
-try_catch handles errors and warning the way you specify. try_catch_df
+try_catch handles errors and warnings the way you specify. try_catch_df
 returns a tibble with the call, the error message if any, the warning message if
 any, and the value of the evaluated expression.
 }
 \examples{
 \dontrun{
 try_catch(log("a"), .e = ~ paste0("There was an error: ", .x))
+try_catch(log(1), .f = ~ print("finally"))
+try_catch(log(1), .f = function() print("finally"))
 }
 }

@@ -18,7 +18,7 @@
 \alias{message_if_not}
 \title{Warn if}
 \usage{
-stop_if(.x, .p = isTRUE, msg = NULL)
+stop_if(.x = NULL, .p = isTRUE, msg = NULL)
 
 stop_if_any(.l, .p = isTRUE, msg = NULL)
 
@@ -26,9 +26,9 @@ stop_if_all(.l, .p = isTRUE, msg = NULL)
 
 stop_if_none(.l, .p = isTRUE, msg = NULL)
 
-stop_if_not(.x, .p = isTRUE, msg = NULL)
+stop_if_not(.x = NULL, .p = isTRUE, msg = NULL)
 
-warn_if(.x, .p = isTRUE, msg = NULL)
+warn_if(.x = NULL, .p = isTRUE, msg = NULL)
 
 warn_if_any(.l, .p = isTRUE, msg = NULL)
 
@@ -36,9 +36,9 @@ warn_if_all(.l, .p = isTRUE, msg = NULL)
 
 warn_if_none(.l, .p = isTRUE, msg = NULL)
 
-warn_if_not(.x, .p = isTRUE, msg = NULL)
+warn_if_not(.x = NULL, .p = isTRUE, msg = NULL)
 
-message_if(.x, .p = isTRUE, msg = NULL)
+message_if(.x = NULL, .p = isTRUE, msg = NULL)
 
 message_if_any(.l, .p = isTRUE, msg = NULL)
 
@@ -46,12 +46,12 @@ message_if_all(.l, .p = isTRUE, msg = NULL)
 
 message_if_none(.l, .p = isTRUE, msg = NULL)
 
-message_if_not(.x, .p = isTRUE, msg = NULL)
+message_if_not(.x = NULL, .p = isTRUE, msg = NULL)
 }
 \arguments{
-\item{.x}{the element to evaluate. If dot \code{.}, the}
+\item{.x}{the element to evaluate. If \code{NULL} (default), only `.p` is evaluated.}
 
-\item{.p}{the predicate with the condition to test on \code{.x} or \code{.l}. Default is isTRUE.}
+\item{.p}{the predicate with the condition to test on \code{.x} or \code{.l}. Default is \code{isTRUE}.}
 
 \item{msg}{the message to return. If NULL (default), the built-in message is printed.}
 
@@ -59,6 +59,11 @@ message_if_not(.x, .p = isTRUE, msg = NULL)
 }
 \description{
 Friendlier messaging functions
+}
+\note{
+If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
+you can set \code{.x} as \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
+forget to name the arguments.
 }
 \examples{
 \dontrun{

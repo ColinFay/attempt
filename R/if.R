@@ -1,18 +1,22 @@
 #' If this, then that
 #'
-#' @param .x the object to test
-#' @param .p the predicate for testing. Defaut is \code{isTRUE}
+#' @param .x the object to test. If \code{NULL} (the default), only .p is evaluated.
+#' @param .p the predicate for testing. Defaut is \code{isTRUE}.
 #' @param .f what to do if TRUE
+#'
+#' @note If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
+#' you can set \code{.x} to \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
+#' forget to name the arguments.
 #'
 #' @return the result in .f
 #' @export
 #'
 #' @examples
 #' a <- if_then(1, is.numeric, ~ return("Yay"))
-#' a <- if_then(., ~ return(TRUE), ~ return("Yay"))
+#' a <- if_then(.p = ~ return(TRUE), .f = ~ return("Yay"))
 
-if_then <- function(.x, .p = isTRUE, .f) {
-  if (deparse(substitute(.x)) == ".") {
+if_then <- function(.x = NULL, .p = isTRUE, .f) {
+  if (is.null(.x)) {
     res <- as_function(.p)()
   } else {
     res <- as_function(.p)(.x)
@@ -27,22 +31,26 @@ if_then <- function(.x, .p = isTRUE, .f) {
 
 #' If this, then that, else that
 #'
-#' @param .x the object to test
-#' @param .p the predicate for testing. Defaut is \code{isTRUE}
+#' @param .x the object to test. If \code{NULL} (the default), only .p is evaluated.
+#' @param .p the predicate for testing. Defaut is \code{isTRUE}.
 #' @param .f what to do if TRUE
 #' @param .else what to do if TRUE
+#'
+#' @note If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
+#' you can set \code{.x} as \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
+#' forget to name the arguments.
 #'
 #' @return the evalution
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' a <- if_else(., curl::has_internet, ~ "Yay", ~ "Nay")
+#' a <- if_else(.f = curl::has_internet, ~ "Yay", ~ "Nay")
 #' }
 #'
 
-if_else <- function(.x, .p = isTRUE, .f, .else) {
-  if (deparse(substitute(.x)) == ".") {
+if_else <- function(.x = NULL, .p = isTRUE, .f, .else) {
+  if (is.null(.x)) {
     res <- as_function(.p)()
   } else {
     res <- as_function(.p)(.x)
