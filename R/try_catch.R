@@ -31,13 +31,13 @@ try_catch <- function(expr, .e = NULL, .w = NULL, .f = NULL) {
     if ( ! is_formula(.e) )
       args <- c(args, error = .e)
     else
-      args <- c(args, error = as_function(eval(.e)))
+      args <- c(args, error = as_function(.e))
   }
   if ( !is.null(.w) ) {
     if ( ! is_formula(.w) )
       args <- c(args, warning = .w)
     else
-      args <- c(args, warning = as_function(eval(.w)))
+      args <- c(args, warning = as_function(.w))
   }
   if ( !is.null(.f) ) {
     if ( ! is_formula(.f) )
