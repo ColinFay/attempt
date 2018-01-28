@@ -26,12 +26,12 @@ test_that("warning catching", {
   expect_is(a, "simpleError")
   expect_is(a, "error")
   expect_is(a, "condition")
-  expect_output(try_catch(log(1), .f = ~ print("a")), "a")
 })
 
 test_that("finally works", {
   a <- try_catch(NULL, .f = ~ print("bye"))
   expect_null(a)
+  expect_output(try_catch(log(1), .f = ~ print("a")), "a")
 })
 
 context("try_catch_df")
@@ -113,7 +113,7 @@ test_that("attempt and try work the same way", {
 })
 
 
-context("silently")
+context("adverbs")
 
 test_that("silently works", {
   silent_log <- silently(log)
@@ -136,6 +136,16 @@ test_that("silent_attempt works", {
   b <- silent_attempt(log("a"))
   expect_is(b, "try-error")
 
+  }
+)
+
+test_that("with_* works", {
+  as_num_msg <- with_message(as.numeric, msg = "We're performing a numeric conversion")
+  as_num_warn <- with_warning(as.numeric, msg = "We're performing a numeric conversion")
+  expect_message(as_num_msg("1"))
+  expect_warning(as_num_warn("1"))
+  expect_is(as_num_msg("1"), "numeric")
+  expect_is(as_num_warn("1"), "numeric")
   }
 )
 
