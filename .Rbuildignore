@@ -1,6 +1,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
+^revedp$
 ^CONDUCT\.md$
 ^README\.Rmd$
 ^README-.*\.png$
