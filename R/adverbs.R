@@ -125,7 +125,7 @@ with_message <- function (.f, msg) {
   .f <- as_function(.f)
   function(...) {
     message(msg)
-    attempt(.f(...))
+    .f(...)
   }
 }
 
@@ -137,7 +137,7 @@ with_warning <- function (.f, msg) {
   .f <- as_function(.f)
   function(...) {
     warning(msg)
-    attempt(.f(...))
+    .f(...)
   }
 }
 
