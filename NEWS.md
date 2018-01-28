@@ -1,8 +1,13 @@
-# trycatchit 0.1.1
+# attempt 0.2.0
 
-* 2018-01-10 : small breaking change in functions. If you call functions with no arg (like `curl::has_internet`), you no longer need to specify "." as first argument - this "." use is no longer supported. 
+* Bug fix and performance optimisation
+* Two new functions: with_message and with_warning
 
-# trycatchit 0.1.0
+# attempt 0.1.1
+
+* 2018-01-10 : small breaking change in functions. If you call functions with no arg (like `curl::has_internet`), you can't specify "." as first argument anymore - this use of "." is no longer supported. Pass this function as .x.
+
+# attempt 0.1.0
 
 * 2017-12-21 : ready to be used 
 

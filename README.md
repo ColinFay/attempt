@@ -235,7 +235,11 @@ map_try_catch_df(list(1,3,"a"), log)
 #> Error in map_try_catch_df(list(1, 3, "a"), log): impossible de trouver la fonction "map_try_catch_df"
 ```
 
-## silently
+## Adverbs
+
+Adverbs take a function and return a modified function.
+
+### silently
 
 `silently` transforms a function so that when you call this new
 function, it returns nothing unless there is an error or a warning
@@ -262,7 +266,7 @@ silent_matrix(1:3, 2)
 #  la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
 ```
 
-## surely
+### surely
 
 `surely` transforms a function so that when you call this new function,
 it calls `attempt()` - i.e. in the code below, calling `sure_log(1)` is
@@ -275,6 +279,18 @@ sure_log(1)
 # [1] 0
 sure_log("a")
 # Error: argument non numérique pour une fonction mathématique
+```
+
+### `with_message` and `with_warning`
+
+These two functions take a function, and add a warning or a message to
+it.
+
+``` r
+as_num_msg <- with_message(as.numeric, msg = "We're performing a numeric conversion")
+as_num_warn <- with_warning(as.numeric, msg = "We're performing a numeric conversion")
+as_num_msg("1")
+as_num_warn("1")
 ```
 
 ## `if_` conditions
@@ -380,18 +396,16 @@ message_if(.x = e,
 ```
 
 If you need to call a function that takes no argument at `.p` (like
-`curl::has_internet()`), you can set `.x` as `NULL`, which is also the
-default. If ever you don’t pass anything to `.x`, don’t forget to name
-the
-arguments.
+`curl::has_internet()`), use this function as
+`.x`.
 
 ``` r
-stop_if(.p = curl::has_internet, msg = "You shouldn't have internet to do that")
+stop_if(.x = curl::has_internet(), msg = "You shouldn't have internet to do that")
 
-warn_if(NULL, curl::has_internet, 
+warn_if(.x = curl::has_internet(), 
             msg = "You shouldn't have internet to do that")
 
-message_if(.p = curl::has_internet, 
+message_if(.x = curl::has_internet(), 
             msg = "Huray, you have internet \\o/")
 ```
 
