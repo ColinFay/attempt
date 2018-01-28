@@ -45,13 +45,16 @@ devtools::install_github("ColinFay/attempt")
 
 # Reference
 
+``` r
+library(attempt)
+```
+
 ## attempt
 
 `attempt` is a wrapper around base `try` that allows you to insert a
 custom messsage on error.
 
 ``` r
-library(attempt)
 attempt(log("a"))
 # Error: argument non numérique pour une fonction mathématique
 
@@ -201,25 +204,36 @@ the warning message if any, and the value of the evaluated expression or
 
 ``` r
 res_log <- try_catch_df(log("a"))
-#> Error in try_catch_df(log("a")): impossible de trouver la fonction "try_catch_df"
 res_log
-#> Error in eval(expr, envir, enclos): objet 'res_log' introuvable
+#>       call                                                 error warning
+#> 1 log("a") argument non numérique pour une fonction mathématique      NA
+#>   value
+#> 1 error
 res_log$value
-#> Error in eval(expr, envir, enclos): objet 'res_log' introuvable
+#> [[1]]
+#> [1] "error"
 
 res_matrix <- try_catch_df(matrix(1:3, nrow = 2))
-#> Error in try_catch_df(matrix(1:3, nrow = 2)): impossible de trouver la fonction "try_catch_df"
 res_matrix
-#> Error in eval(expr, envir, enclos): objet 'res_matrix' introuvable
+#>                    call error
+#> 1 matrix(1:3, nrow = 2)    NA
+#>                                                                                    warning
+#> 1 la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
+#>        value
+#> 1 1, 2, 3, 1
 res_matrix$value
-#> Error in eval(expr, envir, enclos): objet 'res_matrix' introuvable
+#> [[1]]
+#>      [,1] [,2]
+#> [1,]    1    3
+#> [2,]    2    1
 
 res_success <- try_catch_df(log(1))
-#> Error in try_catch_df(log(1)): impossible de trouver la fonction "try_catch_df"
 res_success
-#> Error in eval(expr, envir, enclos): objet 'res_success' introuvable
+#>     call error warning value
+#> 1 log(1)    NA      NA     0
 res_success$value
-#> Error in eval(expr, envir, enclos): objet 'res_success' introuvable
+#> [[1]]
+#> [1] 0
 ```
 
 ### map try\_catch
@@ -229,10 +243,24 @@ arguments `l`, to be evaluated by the function in `fun`.
 
 ``` r
 map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
-#> Error in map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~.x): impossible de trouver la fonction "map_try_catch"
+#> [[1]]
+#> [1] 0
+#> 
+#> [[2]]
+#> [1] 1.098612
+#> 
+#> [[3]]
+#> <simpleError in .Primitive("log")("a"): argument non numérique pour une fonction mathématique>
 
 map_try_catch_df(list(1,3,"a"), log)
-#> Error in map_try_catch_df(list(1, 3, "a"), log): impossible de trouver la fonction "map_try_catch_df"
+#>                     call
+#> 1   .Primitive("log")(1)
+#> 2   .Primitive("log")(3)
+#> 3 .Primitive("log")("a")
+#>                                                   error warning    value
+#> 1                                                  <NA>      NA        0
+#> 2                                                  <NA>      NA 1.098612
+#> 3 argument non numérique pour une fonction mathématique      NA    error
 ```
 
 ## Adverbs
@@ -248,11 +276,8 @@ function stay silent unless error or warning.
 
 ``` r
 silent_log <- silently(log)
-#> Error in silently(log): impossible de trouver la fonction "silently"
 silent_log(1)
-#> Error in silent_log(1): impossible de trouver la fonction "silent_log"
 silent_log("a")
-#> Error in silent_log("a"): impossible de trouver la fonction "silent_log"
 # Error: argument non numérique pour une fonction mathématique
 ```
 
@@ -290,7 +315,11 @@ it.
 as_num_msg <- with_message(as.numeric, msg = "We're performing a numeric conversion")
 as_num_warn <- with_warning(as.numeric, msg = "We're performing a numeric conversion")
 as_num_msg("1")
+#> We're performing a numeric conversion
+#> [1] 1
 as_num_warn("1")
+#> Warning in as_num_warn("1"): We're performing a numeric conversion
+#> [1] 1
 ```
 
 ## `if_` conditions
@@ -299,13 +328,14 @@ as_num_warn("1")
 
 ``` r
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
-#> Error in if_all(1:10, ~.x < 11, ~return(letters[1:10])): impossible de trouver la fonction "if_all"
+#>  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"
 
 if_any(1:10, is.numeric, ~ print("Yay!"))
-#> Error in if_any(1:10, is.numeric, ~print("Yay!")): impossible de trouver la fonction "if_any"
+#> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#> Error in if_none(1:10, is.character, ~rnorm(10)): impossible de trouver la fonction "if_none"
+#>  [1] -1.9861501 -0.1127188 -1.0600827  0.8724724 -0.6733284 -1.1436819
+#>  [7] -0.3794485 -0.5803842 -0.3432792  0.2483801
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:
@@ -314,23 +344,22 @@ The defaut for all `.p` is `isTRUE`. So you can:
 a <- c(FALSE, TRUE, TRUE, TRUE)
 
 if_any(a, .f = ~ print("nop!"))
-#> Error in if_any(a, .f = ~print("nop!")): impossible de trouver la fonction "if_any"
+#> [1] "nop!"
 ```
 
 `if_then` performs a simple “if this then do that”:
 
 ``` r
 if_then(1, is.numeric, ~ return("nop!"))
-#> Error in if_then(1, is.numeric, ~return("nop!")): impossible de trouver la fonction "if_then"
+#> [1] "nop!"
 ```
 
 And `if_else` is a wrapper around `base::ifelse()` :
 
 ``` r
 a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
-#> Error in if_else(1, is.numeric, ~return("Yay"), ~return("Nay")): impossible de trouver la fonction "if_else"
 a
-#> [1] FALSE  TRUE  TRUE  TRUE
+#> [1] "Yay"
 ```
 
 ## warnings and messages

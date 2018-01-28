@@ -52,12 +52,16 @@ devtools::install_github("ColinFay/attempt")
 
 # Reference 
 
+```{r eval = TRUE}
+library(attempt)
+```
+
+
 ## attempt 
 
 `attempt` is a wrapper around base `try` that allows you to insert a custom messsage on error. 
 
 ```{r}
-library(attempt)
 attempt(log("a"))
 # Error: argument non numérique pour une fonction mathématique
 
@@ -267,7 +271,7 @@ sure_log("a")
 
 These two functions take a function, and add a warning or a message to it.
 
-```{r}
+```{r eval = TRUE}
 as_num_msg <- with_message(as.numeric, msg = "We're performing a numeric conversion")
 as_num_warn <- with_warning(as.numeric, msg = "We're performing a numeric conversion")
 as_num_msg("1")
