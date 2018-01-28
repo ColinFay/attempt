@@ -26,6 +26,7 @@ test_that("warning catching", {
   expect_is(a, "simpleError")
   expect_is(a, "error")
   expect_is(a, "condition")
+  expect_output(try_catch(log(1), .f = ~ print("a")), "a")
 })
 
 test_that("finally works", {

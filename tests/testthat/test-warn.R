@@ -25,7 +25,7 @@ test_that("stop, warn and message works", {
   expect_warning(warn_if(.x = "this is not numeric",
           .p = is.character,
           msg = "lol"))
-  expect_warning(warn_if(.p = function() TRUE,
+  expect_warning(warn_if(.x = TRUE,
                        msg = "plop"))
 
   expect_warning(warn_if_not(.x = 20,
@@ -33,7 +33,7 @@ test_that("stop, warn and message works", {
   expect_warning(warn_if_not(.x = 20,
               .p = ~ .x == 10 ,
               msg = "b should be 10"))
-  expect_warning(warn_if_not(.p = function() FALSE,
+  expect_warning(warn_if_not(.x =  FALSE,
                            msg = "plop"))
 
 
@@ -56,7 +56,7 @@ test_that("stop, warn and message works", {
   expect_message(message_if_not(.x = 100,
              .p = ~ sqrt(.x) > 42,
              msg = "Your sqrt should be less than 30"))
-  expect_message(message_if_not(.p = function() FALSE,
+  expect_message(message_if_not(.x = function() FALSE,
                              msg = "plop"))
 
   expect_message(message_if_not(.x = 30,

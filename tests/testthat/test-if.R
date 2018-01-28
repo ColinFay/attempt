@@ -19,10 +19,10 @@ test_that("if_then work", {
   expect_is(a, "character")
   expect_length(a, 1)
   expect_equal(a, "lol")
-  af <- if_then(.p =  function() return(TRUE), .f = function() return("lol"))
-  expect_is(a, "character")
-  expect_length(a, 1)
-  expect_equal(a, "lol")
+  af <- if_then(1, is.numeric, ~ return("Yay"))
+  expect_is(af, "character")
+  expect_length(af, 1)
+  expect_equal(af, "Yay")
   g <- if_then(1, function(x) is.numeric(x), ~ return("lol"))
   expect_is(g, "character")
   expect_length(g, 1)
@@ -44,14 +44,14 @@ test_that("if_else work", {
   b <- if_else(FALSE, .f = ~ return("Yay"), .else = ~ return("Nay"))
   expect_equal(b, "Nay")
   expect_is(b, "character")
-  c <- if_else(.p = function() return(TRUE), .f = function() return("lol"), .else = function() return("lol"))
+  c <- if_else(.x = TRUE, .f = function() return("lol"), .else = function() return("lol"))
   expect_is(c, "character")
   expect_length(c, 1)
   expect_equal(c, "lol")
 
 })
 
-test_that("map if works", {
+test_that("scoped if works", {
   b <- if_all(1:10, is.numeric, ~ return(letters[1:10]))
   expect_is(b, "character")
   expect_length(b, 10)
