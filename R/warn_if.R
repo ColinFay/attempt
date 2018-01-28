@@ -1,19 +1,15 @@
 #' Warn if
 #'
-#' Friendlier messaging functions
+#' Friendlier messaging functions.
 #'
 #' @export
 #'
-#' @param .x the element to evaluate. If \code{NULL} (default), only `.p` is evaluated.
+#' @param .x the element to evaluate. It can be a predicate function (i.e a function returning TRUE).
 #' @param .l the list of elements to evaluate
 #' @param .p the predicate with the condition to test on \code{.x} or \code{.l}. Default is \code{isTRUE}.
 #' @param msg the message to return. If NULL (default), the built-in message is printed.
 #'
-#' @note If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
-#' you can set \code{.x} as \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
-#' forget to name the arguments.
-#'
-#' @importFrom rlang quo_text enquo as_function
+#' @importFrom rlang as_function
 #'
 #' @rdname messagehandler
 #'
@@ -35,13 +31,8 @@
 #' }
 
 
-stop_if <- function(.x = NULL, .p = isTRUE, msg = NULL){
-  if ( is.null(.x)) {
-    res <- as_function(.p)()
-  } else {
-    res <- as_function(.p)(.x)
-  }
-  if ( res ) {
+stop_if <- function(.x, .p = isTRUE, msg = NULL){
+  if ( as_function(.p)(.x) ) {
     if (is.null(msg)) {
       stop(paste0( "Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned an error."), call. = FALSE)
     } else {
@@ -78,13 +69,8 @@ stop_if_none <- function(.l, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-stop_if_not <- function(.x = NULL, .p = isTRUE, msg = NULL){
-  if (is.null(.x)) {
-    res <- as_function(.p)()
-  } else {
-    res <- as_function(.p)(.x)
-  }
-  if ( ! res ) {
+stop_if_not <- function(.x, .p = isTRUE, msg = NULL){
+  if ( ! as_function(.p)(.x) ) {
     if (is.null(msg)) {
       stop(paste0( "Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned an error."), call. = FALSE)
     } else {
@@ -96,13 +82,8 @@ stop_if_not <- function(.x = NULL, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if <- function(.x = NULL, .p = isTRUE, msg = NULL){
-  if (is.null(.x)) {
-    res <- as_function(.p)()
-  } else {
-    res <- as_function(.p)(.x)
-  }
-  if ( res ) {
+warn_if <- function(.x, .p = isTRUE, msg = NULL){
+  if ( as_function(.p)(.x) ) {
     if (is.null(msg)) {
       warning(paste0( "Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned a warning."), call. = FALSE, immediate. = TRUE)
     } else {
@@ -140,13 +121,8 @@ warn_if_none <- function(.l, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-warn_if_not <- function(.x = NULL, .p = isTRUE, msg = NULL){
-  if (is.null(.x)) {
-    res <- as_function(.p)()
-  } else {
-    res <- as_function(.p)(.x)
-  }
-  if ( ! res ) {
+warn_if_not <- function(.x, .p = isTRUE, msg = NULL){
+  if ( ! as_function(.p)(.x) ) {
     if (is.null(msg)) {
       warning(paste0( "Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned a warning."), call. = FALSE, immediate. = TRUE)
     } else {
@@ -160,12 +136,7 @@ warn_if_not <- function(.x = NULL, .p = isTRUE, msg = NULL){
 #'@rdname messagehandler
 
 message_if <- function(.x = NULL, .p = isTRUE, msg = NULL){
-  if (is.null(.x)) {
-    res <- as_function(.p)()
-  } else {
-    res <- as_function(.p)(.x)
-  }
-  if ( res ) {
+  if ( as_function(.p)(.x) ) {
     if (is.null(msg)) {
       message(paste("Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned an alert."))
     } else {
@@ -203,13 +174,8 @@ message_if_none <- function(.l, .p = isTRUE, msg = NULL){
 #'@export
 #'@rdname messagehandler
 
-message_if_not <- function(.x = NULL,  .p = isTRUE, msg = NULL){
-  if (is.null(.x)) {
-    res <- as_function(.p)()
-  } else {
-    res <- as_function(.p)(.x)
-  }
-  if ( ! res ) {
+message_if_not <- function(.x,  .p = isTRUE, msg = NULL){
+  if ( ! as_function(.p)(.x) ) {
     if (is.null(msg)) {
       message(paste("Test `", deparse(substitute(.p)), "` on `", deparse(substitute(.x)), "` returned an alert."))
     } else {

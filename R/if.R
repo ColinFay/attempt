@@ -4,29 +4,16 @@
 #' @param .p the predicate for testing. Defaut is \code{isTRUE}.
 #' @param .f what to do if TRUE
 #'
-#' @note If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
-#' you can set \code{.x} to \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
-#' forget to name the arguments.
+#' @importFrom rlang as_function
 #'
 #' @return the result in .f
 #' @export
 #'
 #' @examples
 #' a <- if_then(1, is.numeric, ~ return("Yay"))
-#' a <- if_then(.p = ~ return(TRUE), .f = ~ return("Yay"))
-
-if_then <- function(.x = NULL, .p = isTRUE, .f) {
-  if (is.null(.x)) {
-    res <- as_function(.p)()
-  } else {
-    res <- as_function(.p)(.x)
-  }
-  if ( res ){
-    if (is_formula(.f)){
-      .f <- as_function(.f)
-    }
-    .f()
-  }
+#'
+if_then <- function(.x, .p = isTRUE, .f) {
+  if ( as_function(.p)(.x) ) as_function(.f)()
 }
 
 #' If this, then that, else that
@@ -36,35 +23,20 @@ if_then <- function(.x = NULL, .p = isTRUE, .f) {
 #' @param .f what to do if TRUE
 #' @param .else what to do if TRUE
 #'
-#' @note If you need to call a function that takes no argument at \code{.p} (like \code{curl::has_internet()}),
-#' you can set \code{.x} as \code{NULL}, which is also the default. If ever you don't pass anything to \code{.x}, don't
-#' forget to name the arguments.
-#'
 #' @return the evalution
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' a <- if_else(.f = curl::has_internet, ~ "Yay", ~ "Nay")
+#' a <- if_else(.x = curl::has_internet(), .f = ~ "Yay", .else = ~ "Nay")
 #' }
 #'
 
-if_else <- function(.x = NULL, .p = isTRUE, .f, .else) {
-  if (is.null(.x)) {
-    res <- as_function(.p)()
+if_else <- function(.x, .p = isTRUE, .f, .else) {
+  if ( as_function(.p)(.x) ) {
+    as_function(.f)()
   } else {
-    res <- as_function(.p)(.x)
-  }
-  if ( res ){
-    if (is_formula(.f)){
-      .f <- as_function(.f)
-    }
-    .f()
-  } else {
-    if (is_formula(.else)){
-      .else <- as_function(.else)
-    }
-    .else()
+    as_function(.else)()
   }
 }
 
