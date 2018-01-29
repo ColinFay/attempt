@@ -1,0 +1,104 @@
+---
+title: "attempt"
+author: "Colin Fay"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Intro to attempt}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  error = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(attempt)
+```
+
+# Introduction to {attempt}
+
+{attempt} is a friendlier condition handler for R, inspired by {purrr} mappers and based on {rlang}.
+
+{attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. 
+
+For example : 
+
++ an attempt to run a `log("a")` (error)
++ an attempt to connect to a web API without an internet connexion running (error)
++ an attempt to `paste()` `"good morning` and `iris` (message/warning)
++ ... 
+
+{attempt} provides several condition handlers, from try catch to simple message printing. 
+
+{attempt} only depends on {rlang}, making it easy to implement in other functions and packages.
+
+# Install
+
+From CRAN:
+
+```{r eval = FALSE}
+install.packages("attempt")
+```
+
+The dev version:
+
+```{r eval = FALSE}
+devtools::install_github("ColinFay/attempt")
+```
+
+
+## Using {attempt}
+
+{attempt} provides four families of functions : 
+
++ try catch 
++ adverbs 
++ if 
++ conditions handlers
+
+### try catch
+
+Try catch functions are a family of functions which are used to deal with errors and warnings. 
+
++ `attempt` behaves like `base::try`, except that it allows custom message printing. 
++ `try_catch` is a wrapper around `tryCatch` that has a consistent grammar and allows the use of mappers. 
++ `try_catch_df` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". The values will always be contained in a list-column.
++ `map_try_catch` and `map_try_catch_df` allow to map on a list of arguments to be evaluated by the function in `fun`.
+
+### adverbs 
+
+Adverbs take a function and return a modified function.
+
++ `silently` transforms a function so that when you call this new function, it returns nothing unless there is an error or a warning.
++ `surely` transforms a function so that when you call this new function, it calls `attempt()`.
++ `with_message` and `with_warning` take a function, and add a warning or a message to it.
+
+### if 
+
++ `if_none`, `if_any` and `if_all` test the elements of the list. 
++ `if_then` perfoms a "if this then that"
++ `if_else` is a wrapper around `base::ifelse()` that can take mappers. 
+
+### conditions 
+
++ `stop_if`, `warn_if` and `message_if` are easy to use functions that send an error, a warning or a message if a condition is met.
++ they have a counterpart in `_if_not`, and `_if_all`, `_if_any` and `_if_none`.
+
+## About mappers 
+
+Mappers are function built like one sided formulas. In other words, `~ .x + 2` is the equivalent to `function(x) return(x + 2)`. The first argument in a mapper need to be `.x`.
+
+# Misc
+
+## Acknowledgments
+
+Thanks to [Romain](http://romain.rbind.io/) for the name suggestion. 
+
+## Contact
+
+Questions and feedbacks [welcome](mailto:contact@colinfay.me)!
+
+You want to contribute ? Open a [PR](https://github.com/ColinFay/attempt/pulls) :) If you encounter a bug or want to suggest an enhancement, please [open an issue](https://github.com/ColinFay/attempt/issues).

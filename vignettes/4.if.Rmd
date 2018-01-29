@@ -1,0 +1,52 @@
+---
+title: "If"
+author: "Colin Fay"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{If}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  error = TRUE,
+  collapse = TRUE,
+  comment = "#>"
+)
+library(attempt)
+```
+
+## `if_` conditions
+
+`if_none`, `if_any` and `if_all` test the elements of the list. 
+
+```{r eval=TRUE}
+if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
+
+if_any(1:10, is.numeric, ~ print("Yay!"))
+
+if_none(1:10, is.character, ~ rnorm(10))
+```
+
+The defaut for all `.p` is `isTRUE`. So you can: 
+
+```{r eval=TRUE}
+a <- c(FALSE, TRUE, TRUE, TRUE)
+
+if_any(a, .f = ~ print("nop!"))
+```
+
+`if_then` performs a simple "if this then do that":
+
+```{r eval=TRUE}
+if_then(1, is.numeric, ~ return("nop!"))
+```
+
+And `if_else` is a wrapper around `base::ifelse()` : 
+
+```{r eval=TRUE}
+a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
+a
+```
