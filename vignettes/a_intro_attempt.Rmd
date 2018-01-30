@@ -28,7 +28,7 @@ For example :
 
 + an attempt to run a `log("a")` (error)
 + an attempt to connect to a web API without an internet connexion running (error)
-+ an attempt to `paste()` `"good morning` and `iris` (message/warning)
++ an attempt to `paste()` `"good morning"` and `iris` (message/warning)
 + ... 
 
 {attempt} provides several condition handlers, from try catch to simple message printing. 

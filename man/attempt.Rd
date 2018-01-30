@@ -16,9 +16,8 @@ attempt(expr, msg = NULL, verbose = FALSE, silent = FALSE)
 \item{silent}{wether or not the error should be kept under silence}
 }
 \description{
-Wrappers around base try that allows you to set a custom message when an error/warning occurs.
-\code{attempt} returns the value if there is no error nor message. \code{silent_attempt} stays
-silent unless error or warning.
+A wrapper around base try that allows you to set a custom message when an error/warning occurs.
+\code{attempt} returns the value if there is no error nor message.
 }
 \examples{
 \dontrun{

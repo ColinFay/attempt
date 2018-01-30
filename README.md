@@ -6,8 +6,9 @@ status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travi
 status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/attempt?branch=master)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)
+[![](http://cranlogs.r-pkg.org/badges/attempt)](http://cran.rstudio.com/web/packages/attempt/index.html)
 
-# {attempt} 0.1.0
+# {attempt} 0.2.0
 
 A Friendlier Condition Handler for R, inspired by {purrr} mappers and
 based on {rlang}.
@@ -19,15 +20,16 @@ For example :
 
   - an attempt to run a `log("a")` (error)
   - an attempt to connect to a web API without an internet connexion
-    running (error)
-  - an attempt to `paste()` `"good morning` and `iris` (message/warning)
+    (error)
+  - an attempt to `paste()` `"good morning"` and `iris`
+    (message/warning)
   - …
 
 {attempt} provides several condition handlers, from try catch to simple
 message printing.
 
-{attempt} only depends on {rlang}, making it easy to implement in other
-functions and packages.
+{attempt} only depends on {rlang}, and every function is design to be
+fast, making it easy to implement in other functions and packages.
 
 # Install
 
@@ -57,7 +59,6 @@ custom messsage on error.
 ``` r
 attempt(log("a"))
 # Error: argument non numérique pour une fonction mathématique
-
 attempt(log("a"), msg = "Nop !")
 # Error: Nop !
 ```
@@ -76,7 +77,7 @@ attempt(log(1), msg = "Nop !", verbose = TRUE)
 # [1] 0
 ```
 
-As with `try`, the result cant be saved as an error object :
+As with `try`, the result cant be saved as an error object:
 
 ``` r
 a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
@@ -174,7 +175,7 @@ try_catch(log("a"),
 
 # [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
 # [1] "Ok, let's save this"
-# [1] "log saved on log.txt at 2017-12-20 18:24:05"
+# [1] "log saved on log.txt at 2018-01-30 16:59:13"
 # [1] "let's move on now"
 ```
 
@@ -278,7 +279,7 @@ function stay silent unless error or warning.
 silent_log <- silently(log)
 silent_log(1)
 silent_log("a")
-# Error: argument non numérique pour une fonction mathématique
+# Error in .f(...) : argument non numérique pour une fonction mathématique
 ```
 
 With `silently`, the result is never returned.
@@ -334,8 +335,8 @@ if_any(1:10, is.numeric, ~ print("Yay!"))
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1] -1.9861501 -0.1127188 -1.0600827  0.8724724 -0.6733284 -1.1436819
-#>  [7] -0.3794485 -0.5803842 -0.3432792  0.2483801
+#>  [1]  0.72675483 -0.03257570 -0.68215448 -1.14385214 -1.35260098
+#>  [6] -0.97330416  0.01710774  0.57979007 -0.51538432 -1.34973851
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:
@@ -366,7 +367,7 @@ a
 
 The `stop_if`, `warn_if` and `message_if` are easy to use functions that
 send an error, a warning or a message if a condition is met. Each
-function has its counterpart with `_not`. That returns a message if the
+function has its counterpart with `_not` that returns a message if the
 condition is not met.
 
 `stop_if_not` is quite the same as `assert_that` from the {assertthat}
@@ -375,7 +376,7 @@ package, except that it can takes mappers. It is not the same as base
 
 These functions are also flexible as you can pass base predicates
 (is.numeric, is.character…), a custom predicate built with mappers, or
-even your own testing function.
+even your own predicate function.
 
 You can either choose a custom message or just let the built-in messages
 be printed:
@@ -451,7 +452,7 @@ That can come really handy inside a function :
 
 ``` r
 my_fun <- function(x){
-  stop_if_not(.p = curl::has_internet, 
+  stop_if_not(.x = curl::has_internet(), 
               msg = "You should have internet to do that")
   warn_if_not(x, 
           is.character, 

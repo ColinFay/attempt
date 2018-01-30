@@ -1,8 +1,7 @@
 #' Attempt
 #'
-#' Wrappers around base try that allows you to set a custom message when an error/warning occurs.
-#' \code{attempt} returns the value if there is no error nor message. \code{silent_attempt} stays
-#' silent unless error or warning.
+#' A wrapper around base try that allows you to set a custom message when an error/warning occurs.
+#' \code{attempt} returns the value if there is no error nor message.
 #'
 #' @param expr the expression to be evaluated
 #' @param msg the message to return if an error occurs
@@ -25,10 +24,10 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
                    .w = function(.x) return(.x))
   if (any( class(res) %in% c("error", "warning"))) {
     if (! is.null(msg)) {
-      if(any(class(res) %in% c("error", "warning"))) res$message <- msg
+      res$message <- msg
     }
     if (! verbose) {
-      if(any(class(res) %in% c("error", "warning"))) res$call <- NULL
+      res$call <- NULL
     }
     if (! silent) {
       cat(paste(res), file = getOption("try.outFile", default = stderr()))
