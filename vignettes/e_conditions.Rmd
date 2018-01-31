@@ -77,9 +77,9 @@ If you need to call a function that takes no argument at `.p`, use this function
 ```{r}
 true <- function() TRUE
 false <- function() FALSE
-stop_if(.x =  true, msg = "This is true")
+stop_if(.x =  true(), msg = "This is true")
 
-warn_if(false(), 
+warn_if_not(false(), 
             msg = "This is false")
 
 message_if(.x = true(), 
@@ -100,8 +100,6 @@ That can come really handy inside a function :
 
 ```{r}
 my_fun <- function(x){
-  stop_if_not(.p = true, 
-              msg = "You should have internet to do that")
   warn_if_not(x, 
           is.character, 
           msg =  "x is not a character vector. The output may not be what you're expecting.")

@@ -44,7 +44,16 @@ if_any(a, .f = ~ print("nop!"))
 if_then(1, is.numeric, ~ return("nop!"))
 ```
 
-And `if_else` is a wrapper around `base::ifelse()` : 
+`if_not` runs `.f` if `.p(.x)` is not TRUE : 
+
+```{r}
+if_not(.x = 1, .p = is.character, ~ ".x is not a character")
+```
+
+
+And `if_else` is a wrapper around `base::ifelse()` that works with mappers. 
+
+If you want these function to return a value, you need to wrap these values into a mapper / a function. E.g, to return a vector, you'll need to write `if_then(1, is.numeric, ~ "Yay")`.
 
 ```{r eval=TRUE}
 a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))

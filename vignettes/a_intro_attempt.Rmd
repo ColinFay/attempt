@@ -79,8 +79,8 @@ Adverbs take a function and return a modified function.
 ### if 
 
 + `if_none`, `if_any` and `if_all` test the elements of the list. 
-+ `if_then` perfoms a "if this then that"
-+ `if_else` is a wrapper around `base::ifelse()` that can take mappers. 
++ `if_then` perfoms a "if this then that".
++ `if_else` is a wrapper around `base::ifelse()` that works with mappers. 
 
 ### conditions 
 
@@ -89,7 +89,13 @@ Adverbs take a function and return a modified function.
 
 ## About mappers 
 
-Mappers are function built like one sided formulas. In other words, `~ .x + 2` is the equivalent to `function(x) return(x + 2)`. The first argument in a mapper need to be `.x`.
+Mappers are functions built like one sided formulas. 
+
+In other words, `~ .x + 2` is the equivalent of `function(x) return(x + 2)`. 
+
+The first argument in a mapper need to be `.x`.
+
+[More on mappers](http://colinfay.me/purrr-mappers/).
 
 # Misc
 

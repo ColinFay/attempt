@@ -42,7 +42,6 @@ Of course the result is returned if there is one:
 
 ```{r}
 attempt(log(1), msg = "Nop !", verbose = TRUE)
-# [1] 0
 ```
 
 As with `try`, the result cant be saved as an error object : 
@@ -73,9 +72,9 @@ silent_attempt(log(1))
 You can write a try catch with these params : 
 
 + `expr` the expression to be evaluated 
-+ `.e` a one side formula or a function evaluated when an error occurs
-+ `.w` a one side formula or a function evaluated when a warning occurs
-+ `.f` a one side formula or an expression which is always evaluated before returning or exiting
++ `.e` a mapper or a function evaluated when an error occurs
++ `.w` a mapper or a function evaluated when a warning occurs
++ `.f` a mapper or an expression which is always evaluated before returning or exiting
 
 In `.e` and `.f`, the `.x` refers to the error / warning object.
 

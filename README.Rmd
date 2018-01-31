@@ -110,9 +110,9 @@ silent_attempt(log(1))
 You can write a try catch with these params : 
 
 + `expr` the expression to be evaluated 
-+ `.e` a one side formula or a function evaluated when an error occurs
-+ `.w` a one side formula or a function evaluated when a warning occurs
-+ `.f` a one side formula or an expression which is always evaluated before returning or exiting
++ `.e` a mapper or a function evaluated when an error occurs
++ `.w` a mapper or a function evaluated when a warning occurs
++ `.f` a mapper or an expression which is always evaluated before returning or exiting
 
 In `.e` and `.f`, the `.x` refers to the error / warning object.
 
@@ -284,7 +284,7 @@ as_num_warn("1")
 ```{r eval=TRUE}
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
 
-if_any(1:10, is.numeric, ~ print("Yay!"))
+if_any(1:10, is.numeric, ~ "Yay!")
 
 if_none(1:10, is.character, ~ rnorm(10))
 ```
@@ -294,19 +294,29 @@ The defaut for all `.p` is `isTRUE`. So you can:
 ```{r eval=TRUE}
 a <- c(FALSE, TRUE, TRUE, TRUE)
 
-if_any(a, .f = ~ print("nop!"))
+if_any(a, .f = ~ "nop!")
 ```
 
 `if_then` performs a simple "if this then do that":
 
 ```{r eval=TRUE}
-if_then(1, is.numeric, ~ return("nop!"))
+if_then(1, is.numeric, ~ "nop!")
 ```
 
-And `if_else` is a wrapper around `base::ifelse()` : 
+`if_not` runs `.f` if `.p(.x)` is not TRUE : 
+
+```{r eval = TRUE}
+if_not(.x = 1, .p = is.character, ~ ".x is not a character")
+```
+
+
+
+And `if_else` is a wrapper around `base::ifelse()`. 
+
+If you want these function to return a value, you need to wrap these values into a mapper / a function. E.g, to return a vector, you'll need to write `if_then(1, is.numeric, ~ "Yay")`.
 
 ```{r eval=TRUE}
-a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
+a <- if_else(1, is.numeric, ~ "Yay", ~ "Nay")
 a
 ```
 
@@ -321,7 +331,7 @@ These functions are also flexible as you can pass base predicates (is.numeric, i
 
 You can either choose a custom message or just let the built-in messages be printed:
 
-```{r}
+```{r eval = TRUE}
 x <- 12
 # Stop if .x is numeric
 stop_if(.x = x, 
@@ -367,7 +377,7 @@ message_if(.x = e,
 
 If you need to call a function that takes no argument at `.p` (like `curl::has_internet()`), use this function as `.x`. 
 
-```{r}
+```{r eval = TRUE}
 stop_if(.x = curl::has_internet(), msg = "You shouldn't have internet to do that")
 
 warn_if(.x = curl::has_internet(), 
@@ -379,7 +389,7 @@ message_if(.x = curl::has_internet(),
 
 If you don't specify a `.p`, the default test is `isTRUE`.
 
-```{r}
+```{r eval = TRUE}
 a <- is.na(airquality$Ozone)
 message_if_any(a, msg = "NA found")
 ```
@@ -389,7 +399,7 @@ message_if_any(a, msg = "NA found")
 
 That can come really handy inside a function : 
 
-```{r}
+```{r eval = TRUE}
 my_fun <- function(x){
   stop_if_not(.x = curl::has_internet(), 
               msg = "You should have internet to do that")
@@ -406,7 +416,7 @@ my_fun(head(iris))
 
 `stop_if`, `warn_if` and `message_if` all have complementary tests with `_all`, `_any` and `_none`, which combine the `if_*` and the `warn_*`, `stop_*` and `message_*` seen before. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate. 
 
-```{r}
+```{r eval = TRUE}
 stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors.")
 
 warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero.")

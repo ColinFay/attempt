@@ -106,11 +106,10 @@ silent_attempt(log(1))
 You can write a try catch with these params :
 
   - `expr` the expression to be evaluated
-  - `.e` a one side formula or a function evaluated when an error occurs
-  - `.w` a one side formula or a function evaluated when a warning
-    occurs
-  - `.f` a one side formula or an expression which is always evaluated
-    before returning or exiting
+  - `.e` a mapper or a function evaluated when an error occurs
+  - `.w` a mapper or a function evaluated when a warning occurs
+  - `.f` a mapper or an expression which is always evaluated before
+    returning or exiting
 
 In `.e` and `.f`, the `.x` refers to the error / warning object.
 
@@ -331,12 +330,12 @@ as_num_warn("1")
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
 #>  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"
 
-if_any(1:10, is.numeric, ~ print("Yay!"))
+if_any(1:10, is.numeric, ~ "Yay!")
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1]  0.72675483 -0.03257570 -0.68215448 -1.14385214 -1.35260098
-#>  [6] -0.97330416  0.01710774  0.57979007 -0.51538432 -1.34973851
+#>  [1]  0.71995881  1.06839003  0.48419151  0.45529862 -1.05765724
+#>  [6] -0.05397373  0.86143523 -0.70465428 -0.15123493 -0.90543977
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:
@@ -344,21 +343,32 @@ The defaut for all `.p` is `isTRUE`. So you can:
 ``` r
 a <- c(FALSE, TRUE, TRUE, TRUE)
 
-if_any(a, .f = ~ print("nop!"))
+if_any(a, .f = ~ "nop!")
 #> [1] "nop!"
 ```
 
 `if_then` performs a simple “if this then do that”:
 
 ``` r
-if_then(1, is.numeric, ~ return("nop!"))
+if_then(1, is.numeric, ~ "nop!")
 #> [1] "nop!"
 ```
 
-And `if_else` is a wrapper around `base::ifelse()` :
+`if_not` runs `.f` if `.p(.x)` is not TRUE :
 
 ``` r
-a <- if_else(1, is.numeric, ~ return("Yay"), ~ return("Nay"))
+if_not(.x = 1, .p = is.character, ~ ".x is not a character")
+#> Error in if_not(.x = 1, .p = is.character, ~".x is not a character"): impossible de trouver la fonction "if_not"
+```
+
+And `if_else` is a wrapper around `base::ifelse()`.
+
+If you want these function to return a value, you need to wrap these
+values into a mapper / a function. E.g, to return a vector, you’ll need
+to write `if_then(1, is.numeric, ~ "Yay")`.
+
+``` r
+a <- if_else(1, is.numeric, ~ "Yay", ~ "Nay")
 a
 #> [1] "Yay"
 ```
@@ -386,34 +396,40 @@ x <- 12
 # Stop if .x is numeric
 stop_if(.x = x, 
         .p = is.numeric)
+#> Error: Test `is.numeric` on `x` returned an error.
 
 y <- "20"
 # stop if .x is not numeric
 stop_if_not(.x = y, 
             .p = is.numeric, 
             msg = "y should be numeric")
+#> Error: y should be numeric
 a  <- "this is not numeric"
 # Warn if .x is charcter
 warn_if(.x = a, 
         .p = is.character)
+#> Warning: Test `is.character` on `a` returned a warning.
 
 b  <- 20
 # Warn if .x is not equal to 10
 warn_if_not(.x = b, 
         .p = ~ .x == 10 , 
         msg = "b should be 10")
+#> Warning: b should be 10
 
 c <- "a"
 # Message if c is a character
 message_if(.x = c, 
            .p = is.character, 
            msg = "You entered a character element")
+#> You entered a character element
 
 # Build more complex predicates
 d <- 100
 message_if(.x = d, 
            .p = ~ sqrt(.x) < 42, 
            msg = "The square root of your element must be more than 42")
+#> The square root of your element must be more than 42
 
 # Or, if you're kind of old school, you can still pass classic functions
 
@@ -423,6 +439,7 @@ message_if(.x = e,
              return(sqrt(vec) < 42)
            }, 
            msg = "The square root of your element must be more than 42")
+#> The square root of your element must be more than 42
 ```
 
 If you need to call a function that takes no argument at `.p` (like
@@ -431,12 +448,15 @@ If you need to call a function that takes no argument at `.p` (like
 
 ``` r
 stop_if(.x = curl::has_internet(), msg = "You shouldn't have internet to do that")
+#> Error: You shouldn't have internet to do that
 
 warn_if(.x = curl::has_internet(), 
             msg = "You shouldn't have internet to do that")
+#> Warning: You shouldn't have internet to do that
 
 message_if(.x = curl::has_internet(), 
             msg = "Huray, you have internet \\o/")
+#> Huray, you have internet \o/
 ```
 
 If you don’t specify a `.p`, the default test is `isTRUE`.
@@ -444,6 +464,7 @@ If you don’t specify a `.p`, the default test is `isTRUE`.
 ``` r
 a <- is.na(airquality$Ozone)
 message_if_any(a, msg = "NA found")
+#> NA found
 ```
 
 ### In function
@@ -461,6 +482,13 @@ my_fun <- function(x){
 }
 
 my_fun(head(iris))
+#> Warning: x is not a character vector. The output may not be what you're
+#> expecting.
+#> [1] "c(5.1, 4.9, 4.7, 4.6, 5, 5.4) is the value."  
+#> [2] "c(3.5, 3, 3.2, 3.1, 3.6, 3.9) is the value."  
+#> [3] "c(1.4, 1.4, 1.3, 1.5, 1.4, 1.7) is the value."
+#> [4] "c(0.2, 0.2, 0.2, 0.2, 0.2, 0.4) is the value."
+#> [5] "c(1, 1, 1, 1, 1, 1) is the value."
 ```
 
 ### none, all, any
@@ -474,10 +502,13 @@ predicate.
 
 ``` r
 stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors.")
+#> Error: Factors here. This might be due to stringsAsFactors.
 
 warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero.")
+#> Warning: You need to have at least one number under zero.
 
 message_if_all(1:100, is.numeric, msg = "That makes a lot of numbers.")
+#> That makes a lot of numbers.
 ```
 
 # Misc

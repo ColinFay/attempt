@@ -13,14 +13,14 @@ if_any(.l, .p = isTRUE, .f)
 if_none(.l, .p = isTRUE, .f)
 }
 \arguments{
-\item{.l}{the list to test}
+\item{.l}{the list to test.}
 
-\item{.p}{the predicate for testing}
+\item{.p}{the predicate for testing. Defaut is \code{isTRUE}.}
 
-\item{.f}{what to do if TRUE}
+\item{.f}{a mapper or a function run if .p(.x) is TRUE.}
 }
 \value{
-the result in .f
+If .p(.x) is TRUE, .f() is run.
 }
 \description{
 Test for all, any or none
