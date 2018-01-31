@@ -6,7 +6,7 @@ status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travi
 status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/attempt?branch=master)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)
-[![](http://cranlogs.r-pkg.org/badges/attempt)](http://cran.rstudio.com/web/packages/attempt/index.html)
+[![](https://cranlogs.r-pkg.org/badges/attempt)](https://cran.rstudio.com/web/packages/attempt/index.html)
 
 # {attempt} 0.2.0
 
@@ -334,8 +334,8 @@ if_any(1:10, is.numeric, ~ "Yay!")
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1]  0.71995881  1.06839003  0.48419151  0.45529862 -1.05765724
-#>  [6] -0.05397373  0.86143523 -0.70465428 -0.15123493 -0.90543977
+#>  [1] -0.2013170 -0.1576704  0.4654674  0.9105287 -0.1351854  1.0999671
+#>  [7] -0.9887852 -1.0671943  1.7300508 -1.1688721
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:
