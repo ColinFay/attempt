@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![Travis build status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travis-ci.org/ColinFay/attempt)   [![Coverage status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/attempt?branch=master)  [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)  [![](https://cranlogs.r-pkg.org/badges/attempt)](https://cran.rstudio.com/web/packages/attempt/index.html)
 
  
-# {attempt} 0.2.0
+# {attempt} 0.2.1
 
 A Friendlier Condition Handler for R, inspired by {purrr} mappers and based on {rlang}.
 
@@ -275,6 +275,16 @@ as_num_msg <- with_message(as.numeric, msg = "We're performing a numeric convers
 as_num_warn <- with_warning(as.numeric, msg = "We're performing a numeric conversion")
 as_num_msg("1")
 as_num_warn("1")
+```
+
+### `without_message` and `withou_warning`
+
+These two functions do the opposite, as they remove warnings and messages: 
+
+```{r}
+matrix(1:3, ncol = 2)
+no_warning_matrix <- without_warning(matrix)
+no_warning_matrix(1:3, ncol = 2)
 ```
 
 ## `if_` conditions

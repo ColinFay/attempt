@@ -8,7 +8,7 @@ status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](h
 Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)
 [![](https://cranlogs.r-pkg.org/badges/attempt)](https://cran.rstudio.com/web/packages/attempt/index.html)
 
-# {attempt} 0.2.0
+# {attempt} 0.2.1
 
 A Friendlier Condition Handler for R, inspired by {purrr} mappers and
 based on {rlang}.
@@ -322,6 +322,17 @@ as_num_warn("1")
 #> [1] 1
 ```
 
+### `without_message` and `withou_warning`
+
+These two functions do the opposite, as they remove warnings and
+messages:
+
+``` r
+matrix(1:3, ncol = 2)
+no_warning_matrix <- without_warning(matrix)
+no_warning_matrix(1:3, ncol = 2)
+```
+
 ## `if_` conditions
 
 `if_none`, `if_any` and `if_all` test the elements of the list.
@@ -334,8 +345,8 @@ if_any(1:10, is.numeric, ~ "Yay!")
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1] -0.2013170 -0.1576704  0.4654674  0.9105287 -0.1351854  1.0999671
-#>  [7] -0.9887852 -1.0671943  1.7300508 -1.1688721
+#>  [1] -1.354288865 -1.049826692 -1.378733301  0.005942126 -1.380438418
+#>  [6]  0.353616730 -0.489985293 -0.019115143 -2.262219617 -0.295913462
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:
@@ -358,7 +369,7 @@ if_then(1, is.numeric, ~ "nop!")
 
 ``` r
 if_not(.x = 1, .p = is.character, ~ ".x is not a character")
-#> Error in if_not(.x = 1, .p = is.character, ~".x is not a character"): impossible de trouver la fonction "if_not"
+#> [1] ".x is not a character"
 ```
 
 And `if_else` is a wrapper around `base::ifelse()`.
