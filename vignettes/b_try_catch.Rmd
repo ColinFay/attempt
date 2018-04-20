@@ -66,7 +66,6 @@ silent_attempt(log("a"))
 silent_attempt(log(1))
 ```
 
-
 ## try catch
 
 You can write a try catch with these params : 
