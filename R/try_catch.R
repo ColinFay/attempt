@@ -26,17 +26,14 @@
 #' }
 
 try_catch <- function(expr, .e = NULL, .w = NULL, .f = NULL) {
-  args <- list(substitute(expr))
-  if ( !is.null(.e) ) {
-    args <- c(args, error = as_function(.e))
-  }
-  if ( !is.null(.w) ) {
-    args <- c(args, warning = as_function(.w))
-  }
-  if ( !is.null(.f) ) {
-    as_function(.f)()
-  }
-  eval(lang("tryCatch", splice(args)))
+
+  if ( !is.null(.f) ) as_function(.f)()
+
+  if (is.null(.e) & is.null(.w)) tryCatch(expr)
+  else if (!is.null(.e) & is.null(.w)) tryCatch(expr, error = as_function(.e))
+  else if (is.null(.e) & !is.null(.w)) tryCatch(expr, warning = as_function(.w))
+  else if (!is.null(.e) & !is.null(.w)) tryCatch(expr, error = as_function(.e), warning = as_function(.w))
+
 }
 
 #' @rdname try_catch

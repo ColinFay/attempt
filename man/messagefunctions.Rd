@@ -3,11 +3,17 @@
 \name{with_message}
 \alias{with_message}
 \alias{with_warning}
-\title{Add a message or warning to a function}
+\alias{without_message}
+\alias{without_warning}
+\title{Manipulate messages and warnings}
 \usage{
 with_message(.f, msg)
 
 with_warning(.f, msg)
+
+without_message(.f)
+
+without_warning(.f)
 }
 \arguments{
 \item{.f}{the function to wrap}
@@ -18,7 +24,8 @@ with_warning(.f, msg)
 a function
 }
 \description{
-Add a message or warning to a function
+\code{with_message} and \code{with_warning} add a warning or a message to a function.
+\code{without_message} and \code{without_warning} turn the warning and message off.
 }
 \examples{
 msg_as_num <- with_message(as.numeric, msg = "Numeric conversion")

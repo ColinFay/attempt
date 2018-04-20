@@ -106,7 +106,10 @@ surely <- function (.f) {
 
 silent_attempt <- silently(~ attempt(expr = .x, silent = TRUE))
 
-#' Add a message or warning to a function
+#' Manipulate messages and warnings
+#'
+#' \code{with_message} and \code{with_warning} add a warning or a message to a function.
+#' \code{without_message} and \code{without_warning} turn the warning and message off.
 #'
 #' @param .f the function to wrap
 #' @param msg the message to print
@@ -139,4 +142,27 @@ with_warning <- function (.f, msg) {
     .f(...)
   }
 }
+
+#' @export
+#'
+#' @rdname messagefunctions
+#'
+
+without_message <-  function (.f) {
+  .f <- as_function(.f)
+  function(...) {
+    suppressMessages(.f(...))
+  }
+}
+
+#' @export
+#' @rdname messagefunctions
+
+without_warning <-  function (.f) {
+  .f <- as_function(.f)
+  function(...) {
+    suppressWarnings(.f(...))
+  }
+}
+
 
