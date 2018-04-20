@@ -79,7 +79,7 @@ test_that("map_try_catch works", {
   expect_that(b$error[1], function(x) is.na(x))
   expect_is(b$value, "list")
   expect_equal(b$value[[1]], 0)
-  c <- map_try_catch_df("plop", warning)
+  c <- suppressWarnings(map_try_catch_df("plop", warning))
   expect_is(c, "tbl_df")
   expect_is(c, "tbl")
   expect_is(c, "data.frame")

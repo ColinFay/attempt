@@ -1,3 +1,8 @@
+# attempt 0.2.1
+
+* Bug fix regarding try_catch and variables
+* Two new functions: without_message and without_warning
+
 # attempt 0.2.0
 
 * Bug fix and performance optimisation
