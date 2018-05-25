@@ -277,7 +277,7 @@ as_num_msg("1")
 as_num_warn("1")
 ```
 
-### `without_message` and `withou_warning`
+### `without_message` and `without_warning`
 
 These two functions do the opposite, as they remove warnings and messages: 
 
