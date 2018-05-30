@@ -10,7 +10,7 @@ Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?bran
 
 # {attempt} 0.2.1
 
-![](README-fig/attempt.png)
+![](README-fig/attempt_hex.png)
 
 A Friendlier Condition Handler for R, inspired by {purrr} mappers and
 based on {rlang}.
@@ -347,8 +347,8 @@ if_any(1:10, is.numeric, ~ "Yay!")
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1]  0.78658945  0.97987440  0.93384178  0.35672351 -0.98365879
-#>  [6]  0.07475291  0.40735668 -1.36043781 -0.16992910  1.15252941
+#>  [1] -1.0800925  1.4836081  1.3886694  1.7570130  0.1790024 -0.8207485
+#>  [7]  0.4520467  0.8442886  0.0846469  0.1582374
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:
