@@ -10,6 +10,8 @@ Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?bran
 
 # {attempt} 0.2.1
 
+![](README-fig/attempt.png)
+
 A Friendlier Condition Handler for R, inspired by {purrr} mappers and
 based on {rlang}.
 
@@ -322,7 +324,7 @@ as_num_warn("1")
 #> [1] 1
 ```
 
-### `without_message` and `withou_warning`
+### `without_message` and `without_warning`
 
 These two functions do the opposite, as they remove warnings and
 messages:
@@ -345,8 +347,8 @@ if_any(1:10, is.numeric, ~ "Yay!")
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1]  1.4009622 -0.1283071  0.5897866 -0.5866992  0.7000602 -1.2195835
-#>  [7] -0.5577498 -1.2972518 -3.2927561  0.1351306
+#>  [1]  0.78658945  0.97987440  0.93384178  0.35672351 -0.98365879
+#>  [6]  0.07475291  0.40735668 -1.36043781 -0.16992910  1.15252941
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:

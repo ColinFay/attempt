@@ -21,6 +21,8 @@ knitr::opts_chunk$set(
  
 # {attempt} 0.2.1
 
+![](README-fig/attempt.png)
+
 A Friendlier Condition Handler for R, inspired by {purrr} mappers and based on {rlang}.
 
 {attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. 
