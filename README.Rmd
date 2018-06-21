@@ -27,7 +27,7 @@ A Friendlier Condition Handler for R, inspired by {purrr} mappers and based on {
 
 {attempt} is designed to handle the cases when something / someone attempts to do something it shouldn't. 
 
-For example : 
+For example: 
 
 + an attempt to run a `log("a")` (error)
 + an attempt to connect to a web API without an internet connexion (error)
@@ -109,7 +109,7 @@ silent_attempt(log(1))
 
 ## try catch
 
-You can write a try catch with these params : 
+You can write a try catch with these params: 
 
 + `expr` the expression to be evaluated 
 + `.e` a mapper or a function evaluated when an error occurs
@@ -142,7 +142,7 @@ try_catch(expr = 2 + 2 ,
 # [1] 4
 ```
 
-As usual, the handlers are set only if you call them : 
+As usual, the handlers are set only if you call them: 
 
 ```{r}
 try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
@@ -409,7 +409,7 @@ message_if_any(a, msg = "NA found")
 
 ### In function
 
-That can come really handy inside a function : 
+That can come really handy inside a function: 
 
 ```{r eval = TRUE}
 my_fun <- function(x){
