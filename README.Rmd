@@ -84,7 +84,7 @@ attempt(log(1), msg = "Nop !", verbose = TRUE)
 # [1] 0
 ```
 
-As with `try`, the result cant be saved as an error object: 
+As with `try`, the result can be saved as an error object: 
 
 ```{r}
 a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
