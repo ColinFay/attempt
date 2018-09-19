@@ -113,7 +113,7 @@ You can write a try catch with these params :
   - `.f` a mapper or an expression which is always evaluated before
     returning or exiting
 
-In `.e` and `.f`, the `.x` refers to the error / warning object.
+In `.e` and `.w`, the `.x` refers to the error / warning object.
 
 ### With mappers
 
