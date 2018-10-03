@@ -6,7 +6,7 @@ test_that("any, all and none works", {
                                 .p = is.character,
                                 msg = "This is character only"))
 
-  expect_message(message_if_none(.l = letters,
+  expect_message(message_if_none(.l = 1:10,
                                  .p = function(vec){
                                    is.numeric(vec)
                                  },
