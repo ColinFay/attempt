@@ -18,7 +18,7 @@ based on {rlang}.
 {attempt} is designed to handle the cases when something / someone
 attempts to do something it shouldn’t.
 
-For example :
+For example:
 
   - an attempt to run a `log("a")` (error)
   - an attempt to connect to a web API without an internet connexion
@@ -60,7 +60,7 @@ custom messsage on error.
 
 ``` r
 attempt(log("a"))
-# Error: argument non numérique pour une fonction mathématique
+# Error: non-numeric argument to mathematical function
 attempt(log("a"), msg = "Nop !")
 # Error: Nop !
 ```
@@ -79,7 +79,7 @@ attempt(log(1), msg = "Nop !", verbose = TRUE)
 # [1] 0
 ```
 
-As with `try`, the result cant be saved as an error object:
+As with `try`, the result can be saved as an error object:
 
 ``` r
 a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
@@ -99,13 +99,13 @@ the expression succeeds, and returns error or warnings if any.
 
 ``` r
 silent_attempt(log("a"))
-# Error: argument non numérique pour une fonction mathématique
+# Error: non-numeric argument to mathematical function
 silent_attempt(log(1))
 ```
 
 ## try catch
 
-You can write a try catch with these params :
+You can write a try catch with these params:
 
   - `expr` the expression to be evaluated
   - `.e` a mapper or a function evaluated when an error occurs
@@ -113,7 +113,7 @@ You can write a try catch with these params :
   - `.f` a mapper or an expression which is always evaluated before
     returning or exiting
 
-In `.e` and `.w`, the `.x` refers to the error / warning object.
+In `.e` and `.f`, the `.x` refers to the error / warning object.
 
 ### With mappers
 
@@ -121,17 +121,17 @@ In `.e` and `.w`, the `.x` refers to the error / warning object.
 try_catch(expr = log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
-#[1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+#[1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"
 
 try_catch(log("a"), 
           .e = ~ stop(.x), 
           .w = ~ warning(.x))
-# Error in log("a") : argument non numérique pour une fonction mathématique
+# Error in log("a") : non-numeric argument to mathematical function
 
 try_catch(matrix(1:3, nrow= 2), 
           .e = ~ print(.x), 
           .w = ~ print(.x))
-#<simpleWarning in matrix(1:3, nrow = 2): la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]>
+#<simpleWarning in matrix(1:3, nrow = 2): data length [3] is not a sub-multiple or multiple of the number of rows [2]>
 
 try_catch(expr = 2 + 2 , 
           .f = ~ print("Using R for addition... ok I'm out!"))
@@ -139,7 +139,7 @@ try_catch(expr = 2 + 2 ,
 # [1] 4
 ```
 
-As usual, the handlers are set only if you call them :
+As usual, the handlers are set only if you call them:
 
 ``` r
 try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
@@ -148,7 +148,7 @@ try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
 # [2,]    2    1
 # Warning message:
 # In matrix(1:3, nrow = 2) :
-#   la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
+# data length [3] is not a sub-multiple or multiple of the number of rows [2]
 ```
 
 ``` r
@@ -174,7 +174,7 @@ try_catch(log("a"),
             print("let's move on now")
           })
 
-# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+# [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"
 # [1] "Ok, let's save this"
 # [1] "log saved on log.txt at 2018-01-30 16:59:13"
 # [1] "let's move on now"
@@ -189,13 +189,13 @@ try_catch(log("a"),
           },
           .f = ~ print("I'm not sure you can do that pal !"))
 # [1] "I'm not sure you can do that pal !"
-# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+# [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"
 
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x),
           .f = function() print("I'm not sure you can do that pal !"))
 # [1] "I'm not sure you can do that pal !"
-# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+# [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"
 ```
 
 ### try\_catch\_df
@@ -207,10 +207,8 @@ the warning message if any, and the value of the evaluated expression or
 ``` r
 res_log <- try_catch_df(log("a"))
 res_log
-#>       call                                                 error warning
-#> 1 log("a") argument non numérique pour une fonction mathématique      NA
-#>   value
-#> 1 error
+#>       call                                         error warning value
+#> 1 log("a") non-numeric argument to mathematical function      NA error
 res_log$value
 #> [[1]]
 #> [1] "error"
@@ -219,8 +217,8 @@ res_matrix <- try_catch_df(matrix(1:3, nrow = 2))
 res_matrix
 #>                    call error
 #> 1 matrix(1:3, nrow = 2)    NA
-#>                                                                                    warning
-#> 1 la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
+#>                                                                       warning
+#> 1 data length [3] is not a sub-multiple or multiple of the number of rows [2]
 #>        value
 #> 1 1, 2, 3, 1
 res_matrix$value
@@ -252,17 +250,17 @@ map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
 #> [1] 1.098612
 #> 
 #> [[3]]
-#> <simpleError in .Primitive("log")("a"): argument non numérique pour une fonction mathématique>
+#> <simpleError in .Primitive("log")("a"): non-numeric argument to mathematical function>
 
 map_try_catch_df(list(1,3,"a"), log)
-#>                     call
-#> 1   .Primitive("log")(1)
-#> 2   .Primitive("log")(3)
-#> 3 .Primitive("log")("a")
-#>                                                   error warning    value
-#> 1                                                  <NA>      NA        0
-#> 2                                                  <NA>      NA 1.098612
-#> 3 argument non numérique pour une fonction mathématique      NA    error
+#>                     call                                         error
+#> 1   .Primitive("log")(1)                                          <NA>
+#> 2   .Primitive("log")(3)                                          <NA>
+#> 3 .Primitive("log")("a") non-numeric argument to mathematical function
+#>   warning    value
+#> 1      NA        0
+#> 2      NA 1.098612
+#> 3      NA    error
 ```
 
 ## Adverbs
@@ -280,7 +278,7 @@ function stay silent unless error or warning.
 silent_log <- silently(log)
 silent_log(1)
 silent_log("a")
-# Error in .f(...) : argument non numérique pour une fonction mathématique
+# Error in .f(...) : non-numeric argument to mathematical function
 ```
 
 With `silently`, the result is never returned.
@@ -290,7 +288,7 @@ silent_matrix <- silently(matrix)
 silent_matrix(1:3, 2)
 #Warning message:
 #In .f(...) :
-#  la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
+#  data length [3] is not a sub-multiple or multiple of the number of rows [2]
 ```
 
 ### surely
@@ -305,7 +303,7 @@ sure_log <- surely(log)
 sure_log(1)
 # [1] 0
 sure_log("a")
-# Error: argument non numérique pour une fonction mathématique
+# Error: non-numeric argument to mathematical function
 ```
 
 ### `with_message` and `with_warning`
@@ -347,8 +345,8 @@ if_any(1:10, is.numeric, ~ "Yay!")
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1]  0.35121495 -0.88159849  0.87312948  0.15687024  0.52992442
-#>  [6]  0.39311169 -0.33861317  0.81177818  0.06984542  1.87107021
+#>  [1]  0.2399378  1.0329307 -0.5179099 -0.2294044 -0.1514958 -0.7109795
+#>  [7] -0.2612638  0.5054729  0.6268615 -1.5648196
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:
@@ -482,7 +480,7 @@ message_if_any(a, msg = "NA found")
 
 ### In function
 
-That can come really handy inside a function :
+That can come really handy inside a function:
 
 ``` r
 my_fun <- function(x){
