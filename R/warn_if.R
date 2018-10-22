@@ -16,7 +16,7 @@
 #' @examples
 #' \dontrun{
 #' x <- 12
-#' stop_if(x, is.numeric)
+#' stop_if(x, ~ .x > 13)
 #' stop_if_not(x, is.character)
 #'
 #' a  <- "this is not numeric"
