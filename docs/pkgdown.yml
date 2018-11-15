@@ -1,0 +1,11 @@
+pandoc: 2.2.2.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  a_intro_attempt: a_intro_attempt.html
+  b_try_catch: b_try_catch.html
+  c_adverbs: c_adverbs.html
+  d_if: d_if.html
+  e_conditions: e_conditions.html
+  tests_and_coverage: tests_and_coverage.html
+
