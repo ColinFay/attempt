@@ -1,9 +1,9 @@
 Package: attempt
-Title: Easy Condition Handling
-Version: 0.2.1
+Title: Tools for Defensive Programming
+Version: 0.3.0.9000
 Authors@R: person("Colin", "Fay", email = "contact@colinfay.me", role = c("aut", "cre"))
-Description: A friendlier condition handler, inspired by 'purrr' mappers and 
-    based on 'rlang'.'attempt' extends and facilitates condition handling by 
+Description: Tools for defensive programming, inspired by 'purrr' mappers and 
+    based on 'rlang'.'attempt' extends and facilitates defensive programming by 
     providing a consistent grammar, and provides a set of easy to use functions 
     for common tests and conditions. 'attempt' only depends on 'rlang', and 
     focuses on speed, so it can be easily integrated in other functions and 
@@ -18,4 +18,4 @@ Suggests:
 VignetteBuilder: knitr
 Imports: 
     rlang
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0

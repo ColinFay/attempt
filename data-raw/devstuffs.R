@@ -45,3 +45,9 @@ bulk_check <- function(){
 }
 bulk_check()
 
+#
+devtools::document()
+devtools::build_vignettes()
+covrpage::covrpage()
+covrpage::use_covrpage_vignette()
+pkgdown::build_site()
