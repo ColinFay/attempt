@@ -1,0 +1,15 @@
+bookdown::gitbook:
+  css: style.css
+  config:
+    toc:
+      before: |
+        <h3>&nbsp;&nbsp;&nbsp;{testdown} report</h3>
+      after: |
+        <li><a href="https://github.com/ThinkR-open/testdown" target="blank">Built with {testdown} and {bookdown}</a></li>
+bookdown::pdf_book:
+  includes:
+    in_header: preamble.tex
+  latex_engine: xelatex
+  citation_package: natbib
+  keep_tex: yes
+bookdown::epub_book: default

@@ -18,7 +18,7 @@ This function behaves as `on.exit()`, but is run on error, and supports mappers.
 \examples{
 
 y <- function(num){
-  on_error(~ write( Sys.time(), "error_log.txt", append = TRUE))
+  on_error(~ write( Sys.time(), "error_log.txt", append = TRUE) )
   log(num)
 }
 

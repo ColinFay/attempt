@@ -1,5 +1,6 @@
 # attempt 0.3.0.9000
 
+* New `is_try_error()` function that tests if an object is of class "try-error".
 * New `on_error()` function, for adding a local error handler.
 * New `discretly()` function, for removing warnings and message.
 
