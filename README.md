@@ -44,7 +44,7 @@ install.packages("attempt")
 The dev version:
 
 ``` r
-devtools::install_github("ColinFay/attempt")
+install.packages("attempt", repo = "https://colinfay.me/ran")
 ```
 
 # Reference
@@ -345,8 +345,8 @@ if_any(1:10, is.numeric, ~ "Yay!")
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1]  0.57987692  0.87053568  0.09341395  0.30916997 -0.12615429
-#>  [6]  0.14737520  1.26895426  0.92950266 -1.93281367  1.15678546
+#>  [1] -1.38027802  0.66220522  1.32721316  0.48161781  1.49041554
+#>  [6] -0.93295765 -0.52554593  0.07388034  1.23698158  0.66735459
 ```
 
 The defaut for all `.p` is `isTRUE`. So you can:

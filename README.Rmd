@@ -49,7 +49,7 @@ install.packages("attempt")
 The dev version:
 
 ```{r eval = FALSE}
-devtools::install_github("ColinFay/attempt")
+install.packages("attempt", repo = "https://colinfay.me/ran")
 ```
 
 # Reference 
