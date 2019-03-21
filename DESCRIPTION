@@ -10,6 +10,7 @@ Description: A friendlier condition handler, inspired by 'purrr' mappers and
     used in data analysis. 
 License: MIT + file LICENSE
 Encoding: UTF-8
+URL: https://github.com/ColinFay/attempt
 LazyData: true
 Suggests: 
     testthat,
