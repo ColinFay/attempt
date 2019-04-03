@@ -1,0 +1,102 @@
+---
+title: "Tests and Coverage"
+date: "`r format(Sys.time(), '%d %B, %Y %H:%M:%S')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{covrpage: Tests and Coverage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+<!--- Placeholder for tests/README.md Do Not Edit--->
+This output is created by
+[covrpage](https://github.com/yonicd/covrpage).
+
+## Coverage
+
+Coverage summary is created using the
+[covr](https://github.com/r-lib/covr) package.
+
+| Object                             | Coverage (%) |
+| :--------------------------------- | :----------: |
+| attempt                            |    87.86     |
+| [R/on\_error.R](https://github.com/ColinFay/trycatchthis/tree/dev/R/on_error.R)   |     0.00     |
+| [R/adverbs.R](https://github.com/ColinFay/trycatchthis/tree/dev/R/adverbs.R)      |    91.30     |
+| [R/if.R](https://github.com/ColinFay/trycatchthis/tree/dev/R/if.R)                |    100.00    |
+| [R/try\_catch.R](https://github.com/ColinFay/trycatchthis/tree/dev/R/try_catch.R) |    100.00    |
+| [R/utils.R](https://github.com/ColinFay/trycatchthis/tree/dev/R/utils.R)          |    100.00    |
+| [R/warn\_if.R](https://github.com/ColinFay/trycatchthis/tree/dev/R/warn_if.R)     |    100.00    |
+
+<br>
+
+## Unit Tests
+
+Unit Test summary is created using the
+[testthat](https://github.com/r-lib/testthat)
+package.
+
+| file                                        |  n |  time | error | failed | skipped | warning |
+| :------------------------------------------ | -: | ----: | ----: | -----: | ------: | ------: |
+| [test-if.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-if.R)             | 78 | 0.103 |     0 |      0 |       0 |       0 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R) | 70 | 0.139 |     0 |      0 |       0 |       0 |
+| [test-utils.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-utils.R)       |  7 | 0.008 |     0 |      0 |       0 |       0 |
+| [test-warn.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-warn.R)         | 40 | 0.069 |     0 |      0 |       0 |       0 |
+
+<details closed>
+
+<summary> Show Detailed Test Results
+</summary>
+
+| file                                             | context             | test                                     | status |  n |  time |
+| :----------------------------------------------- | :------------------ | :--------------------------------------- | :----- | -: | ----: |
+| [test-if.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-if.R#L5_L7)            | if                  | any, all and none works                  | PASS   | 18 | 0.043 |
+| [test-if.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-if.R#L70_L71)          | if                  | if\_then work                            | PASS   | 26 | 0.032 |
+| [test-if.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-if.R#L112)             | if                  | if\_else work                            | PASS   |  7 | 0.006 |
+| [test-if.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-if.R#L126)             | if                  | scoped if works                          | PASS   | 27 | 0.022 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L5)   | trycatch            | errors catching                          | PASS   |  4 | 0.005 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L20)  | trycatch            | warning catching                         | PASS   |  5 | 0.005 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L33)  | trycatch            | finally works                            | PASS   |  2 | 0.010 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L39)  | trycatch            | trycatch works with an external variabel | PASS   |  2 | 0.004 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L47)  | try\_catch\_df      | try\_catch\_df works                     | PASS   | 14 | 0.030 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L68)  | map\_try\_catch     | map\_try\_catch works                    | PASS   | 20 | 0.033 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L97)  | attempt             | attempt works                            | PASS   |  8 | 0.014 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L116) | attempt             | attempt and try work the same way        | PASS   |  3 | 0.009 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L127) | adverbs             | silently works                           | PASS   |  1 | 0.003 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L134) | adverbs             | surely works                             | PASS   |  2 | 0.003 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L139) | adverbs             | silent\_attempt works                    | PASS   |  3 | 0.008 |
+| [test-trycatch.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-trycatch.R#L151) | adverbs             | with\_\* works                           | PASS   |  6 | 0.015 |
+| [test-utils.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-utils.R#L5)         | test-utils.R        | try\_catch\_builder works                | PASS   |  7 | 0.008 |
+| [test-warn.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-warn.R#L5_L6)        | test-warn.R         | stop, warn and message works             | PASS   | 22 | 0.041 |
+| [test-warn.R](https://github.com/ColinFay/trycatchthis/tree/dev/tests/testthat/test-warn.R#L77_L78)      | test-any-all-none.R | any, all and none works                  | PASS   | 18 | 0.028 |
+
+</details>
+
+<details>
+
+<summary> Session Info </summary>
+
+| Field    | Value                               |
+| :------- | :---------------------------------- |
+| Version  | R version 3.4.4 (2018-03-15)        |
+| Platform | x86\_64-apple-darwin15.6.0 (64-bit) |
+| Running  | macOS 10.14                         |
+| Language | en\_US                              |
+| Timezone | Europe/Paris                        |
+
+| Package  | Version    |
+| :------- | :--------- |
+| testthat | 2.0.0.9000 |
+| covr     | 3.2.0      |
+| covrpage | 0.0.65     |
+
+</details>
+
+<!--- Final Status : pass --->

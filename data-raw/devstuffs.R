@@ -6,6 +6,7 @@ use_test("trycatch")
 use_test("warn")
 use_test("utils")
 use_test("if")
+use_test("is_try_error")
 use_vignette("attempt")
 use_vignette("trycatch")
 use_vignette("conditions")
@@ -45,3 +46,9 @@ bulk_check <- function(){
 }
 bulk_check()
 
+#
+devtools::document()
+devtools::build_vignettes()
+covrpage::covrpage()
+covrpage::use_covrpage_vignette()
+pkgdown::build_site()

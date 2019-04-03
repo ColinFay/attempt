@@ -19,9 +19,9 @@ knitr::opts_chunk$set(
 )
 ```
  
-# {attempt} 0.2.1
+# {attempt} 
 
-![](README-fig/attempt_hex_200.png)
+![](https://raw.githubusercontent.com/ColinFay/attempt/master/README-fig/attempt_hex_200.png)
 
 A Friendlier Condition Handler for R, inspired by {purrr} mappers and based on {rlang}.
 
@@ -49,7 +49,7 @@ install.packages("attempt")
 The dev version:
 
 ```{r eval = FALSE}
-devtools::install_github("ColinFay/attempt")
+install.packages("attempt", repo = "https://colinfay.me/ran")
 ```
 
 # Reference 
@@ -57,7 +57,6 @@ devtools::install_github("ColinFay/attempt")
 ```{r eval = TRUE}
 library(attempt)
 ```
-
 
 ## attempt 
 

@@ -47,7 +47,7 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
 #'
 #' @return an error if any, a warning if any. The result is never returned.
 #' @export
-#'
+#' @importFrom rlang as_function
 #' @examples
 #' \dontrun{
 #' silent_log <- silently(log)
@@ -75,6 +75,7 @@ silently <- function (.f) {
 #'
 #' @return an error if any, a warning if any, the result if any
 #' @export
+#' @importFrom rlang as_function
 #'
 #' @examples
 #' \dontrun{
@@ -90,6 +91,29 @@ surely <- function (.f) {
   }
 }
 
+#' discretly
+#'
+#' Prevent a funtion from printing message or warning
+#'
+#' @param .f the function to wrap
+#'
+#' @return an error if any, a warning if any, the result if any
+#' @export
+#' @importFrom rlang as_function
+#'
+#' @examples
+#' \dontrun{
+#' discrete_mat <- discretly(matrix)
+#' discrete_mat(1:3, 2)
+#' }
+
+discretly <- function (.f) {
+  .f <- as_function(.f)
+  function(...) {
+    suppressMessages(suppressWarnings(.f(...)))
+  }
+}
+
 #' Silently attempt
 #'
 #' A wrapper around silently and attempt
@@ -98,6 +122,7 @@ surely <- function (.f) {
 #'
 #' @return an error if any, a warning if any.
 #' @export
+#' @importFrom rlang as_function
 #'
 #' @examples
 #' \dontrun{
@@ -116,6 +141,7 @@ silent_attempt <- silently(~ attempt(expr = .x, silent = TRUE))
 #'
 #' @return a function
 #' @export
+#' @importFrom rlang as_function
 #'
 #' @rdname messagefunctions
 #'
@@ -132,9 +158,9 @@ with_message <- function (.f, msg) {
 }
 
 #' @export
-#'
+#' @importFrom rlang as_function
 #' @rdname messagefunctions
-#'
+
 with_warning <- function (.f, msg) {
   .f <- as_function(.f)
   function(...) {
@@ -144,6 +170,7 @@ with_warning <- function (.f, msg) {
 }
 
 #' @export
+#' @importFrom rlang as_function
 #'
 #' @rdname messagefunctions
 #'
@@ -156,6 +183,8 @@ without_message <-  function (.f) {
 }
 
 #' @export
+#' @importFrom rlang as_function
+#'
 #' @rdname messagefunctions
 
 without_warning <-  function (.f) {
@@ -166,3 +195,13 @@ without_warning <-  function (.f) {
 }
 
 
+finally <- function(.f, .what){
+  .f <- as_function(.f)
+
+  function(...) {
+    res <- .f(...)
+    as_function(.what)()
+    res
+  }
+
+}
