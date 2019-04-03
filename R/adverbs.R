@@ -195,3 +195,13 @@ without_warning <-  function (.f) {
 }
 
 
+finally <- function(.f, .what){
+  .f <- as_function(.f)
+
+  function(...) {
+    res <- .f(...)
+    as_function(.what)()
+    res
+  }
+
+}
