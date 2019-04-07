@@ -1,0 +1,24 @@
+Package: attempt
+Title: Easy Condition Handling
+Version: 0.2.1
+Authors@R: person("Colin", "Fay", email = "contact@colinfay.me", role = c("aut", "cre"))
+Description: A friendlier condition handler, inspired by 'purrr' mappers and 
+    based on 'rlang'.'attempt' extends and facilitates condition handling by 
+    providing a consistent grammar, and provides a set of easy to use functions 
+    for common tests and conditions. 'attempt' only depends on 'rlang', and 
+    focuses on speed, so it can be easily integrated in other functions and 
+    used in data analysis. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Suggests: testthat, knitr, rmarkdown
+VignetteBuilder: knitr
+Imports: rlang
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+Packaged: 2018-04-20 11:21:30 UTC; colin
+Author: Colin Fay [aut, cre]
+Maintainer: Colin Fay <contact@colinfay.me>
+Repository: CRAN
+Date/Publication: 2018-04-20 11:43:03 UTC
+Built: R 3.4.4; ; 2018-04-21 08:44:33 UTC; unix

@@ -1,0 +1,25 @@
+context("detect-calendar")
+
+test_that("days are detected", {
+  a <- data.frame(jours = c("C'est lundi 1er mars et mardi 2", "Et mercredi 3", "Il est revenu en juin."))
+  df <- pr_detect_days(a, jours)
+  expect_true(inherits(df, "data.frame"))
+  expect_true(inherits(df, "tbl_df"))
+  expect_true(inherits(df, "tbl"))
+  expect_equal(nrow(df), 3)
+  expect_equal(ncol(df), 3)
+  expect_equal(df$days[[1]], c("lundi", "mardi"))
+  expect_equal(df$n_days, c(2,1,0))
+})
+
+test_that("Months are detected", {
+  a <- data.frame(month = c("C'est lundi 1er mars et mardi 2", "Et mercredi 3", "Il est revenu en juin."))
+  df  <- pr_detect_months(a, month)
+  expect_true(inherits(df, "data.frame"))
+  expect_true(inherits(df, "tbl_df"))
+  expect_true(inherits(df, "tbl"))
+  expect_equal(nrow(df), 3)
+  expect_equal(ncol(df), 3)
+  expect_equal(df$months[[1]], c("mars"))
+  expect_equal(df$n_months, c(1,0,1))
+})

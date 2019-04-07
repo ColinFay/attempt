@@ -20,15 +20,15 @@ library(attempt)
 
 ## warnings and messages
 
-The `stop_if`, `warn_if` and `message_if` are easy to use functions that send an error, a warning or a message if a condition is met. Each function has its counterpart with `_not`. That returns a message if the condition is not met.
+The `stop_if()`, `warn_if()` and `message_if()` are easy to use functions that send an error, a warning or a message if a condition is met. Each function has its counterpart with `_not` that returns a message if the condition is not met.
 
-`stop_if_not` is quite the same as `assert_that` from the {assertthat} package, except that it can takes mappers. It is not the same as base `stopifnot()`, as it doesn't take a list of expression.
+`stop_if_not()` is quite the same as `assert_that()` from the {assertthat} package, except that it can takes mappers. It is not the same as base `stopifnot()`, as it doesn't take a list of expression.
 
-These functions are also flexible as you can pass base predicates (is.numeric, is.character...), a custom predicate built with mappers, or even your own testing function.
+These functions are also flexible as you can pass base predicates (is.numeric, is.character...), a custom predicate built with mappers, or even your own predicate function.
 
 You can either choose a custom message or just let the built-in messages be printed:
 
-```{r}
+```{r eval = TRUE}
 x <- 12
 # Stop if .x is numeric
 stop_if(.x = x, 
@@ -72,34 +72,33 @@ message_if(.x = e,
            msg = "The square root of your element must be more than 42")
 ```
 
-If you need to call a function that takes no argument at `.p`, use this function as `.x`. 
+If you need to call a function that takes no argument at `.p` (like `curl::has_internet()`), use this function as `.x`. 
 
-```{r}
-true <- function() TRUE
-false <- function() FALSE
-stop_if(.x =  true(), msg = "This is true")
+```{r eval = TRUE}
+stop_if(.x = curl::has_internet(), msg = "You shouldn't have internet to do that")
 
-warn_if_not(false(), 
-            msg = "This is false")
+warn_if(.x = curl::has_internet(), 
+            msg = "You shouldn't have internet to do that")
 
-message_if(.x = true(), 
-            msg = "Huray!")
+message_if(.x = curl::has_internet(), 
+            msg = "Huray, you have internet \\o/")
 ```
 
-If you don't specify a `.p`, the default test is `isTRUE`.
+If you don't specify a `.p`, the default test is `isTRUE()`.
 
-```{r}
+```{r eval = TRUE}
 a <- is.na(airquality$Ozone)
 message_if_any(a, msg = "NA found")
 ```
 
-
 ### In function
 
-That can come really handy inside a function : 
+That can come really handy inside a function: 
 
-```{r}
+```{r eval = TRUE}
 my_fun <- function(x){
+  stop_if_not(.x = curl::has_internet(), 
+              msg = "You should have internet to do that")
   warn_if_not(x, 
           is.character, 
           msg =  "x is not a character vector. The output may not be what you're expecting.")
@@ -111,12 +110,28 @@ my_fun(head(iris))
 
 ### none, all, any
 
-`stop_if`, `warn_if` and `message_if` all have complementary tests with `_all`, `_any` and `_none`, which combine the `if_*` and the `warn_*`, `stop_*` and `message_*` seen before. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate. 
+`stop_if()`, `warn_if()` and `message_if()` all have complementary tests with `_all`, `_any` and `_none`, which combine the `if_*` and the `warn_*`, `stop_*` and `message_*` seen before. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate. 
 
-```{r}
+```{r eval = TRUE}
 stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors.")
 
 warn_if_none(1:10, ~ .x < 0, msg = "You need to have at least one number under zero.")
 
 message_if_all(1:100, is.numeric, msg = "That makes a lot of numbers.")
+```
+
+## `on_error()`
+
+`on_error()` behaves as `on.exit()` except it happens only when there is an error in the function. 
+
+``` r
+y <- function(x){
+  on_error(~ print("ouch"))
+  log(x)
+}
+y(12)
+[1] 2.484907
+y("a")
+Error in log(x) : non-numeric argument to mathematical function
+[1] "ouch"
 ```

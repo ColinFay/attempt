@@ -1,0 +1,345 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `geniusr'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\inputencoding{utf8}
+\item[Title]\AsIs{Tools for Working with the 'Genius' API}
+\item[Version]\AsIs{1.1.0}
+\item[Description]\AsIs{Provides tools to interact nicely with the 'Genius' API <https://docs.genius.com/>. Search hosted content, extract different types of associated metadata and retrieve lyrics with ease.}
+\item[URL]\AsIs{}\url{https://github.com/ewenme/geniusr}\AsIs{}
+\item[BugReports]\AsIs{}\url{https://github.com/ewenme/geniusr/issues}\AsIs{}
+\item[Depends]\AsIs{R (>= 3.2.0)}
+\item[License]\AsIs{MIT + file LICENSE}
+\item[Encoding]\AsIs{UTF-8}
+\item[LazyData]\AsIs{yes}
+\item[RoxygenNote]\AsIs{6.1.1}
+\item[Imports]\AsIs{httr, purrr, tibble, rvest, stringr, xml2, curl, attempt}
+\item[NeedsCompilation]\AsIs{no}
+\item[Author]\AsIs{Ewen Henderson [aut, cre]}
+\item[Maintainer]\AsIs{Ewen Henderson }\email{ewenhenderson@gmail.com}\AsIs{}
+\item[Repository]\AsIs{CRAN}
+\item[Date/Publication]\AsIs{2019-01-20 21:50:02 UTC}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{geniusr}{\code{geniusr} package}{geniusr}
+\aliasA{geniusr-package}{geniusr}{geniusr.Rdash.package}
+%
+\begin{Description}\relax
+An interface to Genius' Web API.
+\end{Description}
+%
+\begin{Details}\relax
+See the README on
+\Rhref{https://github.com/ewenme/geniusr#readme}{GitHub}
+\end{Details}
+\inputencoding{utf8}
+\HeaderA{genius\_token}{Get or set GENIUS\_API\_TOKEN value}{genius.Rul.token}
+%
+\begin{Description}\relax
+The API wrapper functions in this package all rely on a Genius client access token
+residing in the environment variable \code{GENIUS\_API\_TOKEN}. The
+easiest way to accomplish this is to set it in the `\code{.Renviron}` file in your
+home directory.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+genius_token(force = FALSE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{force}] force setting a new Genius API token for the current environment?
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+atomic character vector containing the Genius API token
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{get\_album\_meta}{Retrieve meta data for an album}{get.Rul.album.Rul.meta}
+%
+\begin{Description}\relax
+The Genius API lets you search for an album's meta data, given an album ID.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_album_meta(album_id, access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{album\_id}] An album ID (\code{album\_id} returned in \code{\LinkA{get\_song\_meta}{get.Rul.song.Rul.meta}})
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+get_album_meta(album_id = 337082)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{get\_artist\_meta}{Retrieve meta data for an artist}{get.Rul.artist.Rul.meta}
+%
+\begin{Description}\relax
+The Genius API lets you search for meta data for an artist, given an artist ID.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_artist_meta(artist_id, access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{artist\_id}] An artist ID (\code{artist\_id} returned in \code{\LinkA{search\_artist}{search.Rul.artist}})
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+get_artist_meta(artist_id = 16751)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{get\_artist\_songs}{Retrieve meta data for all of an artist's appearances on Genius}{get.Rul.artist.Rul.songs}
+%
+\begin{Description}\relax
+Return meta data for all appearances (features optional) of an artist on Genius.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_artist_songs(artist_id, include_features = FALSE,
+  access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{artist\_id}] An artist ID (\code{artist\_id} returned in \code{\LinkA{search\_artist}{search.Rul.artist}})
+
+\item[\code{include\_features}] Whether to return results where artist isn't the primary artist (logical, defaults to FALSE)
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+get_artist_songs(artist_id = 1421)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{get\_song\_meta}{Retrieve meta data for a song}{get.Rul.song.Rul.meta}
+%
+\begin{Description}\relax
+The Genius API lets you search for meta data for a song, given a song ID.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_song_meta(song_id, access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{song\_id}] A song ID (\code{song\_id} returned in \code{\LinkA{search\_song}{search.Rul.song}})
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+get_song_meta(song_id = 3039923)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{scrape\_lyrics\_id}{Retrieve lyrics associated with a Genius song ID}{scrape.Rul.lyrics.Rul.id}
+%
+\begin{Description}\relax
+Scrape lyrics from Genius' lyric pages using an associated song ID.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+scrape_lyrics_id(song_id, access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{song\_id}] song ID (like in \code{song\_id} returned by \code{\LinkA{search\_song}{search.Rul.song}})
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+scrape_lyrics_id(song_id = 3214267)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{scrape\_lyrics\_url}{Retrieve lyrics associated with a Genius lyrics page URL}{scrape.Rul.lyrics.Rul.url}
+%
+\begin{Description}\relax
+Scrape lyrics from a Genius' lyric page using it's associated URL. Best used with \code{\LinkA{scrape\_tracklist}{scrape.Rul.tracklist}}, when song IDs aren't returned - otherwise, \code{\LinkA{scrape\_lyrics\_id}{scrape.Rul.lyrics.Rul.id}} is recommended.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+scrape_lyrics_url(song_lyrics_url, access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{song\_lyrics\_url}] song lyrics url (like in \code{song\_lyrics\_url} returned by \code{\LinkA{get\_song\_meta}{get.Rul.song.Rul.meta}})
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+scrape_lyrics_url(song_lyrics_url = "https://genius.com/Kendrick-lamar-dna-lyrics")
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{scrape\_tracklist}{Retrieve an album's tracklisting}{scrape.Rul.tracklist}
+%
+\begin{Description}\relax
+Scrape an album's tracklisting, and song meta data, given an album ID.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+scrape_tracklist(album_id, access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{album\_id}] An album ID (\code{album\_id} returned in \code{\LinkA{get\_song\_meta}{get.Rul.song.Rul.meta}})
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+scrape_tracklist(album_id = 337082)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{search\_artist}{Retrieve artist identifiers for associated search terms}{search.Rul.artist}
+%
+\begin{Description}\relax
+The Genius API lets you search hosted content (all songs). Use \code{search\_artist} to
+return \code{artist\_id}, \code{artist\_name} and \code{artist\_url} for all unique artist matches to a search.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+search_artist(search_term, n_results = 10,
+  access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{search\_term}] A character string to search for artist matches
+
+\item[\code{n\_results}] Maximum no. of search results to return (this is the number of hosted content search results, unique artist matches will be smaller)
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+search_artist(search_term = "Lil")
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{search\_song}{Retrieve song identifiers for associated search terms}{search.Rul.song}
+%
+\begin{Description}\relax
+The Genius API lets you search hosted content (all songs). Use \code{search\_song} to
+return \code{song\_id}, \code{song\_name}, \code{lyrics\_url} and
+\code{artist\_id} for all unique song matches to a search.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+search_song(search_term, n_results = 10, access_token = genius_token())
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{search\_term}] A character string to search for song matches
+
+\item[\code{n\_results}] Maximum no. of search results to return
+
+\item[\code{access\_token}] Genius' client access token, defaults to \code{genius\_token}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+search_song(search_term = "Gucci", n_results=50)
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\printindex{}
+\end{document}

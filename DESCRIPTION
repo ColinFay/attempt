@@ -1,6 +1,6 @@
 Package: attempt
 Title: Tools for Defensive Programming
-Version: 0.3.0.9000
+Version: 0.3.0
 Authors@R: person("Colin", "Fay", email = "contact@colinfay.me", role = c("aut", "cre"), comment=c(ORCID="0000-0001-7343-1846"))
 Description: Tools for defensive programming, inspired by 'purrr' mappers and 
     based on 'rlang'.'attempt' extends and facilitates defensive programming by 
@@ -15,7 +15,8 @@ LazyData: true
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    curl
 VignetteBuilder: knitr
 Imports: 
     rlang

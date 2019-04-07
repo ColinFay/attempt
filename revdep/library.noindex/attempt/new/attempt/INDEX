@@ -1,0 +1,13 @@
+attempt                 Attempt
+attempt-package         attempt package
+discretly               discretly
+if_all                  Test for all, any or none
+if_then                 If this, then that
+is_try_error            Is the element of class "try-error"?
+on_error                Add a function to be run on error
+silent_attempt          Silently attempt
+silently                Silently
+stop_if                 Warn if
+surely                  surely
+try_catch               Try Catch
+with_message            Manipulate messages and warnings

@@ -1,0 +1,144 @@
+Hmm ... looks like a package
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2018-04-01> patch level 5
+
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu))))
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty)
+No file Rd2.aux.
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd)
+
+LaTeX Font Warning: Font shape `OML/cmtt/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 34.
+
+No file Rd2.toc.
+[1{/Users/colin/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2] [3] [4] [5] [6]
+Overfull \hbox (31.52718pt too wide) in paragraph at lines 323--324
+[]$\OT1/cmtt/m/n/10 https : / / raw . githubusercontent . com / stopwords-[]iso
+ / stopwords-[]fr / master / stopwords-[]fr .
+[7] (/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmtt.fd)
+[8] [9] [10]
+Overfull \hbox (21.44969pt too wide) in paragraph at lines 527--528
+[]\OT1/cmr/m/n/10 the lan-guage of the text. De-faut is french. See Snow-ballC:
+:getStemLanguages()
+
+Overfull \hbox (24.68114pt too wide) in paragraph at lines 562--563
+[]\OT1/cmr/m/n/10 the lan-guage of the words De-faut is french. See Snow-ballC:
+:getStemLanguages()
+
+Overfull \hbox (34.75089pt too wide) in paragraph at lines 572--572
+ []\OT1/cmtt/m/n/9 a <- data.frame(words = c("matin", "heure", "fatigu^^Se","so
+nn^^Se","lois", "tests","fusionner"))[] 
+[11] [12]
+Overfull \hbox (42.02708pt too wide) in paragraph at lines 646--647
+[]$\OT1/cmtt/m/n/10 https : / / raw . githubusercontent . com / stopwords-[]iso
+ / stopwords-[]iso / master / stopwords-[]iso .
+[13] (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information) </Users/colin/.TinyTeX/tex
+mf-var/fonts/pk/ljfour/jknappen/ec/tctt0900.600pk> </Users/colin/.TinyTeX/texmf
+-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></Users/colin/Library/TinyTeX/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/colin/Library/TinyT
+eX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/colin/Library/T
+inyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/colin/Libra
+ry/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/colin/Li
+brary/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/colin
+/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></Users/c
+olin/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></Use
+rs/colin/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><
+/Users/colin/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb></Users/colin/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt
+9.pfb>
+Output written on Rd2.pdf (13 pages, 149010 bytes).
+Transcript written on Rd2.log.
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2018-04-01> patch level 5
+
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2014/09/29 v1.4h Standard LaTeX document class
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/tools/longtable.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/tools/verbatim.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.def
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ts1enc.dfu))))
+(/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty)
+(./Rd2.aux) (/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmr.fd)
+
+LaTeX Font Warning: Font shape `OML/cmtt/m/n' undefined
+(Font)              using `OML/cmm/m/it' instead
+(Font)              for symbol `textless' on input line 34.
+
+(./Rd2.toc [1{/Users/colin/Library/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pd
+ftex.map}]) [2] [3] [4] [5] [6]
+Overfull \hbox (31.52718pt too wide) in paragraph at lines 323--324
+[]$\OT1/cmtt/m/n/10 https : / / raw . githubusercontent . com / stopwords-[]iso
+ / stopwords-[]fr / master / stopwords-[]fr .
+[7] (/Users/colin/Library/TinyTeX/texmf-dist/tex/latex/base/ts1cmtt.fd)
+[8] [9] [10]
+Overfull \hbox (21.44969pt too wide) in paragraph at lines 527--528
+[]\OT1/cmr/m/n/10 the lan-guage of the text. De-faut is french. See Snow-ballC:
+:getStemLanguages()
+
+Overfull \hbox (24.68114pt too wide) in paragraph at lines 562--563
+[]\OT1/cmr/m/n/10 the lan-guage of the words De-faut is french. See Snow-ballC:
+:getStemLanguages()
+
+Overfull \hbox (34.75089pt too wide) in paragraph at lines 572--572
+ []\OT1/cmtt/m/n/9 a <- data.frame(words = c("matin", "heure", "fatigu^^Se","so
+nn^^Se","lois", "tests","fusionner"))[] 
+[11] [12]
+Overfull \hbox (42.02708pt too wide) in paragraph at lines 646--647
+[]$\OT1/cmtt/m/n/10 https : / / raw . githubusercontent . com / stopwords-[]iso
+ / stopwords-[]iso / master / stopwords-[]iso .
+[13] (./Rd2.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ )
+(see the transcript file for additional information) </Users/colin/.TinyTeX/tex
+mf-var/fonts/pk/ljfour/jknappen/ec/tctt0900.600pk> </Users/colin/.TinyTeX/texmf
+-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk></Users/colin/Library/TinyTeX/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></Users/colin/Library/TinyT
+eX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></Users/colin/Library/T
+inyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></Users/colin/Libra
+ry/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></Users/colin/Li
+brary/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></Users/colin
+/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></Users/c
+olin/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></Use
+rs/colin/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><
+/Users/colin/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb></Users/colin/Library/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt
+9.pfb>
+Output written on Rd2.pdf (13 pages, 149914 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘proustr-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -rf /var/folders/5z/rm2h62lj45d332kfpj28c8zm0000gn/T//Rtmpsj69tm/Rd2pdfa73a6dc8ad75'

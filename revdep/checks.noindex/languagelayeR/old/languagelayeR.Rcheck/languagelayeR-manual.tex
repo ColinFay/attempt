@@ -1,0 +1,129 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8,latin1]{inputenc}
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `languagelayeR'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Access the 'languagelayer' API}
+\item[Version]\AsIs{1.2.4}
+\item[Maintainer]\AsIs{Colin FAY }\email{contact@colinfay.me}\AsIs{}
+\item[Description]\AsIs{Improve your text analysis with languagelayer
+<https://languagelayer.com>, a powerful language detection
+API.}
+\item[URL]\AsIs{}\url{https://github.com/ColinFay/languagelayer}\AsIs{}
+\item[BugReports]\AsIs{}\url{https://github.com/ColinFay/languagelayer/issues}\AsIs{}
+\item[License]\AsIs{MIT + file LICENSE}
+\item[LazyData]\AsIs{TRUE}
+\item[Imports]\AsIs{httr, jsonlite, attempt, curl, utils}
+\item[RoxygenNote]\AsIs{6.1.0}
+\item[Suggests]\AsIs{testthat, knitr, rmarkdown, covr}
+\item[ByteCompile]\AsIs{true}
+\item[VignetteBuilder]\AsIs{knitr}
+\item[NeedsCompilation]\AsIs{no}
+\item[Author]\AsIs{Colin FAY [aut, cre]}
+\item[Repository]\AsIs{CRAN}
+\item[Date/Publication]\AsIs{2019-02-12 10:03:19 UTC}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{get\_lang}{Get language}{get.Rul.lang}
+%
+\begin{Description}\relax
+Detect language from a character string.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_lang(query, api_key = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{query}] the character string you want to detect the language from.
+
+\item[\code{api\_key}] your API key.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Takes a character string, returns a data.frame with the available values.
+\end{Details}
+%
+\begin{Value}
+Returns a data.frame with the detected languages, in descending order of probability. Values are : language\_code, language\_name, probability (length of the provided query text and how well it is identified as a language), percentage (confidence margin between multiple matches), and reliable\_result (whether or not the API is completely confident about the main match).
+\end{Value}
+%
+\begin{Note}\relax
+Before running a function of this package for the first time, you need to get your API key.
+\end{Note}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+get_lang(query = "I really really love R and that's a good thing, right?", api_key = "apikey")
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{get\_supported\_lang}{Get supported languages}{get.Rul.supported.Rul.lang}
+%
+\begin{Description}\relax
+Get all current available languages on the languagelayer API.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_supported_lang(api_key = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{api\_key}] Your API key.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+Returns a data.frame with the available languages.
+\end{Details}
+%
+\begin{Value}
+Returns a data.frame with language\_code and language\_name.
+\end{Value}
+%
+\begin{Note}\relax
+Before running a function of this package for the first time, you need to get your API key.
+\end{Note}
+%
+\begin{Examples}
+\begin{ExampleCode}
+## Not run: 
+get_supported_lang(api_key = "yourapikey")
+
+## End(Not run)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{languagelayeR}{languagelayeR}{languagelayeR}
+%
+\begin{Description}\relax
+Access the 'languagelayer' API.
+\end{Description}
+%
+\begin{Details}\relax
+For more info \code{browseVignettes("languagelayeR")}.
+\end{Details}
+\printindex{}
+\end{document}

@@ -1,0 +1,201 @@
+
+R version 3.4.4 (2018-03-15) -- "Someone to Lean On"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "geniusr"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('geniusr')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("get_album_meta")
+> ### * get_album_meta
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_album_meta
+> ### Title: Retrieve meta data for an album
+> ### Aliases: get_album_meta
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D get_album_meta(album_id = 337082)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_artist_meta")
+> ### * get_artist_meta
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_artist_meta
+> ### Title: Retrieve meta data for an artist
+> ### Aliases: get_artist_meta
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D get_artist_meta(artist_id = 16751)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_artist_songs")
+> ### * get_artist_songs
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_artist_songs
+> ### Title: Retrieve meta data for all of an artist's appearances on Genius
+> ### Aliases: get_artist_songs
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D get_artist_songs(artist_id = 1421)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("get_song_meta")
+> ### * get_song_meta
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: get_song_meta
+> ### Title: Retrieve meta data for a song
+> ### Aliases: get_song_meta
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D get_song_meta(song_id = 3039923)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("scrape_lyrics_id")
+> ### * scrape_lyrics_id
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: scrape_lyrics_id
+> ### Title: Retrieve lyrics associated with a Genius song ID
+> ### Aliases: scrape_lyrics_id
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D scrape_lyrics_id(song_id = 3214267)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("scrape_lyrics_url")
+> ### * scrape_lyrics_url
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: scrape_lyrics_url
+> ### Title: Retrieve lyrics associated with a Genius lyrics page URL
+> ### Aliases: scrape_lyrics_url
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D scrape_lyrics_url(song_lyrics_url = "https://genius.com/Kendrick-lamar-dna-lyrics")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("scrape_tracklist")
+> ### * scrape_tracklist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: scrape_tracklist
+> ### Title: Retrieve an album's tracklisting
+> ### Aliases: scrape_tracklist
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D scrape_tracklist(album_id = 337082)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("search_artist")
+> ### * search_artist
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: search_artist
+> ### Title: Retrieve artist identifiers for associated search terms
+> ### Aliases: search_artist
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D search_artist(search_term = "Lil")
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("search_song")
+> ### * search_song
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: search_song
+> ### Title: Retrieve song identifiers for associated search terms
+> ### Aliases: search_song
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D search_song(search_term = "Gucci", n_results=50)
+> ## End(Not run)
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.123 0.009 0.132 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

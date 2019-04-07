@@ -1,0 +1,157 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `tidystringdist'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\inputencoding{utf8}
+\item[Title]\AsIs{String Distance Calculation with Tidy Data Principles}
+\item[Version]\AsIs{0.1.4}
+\item[Description]\AsIs{Calculation of string distance following the tidy
+data principles. Built on top of the 'stringdist' package.}
+\item[License]\AsIs{MIT + file LICENSE}
+\item[Imports]\AsIs{attempt, rlang, stringdist, tibble}
+\item[Suggests]\AsIs{dplyr, knitr, magrittr, rmarkdown, testthat}
+\item[VignetteBuilder]\AsIs{knitr}
+\item[Encoding]\AsIs{UTF-8}
+\item[LazyData]\AsIs{true}
+\item[RoxygenNote]\AsIs{6.1.0}
+\item[Collate]\AsIs{'globalVariables.R' 'tidycomb.R' 'utils.R' 'tidystringdist.R'}
+\item[NeedsCompilation]\AsIs{no}
+\item[Author]\AsIs{Colin Fay [aut, cre] (<https://orcid.org/0000-0001-7343-1846>),
+Dmytro Perepolkin [ctb] (<https://orcid.org/0000-0001-8558-6183>)}
+\item[Maintainer]\AsIs{Colin Fay }\email{contact@colinfay.me}\AsIs{}
+\item[Repository]\AsIs{CRAN}
+\item[Date/Publication]\AsIs{2019-03-20 23:10:03 UTC}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{tidy\_comb}{Tidy combine}{tidy.Rul.comb}
+\methaliasA{tidy\_comb.data.frame}{tidy\_comb}{tidy.Rul.comb.data.frame}
+\methaliasA{tidy\_comb.default}{tidy\_comb}{tidy.Rul.comb.default}
+%
+\begin{Description}\relax
+Get all combinations from a dataframe column or from a list
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+tidy_comb(data, base, ...)
+
+## S3 method for class 'data.frame'
+tidy_comb(data, base, ...)
+
+## Default S3 method:
+tidy_comb(data, base, ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] data object containing the list of words, either a list or a data.frame
+
+\item[\code{base}] the base word to compare with all the words
+
+\item[\code{...}] if data is a data.frame, the col where the words to combine are
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble with all possible combination of elements from a list
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+tidy_comb(iris, "this", Species)
+tidy_comb(state.name, "Paris")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{tidy\_comb\_all}{Tidy combine all}{tidy.Rul.comb.Rul.all}
+\methaliasA{tidy\_comb\_all.data.frame}{tidy\_comb\_all}{tidy.Rul.comb.Rul.all.data.frame}
+\methaliasA{tidy\_comb\_all.default}{tidy\_comb\_all}{tidy.Rul.comb.Rul.all.default}
+%
+\begin{Description}\relax
+Get all combinations from a dataframe column
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+tidy_comb_all(data, ...)
+
+## S3 method for class 'data.frame'
+tidy_comb_all(data, ...)
+
+## Default S3 method:
+tidy_comb_all(data, ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] a list or a data.frame with the elements to combine
+
+\item[\code{...}] if data is a data.frame, the col where the words to combine are
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble with all possible combination of elements from a list
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+tidy_comb_all(iris, Species)
+tidy_comb_all(state.name)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{tidy\_stringdist}{Tidy stringdist calculation}{tidy.Rul.stringdist}
+%
+\begin{Description}\relax
+Tidy stringdist calculation
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+tidy_stringdist(df, v1 = V1, v2 = V2, method = c("osa", "lv", "dl",
+  "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex"), ...)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{df}] a dataframe containing the strings to compare
+
+\item[\code{v1}] the name of the first columns
+
+\item[\code{v2}] the name of the second columns
+
+\item[\code{method}] one of the methods implemented in the stringdist package — "osa", "lv", "dl", "hamming", "lcs", "qgram", "cosine", "jaccard", "jw", "soundex". See \code{\LinkA{stringdist-metrics}{stringdist.Rdash.metrics}}
+
+\item[\code{...}] other parameters passed to \code{\LinkA{stringdist}{stringdist}}
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble with string distance
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+proust <- tidy_comb_all(c("Albertine", "Françoise", "Gilberte", "Odette", "Charles"))
+tidy_stringdist(proust)
+\end{ExampleCode}
+\end{Examples}
+\printindex{}
+\end{document}

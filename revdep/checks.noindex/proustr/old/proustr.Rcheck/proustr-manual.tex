@@ -1,0 +1,651 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc} % @SET ENCODING@
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `proustr'}}
+\par\bigskip{\large \today}
+\end{center}
+\begin{description}
+\raggedright{}
+\inputencoding{utf8}
+\item[Title]\AsIs{Tools for Natural Language Processing in French}
+\item[Version]\AsIs{0.4.0}
+\item[Date]\AsIs{2019-02-05}
+\item[Description]\AsIs{Tools for Natural Language Processing in French and texts from Marcel Proust's collection
+``A La Recherche Du Temps Perdu''. The novels contained in this collection are
+``Du cote de chez Swann '', ``A l'ombre des jeunes filles en fleurs'',``Le Cote de Guermantes'',
+``Sodome et Gomorrhe I et II'', ``La Prisonniere'', ``Albertine disparue'', and ``Le Temps retrouve''.}
+\item[URL]\AsIs{}\url{https://github.com/ColinFay/proustr}\AsIs{}
+\item[BugReports]\AsIs{}\url{https://github.com/ColinFay/proustr/issues}\AsIs{}
+\item[Depends]\AsIs{R (>= 2.10)}
+\item[License]\AsIs{MIT + file LICENSE}
+\item[Imports]\AsIs{stringr, rlang, tidyr, tokenizers, SnowballC, attempt}
+\item[LazyData]\AsIs{true}
+\item[RoxygenNote]\AsIs{6.1.0}
+\item[Encoding]\AsIs{UTF-8}
+\item[Suggests]\AsIs{testthat, knitr, rmarkdown, covr, dplyr}
+\item[VignetteBuilder]\AsIs{knitr}
+\item[NeedsCompilation]\AsIs{no}
+\item[Author]\AsIs{Colin Fay [aut, cre] (<https://orcid.org/0000-0001-7343-1846>)}
+\item[Maintainer]\AsIs{Colin Fay }\email{contact@colinfay.me}\AsIs{}
+\item[Repository]\AsIs{CRAN}
+\item[Date/Publication]\AsIs{2019-02-05 14:50:02 UTC}
+\end{description}
+\Rdcontents{\R{} topics documented:}
+\inputencoding{utf8}
+\HeaderA{albertinedisparue}{Marcel Proust's novel "Albertine disparue"}{albertinedisparue}
+\keyword{datasets}{albertinedisparue}
+%
+\begin{Description}\relax
+A dataset containing Marcel Proust's "Albertine disparue". 
+This text has been downloaded from WikiSource.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+albertinedisparue
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble with text, book, volume, and year
+\end{Format}
+%
+\begin{Source}\relax
+<https://fr.wikisource.org/wiki/Albertine\_disparue>
+\end{Source}
+\inputencoding{utf8}
+\HeaderA{alombredesjeunesfillesenfleurs}{Marcel Proust's novel "À l’ombre des jeunes filles en fleurs"}{alombredesjeunesfillesenfleurs}
+\keyword{datasets}{alombredesjeunesfillesenfleurs}
+%
+\begin{Description}\relax
+A dataset containing Marcel Proust's "À l’ombre des jeunes filles en fleurs". 
+This text has been downloaded from WikiSource.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+alombredesjeunesfillesenfleurs
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble with text, book, volume, and year
+\end{Format}
+%
+\begin{Source}\relax
+<https://fr.wikisource.org/wiki/
+\end{Source}
+\inputencoding{utf8}
+\HeaderA{ducotedechezswann}{Marcel Proust's novel "Du côté de chez Swann"}{ducotedechezswann}
+\keyword{datasets}{ducotedechezswann}
+%
+\begin{Description}\relax
+A dataset containing Marcel Proust's "Du côté de chez Swann". 
+This text has been downloaded from WikiSource.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+ducotedechezswann
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble with text, book, volume, and year
+\end{Format}
+%
+\begin{Source}\relax
+<https://fr.wikisource.org/wiki/Du\_c
+\end{Source}
+\inputencoding{utf8}
+\HeaderA{laprisonniere}{Marcel Proust's novel "La Prisonnière"}{laprisonniere}
+\keyword{datasets}{laprisonniere}
+%
+\begin{Description}\relax
+A dataset containing Marcel Proust's "La prisonnière". 
+This text has been downloaded from WikiSource.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+laprisonniere
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble with text, book, volume, and year
+\end{Format}
+%
+\begin{Source}\relax
+<https://fr.wikisource.org/wiki/La\_Prisonni
+\end{Source}
+\inputencoding{utf8}
+\HeaderA{lecotedeguermantes}{Marcel Proust's novel "Le côté de Guermantes"}{lecotedeguermantes}
+\keyword{datasets}{lecotedeguermantes}
+%
+\begin{Description}\relax
+A dataset containing Marcel Proust's "À l’ombre des jeunes filles en fleurs". 
+This text has been downloaded from WikiSource.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+lecotedeguermantes
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble with text, book, volume, and year
+\end{Format}
+%
+\begin{Source}\relax
+<https://fr.wikisource.org/wiki/Le\_C
+\end{Source}
+\inputencoding{utf8}
+\HeaderA{letempretrouve}{Marcel Proust's novel "Le temps retrouvé"}{letempretrouve}
+\keyword{datasets}{letempretrouve}
+%
+\begin{Description}\relax
+A dataset containing Marcel Proust's "Le temps retrouvé". 
+This text has been downloaded from WikiSource.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+letempretrouve
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble with text, book, volume, and year.
+\end{Format}
+%
+\begin{Source}\relax
+<https://fr.wikisource.org/wiki/Le\_Temps\_retrouv
+\end{Source}
+\inputencoding{utf8}
+\HeaderA{proust\_books}{Tidy data frame of Marcel Proust's 7 novels from La Recherche}{proust.Rul.books}
+%
+\begin{Description}\relax
+Returns a tidy tibble of Marcel Proust's 7 novels from À la recherche du temps
+perdu. The tibble contains four columns: text, book, volume and year.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+proust_books()
+\end{verbatim}
+\end{Usage}
+%
+\begin{Value}
+A tibble with four columns: \code{text}, \code{book}, \code{volume} and \code{year}.
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+#Create the tibble 
+proust <- proust_books()
+ 
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{proust\_char}{Characters from "À la recherche du temps perdu"}{proust.Rul.char}
+\keyword{datasets}{proust\_char}
+%
+\begin{Description}\relax
+A dataset containing Marcel Proust's characters from "À la recherche du temps perdu"  and 
+their frequency in each book. 
+This dataset has been downloaded from proust-personnages.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+proust_char
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble with their name
+\end{Format}
+%
+\begin{Source}\relax
+\url{http://proust-personnages.fr/?page_id=10254}
+\end{Source}
+\inputencoding{utf8}
+\HeaderA{proust\_characters}{Characters from Proust Books}{proust.Rul.characters}
+%
+\begin{Description}\relax
+Returns a tidy data frame of Marcel Proust's characters.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+proust_characters()
+\end{verbatim}
+\end{Usage}
+%
+\begin{Value}
+A tibble
+\end{Value}
+%
+\begin{Source}\relax
+\url{http://proust-personnages.fr/}
+\end{Source}
+%
+\begin{Examples}
+\begin{ExampleCode}
+
+#Creates the tibble 
+proust <- proust_characters()
+ 
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{proust\_random}{Create a Random Proust extract}{proust.Rul.random}
+%
+\begin{Description}\relax
+Create your own flavor of Proust with this random extractor.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+proust_random(count = 1, collapse = TRUE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{count}] the number of line you want to randomly extract and paste.
+
+\item[\code{collapse}] if FALSE, the output will be a tibble. Default is TRUE, a character vector.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a character vector
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+proust_random(4)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{proust\_sentiments}{Old sentiment lexicon This function has been deprecated, and will be in next proustr version. See the rfeel package now: http://github.com/ColinFay/rfeel}{proust.Rul.sentiments}
+%
+\begin{Description}\relax
+Old sentiment lexicon
+This function has been deprecated, and will be in next proustr version.
+See the rfeel package now: http://github.com/ColinFay/rfeel
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+proust_sentiments(type = c("polarity", "score"))
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{type}] For backward compatibility
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble
+\end{Value}
+\inputencoding{utf8}
+\HeaderA{proust\_stopwords}{Stop Words}{proust.Rul.stopwords}
+%
+\begin{Description}\relax
+Stop words concatenated from various web sources.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+proust_stopwords()
+\end{verbatim}
+\end{Usage}
+%
+\begin{Value}
+a tibble with stopwords
+\end{Value}
+%
+\begin{Source}\relax
+\url{https://raw.githubusercontent.com/stopwords-iso/stopwords-fr/master/stopwords-fr.txt}
+\end{Source}
+%
+\begin{Examples}
+\begin{ExampleCode}
+proust_stopwords()
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{pr\_detect\_days}{Detect french days}{pr.Rul.detect.Rul.days}
+%
+\begin{Description}\relax
+Detect the name of the days (in French)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pr_detect_days(df, col)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{df}] a dataframe
+
+\item[\code{col}] the column containing the text
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble with the number of days detected by the algo
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+a <- data.frame(jours = c("C'est lundi 1er mars et mardi 2", 
+"Et mercredi 3", "Il est revenu jeudi."))
+pr_detect_days(a, jours)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{pr\_detect\_months}{Detect french months}{pr.Rul.detect.Rul.months}
+%
+\begin{Description}\relax
+Detect the name of the months (in French)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pr_detect_months(df, col)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{df}] a dataframe
+
+\item[\code{col}] the column containing the text
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble with the number of days detected by the algo
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+a <- data.frame(month = c("C'est lundi 1er mars et mardi 2", 
+"Et mercredi 3", "Il est revenu en juin."))
+pr_detect_months(a, month)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{pr\_detect\_pro}{Detect French pronoums}{pr.Rul.detect.Rul.pro}
+%
+\begin{Description}\relax
+Detect the pronouns from a text (in French)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pr_detect_pro(df, col, verbose = FALSE)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{df}] a dataframe
+
+\item[\code{col}] the column containing the text
+
+\item[\code{verbose}] wether or not to return the list of pronouns. Defaults is FALSE
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}\relax
+The shortcuts in the pronoun col stand for: 
+
+pps: first person singular (première personne du singulier)
+
+dps: second person singular (deuxième personne du singulier)
+
+tps: third person singular (troisième personne du singulier)
+
+ppp: first person plural (première personne du pluriel)
+
+dpp: second person singular (deuxième personne du pluriel)
+
+tpp: third person singular (troisième personne du pluriel)
+\end{Details}
+%
+\begin{Value}
+a tibble with the detected pronouns
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+library(proustr)
+a <- proust_books()[1,] 
+pr_detect_pro(a, text, verbose = TRUE)
+pr_detect_pro(a, text)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{pr\_keep\_only\_alnum}{Remove non alnum elements}{pr.Rul.keep.Rul.only.Rul.alnum}
+%
+\begin{Description}\relax
+Remove non alnum elements
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pr_keep_only_alnum(text, replacement = " ")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{text}] a vector
+
+\item[\code{replacement}] what to replace the non alnum with. Defaut is " ".
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a vector
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+pr_keep_only_alnum("neuilly-en-thelle")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{pr\_normalize\_punc}{Normalize punctuation}{pr.Rul.normalize.Rul.punc}
+%
+\begin{Description}\relax
+Normalize a text written with usual french punctuation
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pr_normalize_punc(df, col)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{df}] a dataframe
+
+\item[\code{col}] the column to normalize
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble with normalized text
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+a <- proustr::albertinedisparue[1:20,]
+pr_normalize_punc(albertinedisparue, text)
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{pr\_stem\_sentences}{Stem a dataframe containing a column with sentences}{pr.Rul.stem.Rul.sentences}
+%
+\begin{Description}\relax
+Implementation of the SnowballC stemmer. Note that punctuation and capital letters 
+are removed when processing.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pr_stem_sentences(df, col, language = "french")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{df}] the data.frame containing the text
+
+\item[\code{col}] the column with the text
+
+\item[\code{language}] the language of the text. Defaut is french. See SnowballC::getStemLanguages() function for a list of supported languages.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+a <- proustr::laprisonniere[1:10,]
+pr_stem_sentences(a, text)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{pr\_stem\_words}{Stem a dataframe containing a column with words}{pr.Rul.stem.Rul.words}
+%
+\begin{Description}\relax
+Implementation of the SnowballC stemmer. Note that punctuation and capitals letters 
+are also removed.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pr_stem_words(df, col, language = "french")
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{df}] the data.frame containing the sentences
+
+\item[\code{col}] the column with the sentences
+
+\item[\code{language}] the language of the words Defaut is french. See SnowballC::getStemLanguages() function for a list of supported languages.
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a tibble
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+a <- data.frame(words = c("matin", "heure", "fatigué","sonné","lois", "tests","fusionner"))
+pr_stem_words(a, words)
+
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{pr\_unacent}{Remove accents}{pr.Rul.unacent}
+%
+\begin{Description}\relax
+Remove accents from a character vector
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+pr_unacent(text)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{text}] a vector
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+a vector
+\end{Value}
+%
+\begin{Examples}
+\begin{ExampleCode}
+pr_unacent("du chêne")
+\end{ExampleCode}
+\end{Examples}
+\inputencoding{utf8}
+\HeaderA{sodomeetgomorrhe}{Marcel Proust's novel "Sodome et Gomorrhe"}{sodomeetgomorrhe}
+\keyword{datasets}{sodomeetgomorrhe}
+%
+\begin{Description}\relax
+A dataset containing Marcel Proust's "Sodom et Gomorrhe". 
+This text has been downloaded from WikiSource.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+sodomeetgomorrhe
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble with text, book, volume, and year
+\end{Format}
+%
+\begin{Source}\relax
+<https://fr.wikisource.org/wiki/Sodome\_et\_Gomorrhe>
+\end{Source}
+\inputencoding{utf8}
+\HeaderA{stop\_words}{Stopwords}{stop.Rul.words}
+\keyword{datasets}{stop\_words}
+%
+\begin{Description}\relax
+ISO stopwords
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+stop_words
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A tibble
+\end{Format}
+%
+\begin{Source}\relax
+\url{https://raw.githubusercontent.com/stopwords-iso/stopwords-iso/master/stopwords-iso.json}
+\end{Source}
+\printindex{}
+\end{document}

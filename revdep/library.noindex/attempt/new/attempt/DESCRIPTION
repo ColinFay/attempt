@@ -1,0 +1,25 @@
+Package: attempt
+Title: Tools for Defensive Programming
+Version: 0.3.0
+Authors@R: person("Colin", "Fay", email = "contact@colinfay.me", role = c("aut", "cre"), comment=c(ORCID="0000-0001-7343-1846"))
+Description: Tools for defensive programming, inspired by 'purrr' mappers and 
+    based on 'rlang'.'attempt' extends and facilitates defensive programming by 
+    providing a consistent grammar, and provides a set of easy to use functions 
+    for common tests and conditions. 'attempt' only depends on 'rlang', and 
+    focuses on speed, so it can be easily integrated in other functions and 
+    used in data analysis. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+URL: https://github.com/ColinFay/attempt
+LazyData: true
+Suggests: testthat, knitr, rmarkdown, curl
+VignetteBuilder: knitr
+Imports: rlang
+RoxygenNote: 6.1.0
+RemoteType: local
+RemoteUrl: /Users/colin/Seafile/documents_colin/R/attempt
+NeedsCompilation: no
+Packaged: 2019-04-03 16:44:41 UTC; colin
+Author: Colin Fay [aut, cre] (0000-0001-7343-1846)
+Maintainer: Colin Fay <contact@colinfay.me>
+Built: R 3.4.4; ; 2019-04-03 16:44:41 UTC; unix

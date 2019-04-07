@@ -1,0 +1,327 @@
+
+R version 3.4.4 (2018-03-15) -- "Someone to Lean On"
+Copyright (C) 2018 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "proustr"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('proustr')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("pr_detect_days")
+> ### * pr_detect_days
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pr_detect_days
+> ### Title: Detect french days
+> ### Aliases: pr_detect_days
+> 
+> ### ** Examples
+> 
+> a <- data.frame(jours = c("C'est lundi 1er mars et mardi 2", 
++ "Et mercredi 3", "Il est revenu jeudi."))
+> pr_detect_days(a, jours)
+[90m# A tibble: 3 x 3[39m
+  jours                           days      n_days
+[90m*[39m [3m[90m<fct>[39m[23m                           [3m[90m<list>[39m[23m     [3m[90m<int>[39m[23m
+[90m1[39m C'est lundi 1er mars et mardi 2 [90m<chr [2]>[39m      2
+[90m2[39m Et mercredi 3                   [90m<chr [1]>[39m      1
+[90m3[39m Il est revenu jeudi.            [90m<chr [1]>[39m      1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pr_detect_months")
+> ### * pr_detect_months
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pr_detect_months
+> ### Title: Detect french months
+> ### Aliases: pr_detect_months
+> 
+> ### ** Examples
+> 
+> a <- data.frame(month = c("C'est lundi 1er mars et mardi 2", 
++ "Et mercredi 3", "Il est revenu en juin."))
+> pr_detect_months(a, month)
+[90m# A tibble: 3 x 3[39m
+  month                           months    n_months
+[90m*[39m [3m[90m<fct>[39m[23m                           [3m[90m<list>[39m[23m       [3m[90m<int>[39m[23m
+[90m1[39m C'est lundi 1er mars et mardi 2 [90m<chr [1]>[39m        1
+[90m2[39m Et mercredi 3                   [90m<chr [0]>[39m        0
+[90m3[39m Il est revenu en juin.          [90m<chr [1]>[39m        1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pr_detect_pro")
+> ### * pr_detect_pro
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pr_detect_pro
+> ### Title: Detect French pronoums
+> ### Aliases: pr_detect_pro
+> 
+> ### ** Examples
+> 
+> library(proustr)
+> a <- proust_books()[1,] 
+> pr_detect_pro(a, text, verbose = TRUE)
+[90m# A tibble: 2 x 6[39m
+  text                           book       volume        year pronoun full_list
+[90m*[39m [3m[90m<chr>[39m[23m                          [3m[90m<chr>[39m[23m      [3m[90m<chr>[39m[23m        [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m   [3m[90m<list>[39m[23m   
+[90m1[39m [90m"[39mLongtemps, je me suis couché… Du côté d… Première pa…  [4m1[24m913 pps     [90m<chr [26[0m…
+[90m2[39m [90m"[39mLongtemps, je me suis couché… Du côté d… Première pa…  [4m1[24m913 tps     [90m<chr [13[0m…
+> pr_detect_pro(a, text)
+[90m# A tibble: 2 x 6[39m
+  text                              book       volume         year pronoun count
+[90m*[39m [3m[90m<chr>[39m[23m                             [3m[90m<chr>[39m[23m      [3m[90m<chr>[39m[23m         [3m[90m<dbl>[39m[23m [3m[90m<chr>[39m[23m   [3m[90m<int>[39m[23m
+[90m1[39m [90m"[39mLongtemps, je me suis couché de… Du côté d… Première par…  [4m1[24m913 pps        26
+[90m2[39m [90m"[39mLongtemps, je me suis couché de… Du côté d… Première par…  [4m1[24m913 tps        13
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pr_keep_only_alnum")
+> ### * pr_keep_only_alnum
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pr_keep_only_alnum
+> ### Title: Remove non alnum elements
+> ### Aliases: pr_keep_only_alnum
+> 
+> ### ** Examples
+> 
+> pr_keep_only_alnum("neuilly-en-thelle")
+[1] "neuilly en thelle"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pr_normalize_punc")
+> ### * pr_normalize_punc
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pr_normalize_punc
+> ### Title: Normalize punctuation
+> ### Aliases: pr_normalize_punc
+> 
+> ### ** Examples
+> 
+> a <- proustr::albertinedisparue[1:20,]
+> pr_normalize_punc(albertinedisparue, text)
+[90m# A tibble: 259 x 4[39m
+   text                                             book          volume    year
+ [90m*[39m [3m[90m<chr>[39m[23m                                            [3m[90m<chr>[39m[23m         [3m[90m<chr>[39m[23m    [3m[90m<dbl>[39m[23m
+[90m 1[39m [90m"[39mMademoiselle Albertine est partie ! Comme la s… Albertine di… Tome Un…  [4m1[24m925
+[90m 2[39m Le plus pressé était de lire la lettre d'Albert… Albertine di… Tome Un…  [4m1[24m925
+[90m 3[39m [90m"[39m\" Pardonnez-moi de ne pas avoir osé vous dire… Albertine di… Tome Un…  [4m1[24m925
+[90m 4[39m [90m"[39m\" Tout cela ne signifie rien, me dis-je, c'es… Albertine di… Tome Un…  [4m1[24m925
+[90m 5[39m [90m"[39mCe malheur était le plus grand de toute ma vie… Albertine di… Tome Un…  [4m1[24m925
+[90m 6[39m [90m"[39mEn me promettant à moi-même qu'Albertine serai… Albertine di… Tome Un…  [4m1[24m925
+[90m 7[39m [90m"[39mLa souffrance, prolongement d'un choc moral im… Albertine di… Tome Un…  [4m1[24m925
+[90m 8[39m [90m"[39mL'esprit dans lequel Albertine était partie ét… Albertine di… Tome Un…  [4m1[24m925
+[90m 9[39m Quant aux moyens de ramener Albertine, ils avai… Albertine di… Tome Un…  [4m1[24m925
+[90m10[39m [90m"[39mJe reconnais que dans tout cela je fus le plus… Albertine di… Tome Un…  [4m1[24m925
+[90m# … with 249 more rows[39m
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pr_stem_sentences")
+> ### * pr_stem_sentences
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pr_stem_sentences
+> ### Title: Stem a dataframe containing a column with sentences
+> ### Aliases: pr_stem_sentences
+> 
+> ### ** Examples
+> 
+> a <- proustr::laprisonniere[1:10,]
+> pr_stem_sentences(a, text)
+[90m# A tibble: 10 x 4[39m
+   text                                               book       volume     year
+ [90m*[39m [3m[90m<chr>[39m[23m                                              [3m[90m<chr>[39m[23m      [3m[90m<chr>[39m[23m     [3m[90m<dbl>[39m[23m
+[90m 1[39m des le matin la têt encor tourn contr le mur et a… La Prison… Tome Uni…  [4m1[24m923
+[90m 2[39m quand je pens mainten que mon ami était venu à no… La Prison… Tome Uni…  [4m1[24m923
+[90m 3[39m quand albertin sav par françois que dan la nuit d… La Prison… Tome Uni…  [4m1[24m923
+[90m 4[39m le douleur sont de foll et qui le écout est encor… La Prison… Tome Uni…  [4m1[24m923
+[90m 5[39m je l'aim trop pour ne pas joyeux sourir de son ma… La Prison… Tome Uni…  [4m1[24m923
+[90m 6[39m une chanson d'adieu sort de sourc troubl           La Prison… Tome Uni…  [4m1[24m923
+[90m 7[39m une nu pass elle éclips le soleil je voi s'éteind… La Prison… Tome Uni…  [4m1[24m923
+[90m 8[39m le cloison qui sépar nos deux cabinet de toilet c… La Prison… Tome Uni…  [4m1[24m923
+[90m 9[39m d'autr fois je rest couch rêv auss longtemp que j… La Prison… Tome Uni…  [4m1[24m923
+[90m10[39m je son françois j'ouvr le figaro j'y cherch et co… La Prison… Tome Uni…  [4m1[24m923
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pr_stem_words")
+> ### * pr_stem_words
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pr_stem_words
+> ### Title: Stem a dataframe containing a column with words
+> ### Aliases: pr_stem_words
+> 
+> ### ** Examples
+> 
+> a <- data.frame(words = c("matin", "heure", "fatigué","sonné","lois", "tests","fusionner"))
+> pr_stem_words(a, words)
+[90m# A tibble: 7 x 1[39m
+  words 
+[90m*[39m [3m[90m<chr>[39m[23m 
+[90m1[39m matin 
+[90m2[39m heur  
+[90m3[39m fatigu
+[90m4[39m son   
+[90m5[39m lois  
+[90m6[39m test  
+[90m7[39m fusion
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("pr_unacent")
+> ### * pr_unacent
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: pr_unacent
+> ### Title: Remove accents
+> ### Aliases: pr_unacent
+> 
+> ### ** Examples
+> 
+> pr_unacent("du chêne")
+[1] "du chene"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("proust_books")
+> ### * proust_books
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: proust_books
+> ### Title: Tidy data frame of Marcel Proust's 7 novels from La Recherche
+> ### Aliases: proust_books
+> 
+> ### ** Examples
+> 
+> 
+> #Create the tibble 
+> proust <- proust_books()
+>  
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("proust_characters")
+> ### * proust_characters
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: proust_characters
+> ### Title: Characters from Proust Books
+> ### Aliases: proust_characters
+> 
+> ### ** Examples
+> 
+> 
+> #Creates the tibble 
+> proust <- proust_characters()
+>  
+> 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("proust_random")
+> ### * proust_random
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: proust_random
+> ### Title: Create a Random Proust extract
+> ### Aliases: proust_random
+> 
+> ### ** Examples
+> 
+> proust_random(4)
+[1] "\" Tenez, voilà une petite qui a déjà compris comment étaient le chapeau et l'ombrelle, me dit Elstir en me montrant Albertine, dont les yeux brillaient de convoitise. — Comme j'aimerais être riche pour avoir un yacht, dit-elle au peintre. Maintenant je me serais aussi volontiers chargé d'une mission pour faire rompre Robert et sa maîtresse qu'il y a quelques heures pour qu'il partît vivre tout à fait avec elle. voyez-vous, Monsieur, on ne peut jamais savoir ce qu'il peut y avoir dans une vie. Et puis du moment qu'elle l'a supporté si longtemps..."
+> 
+> 
+> 
+> cleanEx()
+> nameEx("proust_stopwords")
+> ### * proust_stopwords
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: proust_stopwords
+> ### Title: Stop Words
+> ### Aliases: proust_stopwords
+> 
+> ### ** Examples
+> 
+> proust_stopwords()
+[90m# A tibble: 689 x 1[39m
+   word      
+   [3m[90m<chr>[39m[23m     
+[90m 1[39m a         
+[90m 2[39m abord     
+[90m 3[39m absolument
+[90m 4[39m afin      
+[90m 5[39m ah        
+[90m 6[39m ai        
+[90m 7[39m aie       
+[90m 8[39m aient     
+[90m 9[39m aies      
+[90m10[39m ailleurs  
+[90m# … with 679 more rows[39m
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  2.592 0.093 2.738 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

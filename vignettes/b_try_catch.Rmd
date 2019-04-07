@@ -20,13 +20,11 @@ library(attempt)
 
 ## attempt 
 
-`attempt` is a wrapper around base `try` that allows you to insert a custom messsage on error. 
+`attempt()` is a wrapper around base `try()` that allows you to insert a custom messsage on error. 
 
 ```{r}
-library(attempt)
 attempt(log("a"))
-# Error: argument non numérique pour une fonction mathématique
-
+# Error: non-numeric argument to mathematical function
 attempt(log("a"), msg = "Nop !")
 # Error: Nop !
 ```
@@ -42,9 +40,10 @@ Of course the result is returned if there is one:
 
 ```{r}
 attempt(log(1), msg = "Nop !", verbose = TRUE)
+# [1] 0
 ```
 
-As with `try`, the result cant be saved as an error object : 
+As with `try()`, the result can be saved as an error object: 
 
 ```{r}
 a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
@@ -56,19 +55,28 @@ a
 # <simpleError in log("a"): Nop !>
 ```
 
+You can check if the result is an error with `is_try_error()`
+
+```{r eval = TRUE}
+a <- attempt(log("a"), msg = "Nop !", verbose = FALSE)
+is_try_error(a)
+```
+
+
 ## silent_attempt 
 
-`silent_attempt` is a wrapper around `silently` (see the adverbs vignette for more info) and `attempt`. It attempts to run the expr, stays silent if the expression succeeds, and returns error or warnings if any. 
+`silent_attempt()` is a wrapper around `silently()` (see further down for more info) and `attempt()`. It attempts to run the expr, stays silent if the expression succeeds, and returns error or warnings if any. 
 
 ```{r}
 silent_attempt(log("a"))
-# Error: argument non numérique pour une fonction mathématique
+# Error: non-numeric argument to mathematical function
 silent_attempt(log(1))
 ```
 
+
 ## try catch
 
-You can write a try catch with these params : 
+You can write a try catch with these params: 
 
 + `expr` the expression to be evaluated 
 + `.e` a mapper or a function evaluated when an error occurs
@@ -83,17 +91,17 @@ In `.e` and `.f`, the `.x` refers to the error / warning object.
 try_catch(expr = log("a"), 
           .e = ~ paste0("There is an error: ", .x), 
           .w = ~ paste0("This is a warning: ", .x))
-#[1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+#[1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"
 
 try_catch(log("a"), 
           .e = ~ stop(.x), 
           .w = ~ warning(.x))
-# Error in log("a") : argument non numérique pour une fonction mathématique
+# Error in log("a") : non-numeric argument to mathematical function
 
 try_catch(matrix(1:3, nrow= 2), 
           .e = ~ print(.x), 
           .w = ~ print(.x))
-#<simpleWarning in matrix(1:3, nrow = 2): la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]>
+#<simpleWarning in matrix(1:3, nrow = 2): data length [3] is not a sub-multiple or multiple of the number of rows [2]>
 
 try_catch(expr = 2 + 2 , 
           .f = ~ print("Using R for addition... ok I'm out!"))
@@ -101,7 +109,7 @@ try_catch(expr = 2 + 2 ,
 # [1] 4
 ```
 
-As usual, the handlers are set only if you call them : 
+As usual, the handlers are set only if you call them: 
 
 ```{r}
 try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
@@ -110,7 +118,7 @@ try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
 # [2,]    2    1
 # Warning message:
 # In matrix(1:3, nrow = 2) :
-#   la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]
+# data length [3] is not a sub-multiple or multiple of the number of rows [2]
 ```
 
 ```{r}
@@ -121,9 +129,9 @@ try_catch(matrix(1:3, nrow = 2), .w = ~ print("warning"))
 
 ### Traditionnal way 
 
-{attempt} is flexible in how you can specify your arguments. 
+`{attempt}` is flexible in how you can specify your arguments. 
 
-You can, as you do with {base} `tryCatch`, use a plain old function: 
+You can, as you do with `{base}` `tryCatch()`, use a plain old function: 
 
 ```{r}
 try_catch(log("a"), 
@@ -137,9 +145,9 @@ try_catch(log("a"),
             print("let's move on now")
           })
 
-# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+# [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"
 # [1] "Ok, let's save this"
-# [1] "log saved on log.txt at 2017-12-20 18:24:05"
+# [1] "log saved on log.txt at 2018-01-30 16:59:13"
 # [1] "let's move on now"
 ```
 
@@ -152,18 +160,18 @@ try_catch(log("a"),
           },
           .f = ~ print("I'm not sure you can do that pal !"))
 # [1] "I'm not sure you can do that pal !"
-# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+# [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"
 
 try_catch(log("a"), 
           .e = ~ paste0("There is an error: ", .x),
           .f = function() print("I'm not sure you can do that pal !"))
 # [1] "I'm not sure you can do that pal !"
-# [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"
+# [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"
 ```
 
-### try_catch_df 
+### `try_catch_df()`
 
-`try_catch_df` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". The values will always be contained in a list-column.
+`try_catch_df()` returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or "error". The values will always be contained in a list-column.
 
 ```{r eval = TRUE}
 res_log <- try_catch_df(log("a"))
@@ -179,9 +187,9 @@ res_success
 res_success$value
 ```
 
-### map try_catch
+### `map_try_catch()`
 
-`map_try_catch` and `map_try_catch_df` allow you to map on a list of arguments `l`, to be evaluated by the function in `fun`. 
+`map_try_catch()` and `map_try_catch_df()` allow you to map on a list of arguments `l`, to be evaluated by the function in `fun`. 
 
 ```{r eval = TRUE}
 map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)

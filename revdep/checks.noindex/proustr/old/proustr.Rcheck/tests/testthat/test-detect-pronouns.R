@@ -1,0 +1,20 @@
+context("detect-pronouns")
+
+test_that("Pronouns are detected", {
+  a <- proust_books()[1,] 
+  v <- pr_detect_pro(a, text, verbose = TRUE)
+  nv <- pr_detect_pro(a, text)
+  expect_true(!identical(v, nv))
+  expect_true(inherits(v, "data.frame"))
+  expect_true(inherits(v, "tbl_df"))
+  expect_true(inherits(v, "tbl"))
+  expect_true(inherits(v, "data.frame"))
+  expect_true(inherits(v, "tbl_df"))
+  expect_true(inherits(v, "tbl"))
+  expect_equal(nrow(v), 2)
+  expect_equal(ncol(v), 6)
+  expect_equal(nrow(nv), 2)
+  expect_equal(ncol(nv), 6)
+  expect_equal(class(v$full_list), "list")
+  expect_equal(class(nv$count), "integer")
+})

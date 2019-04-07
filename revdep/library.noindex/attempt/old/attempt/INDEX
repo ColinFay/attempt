@@ -1,0 +1,10 @@
+attempt                 Attempt
+attempt-package         attempt package
+if_all                  Test for all, any or none
+if_then                 If this, then that
+silent_attempt          Silently attempt
+silently                Silently
+stop_if                 Warn if
+surely                  surely
+try_catch               Try Catch
+with_message            Manipulate messages and warnings
