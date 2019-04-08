@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">attempt</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -75,7 +75,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ColinFay/attempt">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -90,9 +97,9 @@
       <h1>attempt</h1>
                         <h4 class="author">Colin Fay</h4>
             
-            <h4 class="date">2018-11-15</h4>
+            <h4 class="date">2019-04-08</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/ColinFay/attempt/blob/master/vignettes/a_intro_attempt.Rmd"><code>vignettes/a_intro_attempt.Rmd</code></a></small>
       <div class="hidden name"><code>a_intro_attempt.Rmd</code></div>
 
     </div>
@@ -102,25 +109,30 @@
 <div id="introduction-to-attempt" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction-to-attempt" class="anchor"></a>Introduction to {attempt}</h1>
-<p>{attempt} is a friendlier condition handler for R, inspired by {purrr} mappers and based on {rlang}.</p>
-<p>{attempt} is designed to handle the cases when something / someone attempts to do something it shouldn’t.</p>
-<p>For example :</p>
+</div>
+<div id="attempt" class="section level1">
+<h1 class="hasAnchor">
+<a href="#attempt" class="anchor"></a>{attempt}</h1>
+<p><img src="https://raw.githubusercontent.com/ColinFay/attempt/master/README-fig/attempt_hex_200.png"></p>
+<p>Tools for defensive programming, inspired by <code>{purrr}</code> mappers and based on <code>{rlang}</code>.</p>
+<p><code>{attempt}</code> is designed to handle the cases when something / someone attempts to do something it shouldn’t.</p>
+<p>For example:</p>
 <ul>
 <li>an attempt to run a <code>log("a")</code> (error)</li>
-<li>an attempt to connect to a web API without an internet connexion running (error)</li>
+<li>an attempt to connect to a web API without an internet connexion (error)</li>
 <li>an attempt to <code>paste()</code> <code>"good morning"</code> and <code>iris</code> (message/warning)</li>
 <li>…</li>
 </ul>
-<p>{attempt} provides several condition handlers, from try catch to simple message printing.</p>
-<p>{attempt} only depends on {rlang}, making it easy to implement in other functions and packages.</p>
+<p><code>{attempt}</code> provides several condition handlers, from try catch to simple message printing.</p>
+<p><code>{attempt}</code> only depends on <code>{rlang}</code>, and every function is design to be fast, making it easy to implement in other functions and packages.</p>
 </div>
 <div id="install" class="section level1">
 <h1 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h1>
 <p>From CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"attempt"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">"attempt"</span>)</a></code></pre></div>
 <p>The dev version:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ColinFay/attempt"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">install.packages</span>(<span class="st">"attempt"</span>, <span class="dt">repo =</span> <span class="st">"https://colinfay.me/ran"</span>, <span class="dt">type =</span> <span class="st">"source"</span>)</a></code></pre></div>
 <div id="using-attempt" class="section level2">
 <h2 class="hasAnchor">
 <a href="#using-attempt" class="anchor"></a>Using {attempt}</h2>
@@ -213,6 +225,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction-to-attempt">Introduction to {attempt}</a></li>
+      <li><a href="#attempt">{attempt}</a></li>
       <li>
 <a href="#install">Install</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#using-attempt">Using {attempt}</a></li>

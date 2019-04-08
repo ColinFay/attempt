@@ -50,7 +50,7 @@ install.packages("attempt")
 The dev version:
 
 ```{r eval = FALSE}
-install.packages("attempt", repo = "https://colinfay.me/ran")
+install.packages("attempt", repo = "https://colinfay.me/ran", type = "source")
 ```
 
 

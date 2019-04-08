@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">attempt</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -75,7 +75,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ColinFay/attempt">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -90,9 +97,9 @@
       <h1>Condition handling</h1>
                         <h4 class="author">Colin Fay</h4>
             
-            <h4 class="date">2018-11-15</h4>
+            <h4 class="date">2019-04-08</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/ColinFay/attempt/blob/master/vignettes/e_conditions.Rmd"><code>vignettes/e_conditions.Rmd</code></a></small>
       <div class="hidden name"><code>e_conditions.Rmd</code></div>
 
     </div>
@@ -102,108 +109,123 @@
 <div id="warnings-and-messages" class="section level2">
 <h2 class="hasAnchor">
 <a href="#warnings-and-messages" class="anchor"></a>warnings and messages</h2>
-<p>The <code>stop_if</code>, <code>warn_if</code> and <code>message_if</code> are easy to use functions that send an error, a warning or a message if a condition is met. Each function has its counterpart with <code>_not</code>. That returns a message if the condition is not met.</p>
-<p><code>stop_if_not</code> is quite the same as <code>assert_that</code> from the {assertthat} package, except that it can takes mappers. It is not the same as base <code>stopifnot()</code>, as it doesn’t take a list of expression.</p>
-<p>These functions are also flexible as you can pass base predicates (is.numeric, is.character…), a custom predicate built with mappers, or even your own testing function.</p>
+<p>The <code><a href="../reference/messagehandler.html">stop_if()</a></code>, <code><a href="../reference/messagehandler.html">warn_if()</a></code> and <code><a href="../reference/messagehandler.html">message_if()</a></code> are easy to use functions that send an error, a warning or a message if a condition is met. Each function has its counterpart with <code>_not</code> that returns a message if the condition is not met.</p>
+<p><code><a href="../reference/messagehandler.html">stop_if_not()</a></code> is quite the same as <code>assert_that()</code> from the {assertthat} package, except that it can takes mappers. It is not the same as base <code>stopifnot()</code>, as it doesn’t take a list of expression.</p>
+<p>These functions are also flexible as you can pass base predicates (is.numeric, is.character…), a custom predicate built with mappers, or even your own predicate function.</p>
 <p>You can either choose a custom message or just let the built-in messages be printed:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">12</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co"># Stop if .x is numeric</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="../reference/messagehandler.html">stop_if</a></span>(<span class="dt">.x =</span> x, </a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="dt">.p =</span> is.numeric)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; Error: Test `is.numeric` on `x` returned an error.</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">y &lt;-<span class="st"> "20"</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co"># stop if .x is not numeric</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw"><a href="../reference/messagehandler.html">stop_if_not</a></span>(<span class="dt">.x =</span> y, </a>
-<a class="sourceLine" id="cb1-10" data-line-number="10">            <span class="dt">.p =</span> is.numeric, </a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">            <span class="dt">msg =</span> <span class="st">"y should be numeric"</span>)</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="co">#&gt; Error: y should be numeric</span></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">a  &lt;-<span class="st"> "this is not numeric"</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="co"># Warn if .x is charcter</span></a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="kw"><a href="../reference/messagehandler.html">warn_if</a></span>(<span class="dt">.x =</span> a, </a>
-<a class="sourceLine" id="cb1-16" data-line-number="16">        <span class="dt">.p =</span> is.character)</a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="co">#&gt; Warning: Test `is.character` on `a` returned a warning.</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19">b  &lt;-<span class="st"> </span><span class="dv">20</span></a>
-<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="co"># Warn if .x is not equal to 10</span></a>
-<a class="sourceLine" id="cb1-21" data-line-number="21"><span class="kw"><a href="../reference/messagehandler.html">warn_if_not</a></span>(<span class="dt">.x =</span> b, </a>
-<a class="sourceLine" id="cb1-22" data-line-number="22">        <span class="dt">.p =</span> <span class="op">~</span><span class="st"> </span>.x <span class="op">==</span><span class="st"> </span><span class="dv">10</span> , </a>
-<a class="sourceLine" id="cb1-23" data-line-number="23">        <span class="dt">msg =</span> <span class="st">"b should be 10"</span>)</a>
-<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="co">#&gt; Warning: b should be 10</span></a>
-<a class="sourceLine" id="cb1-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb1-26" data-line-number="26">c &lt;-<span class="st"> "a"</span></a>
-<a class="sourceLine" id="cb1-27" data-line-number="27"><span class="co"># Message if c is a character</span></a>
-<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="kw"><a href="../reference/messagehandler.html">message_if</a></span>(<span class="dt">.x =</span> c, </a>
-<a class="sourceLine" id="cb1-29" data-line-number="29">           <span class="dt">.p =</span> is.character, </a>
-<a class="sourceLine" id="cb1-30" data-line-number="30">           <span class="dt">msg =</span> <span class="st">"You entered a character element"</span>)</a>
-<a class="sourceLine" id="cb1-31" data-line-number="31"><span class="co">#&gt; You entered a character element</span></a>
-<a class="sourceLine" id="cb1-32" data-line-number="32"></a>
-<a class="sourceLine" id="cb1-33" data-line-number="33"><span class="co"># Build more complex predicates</span></a>
-<a class="sourceLine" id="cb1-34" data-line-number="34">d &lt;-<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb1-35" data-line-number="35"><span class="kw"><a href="../reference/messagehandler.html">message_if</a></span>(<span class="dt">.x =</span> d, </a>
-<a class="sourceLine" id="cb1-36" data-line-number="36">           <span class="dt">.p =</span> <span class="op">~</span><span class="st"> </span><span class="kw">sqrt</span>(.x) <span class="op">&lt;</span><span class="st"> </span><span class="dv">42</span>, </a>
-<a class="sourceLine" id="cb1-37" data-line-number="37">           <span class="dt">msg =</span> <span class="st">"The square root of your element must be more than 42"</span>)</a>
-<a class="sourceLine" id="cb1-38" data-line-number="38"><span class="co">#&gt; The square root of your element must be more than 42</span></a>
-<a class="sourceLine" id="cb1-39" data-line-number="39"></a>
-<a class="sourceLine" id="cb1-40" data-line-number="40"><span class="co"># Or, if you're kind of old school, you can still pass classic functions</span></a>
-<a class="sourceLine" id="cb1-41" data-line-number="41"></a>
-<a class="sourceLine" id="cb1-42" data-line-number="42">e &lt;-<span class="st"> </span><span class="dv">30</span></a>
-<a class="sourceLine" id="cb1-43" data-line-number="43"><span class="kw"><a href="../reference/messagehandler.html">message_if</a></span>(<span class="dt">.x =</span> e, </a>
-<a class="sourceLine" id="cb1-44" data-line-number="44">           <span class="dt">.p =</span> <span class="cf">function</span>(vec){</a>
-<a class="sourceLine" id="cb1-45" data-line-number="45">             <span class="kw">return</span>(<span class="kw">sqrt</span>(vec) <span class="op">&lt;</span><span class="st"> </span><span class="dv">42</span>)</a>
-<a class="sourceLine" id="cb1-46" data-line-number="46">           }, </a>
-<a class="sourceLine" id="cb1-47" data-line-number="47">           <span class="dt">msg =</span> <span class="st">"The square root of your element must be more than 42"</span>)</a>
-<a class="sourceLine" id="cb1-48" data-line-number="48"><span class="co">#&gt; The square root of your element must be more than 42</span></a></code></pre></div>
-<p>If you need to call a function that takes no argument at <code>.p</code>, use this function as <code>.x</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">true &lt;-<span class="st"> </span><span class="cf">function</span>() <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">false &lt;-<span class="st"> </span><span class="cf">function</span>() <span class="ot">FALSE</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="../reference/messagehandler.html">stop_if</a></span>(<span class="dt">.x =</span>  <span class="kw">true</span>(), <span class="dt">msg =</span> <span class="st">"This is true"</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; Error: This is true</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw"><a href="../reference/messagehandler.html">warn_if_not</a></span>(<span class="kw">false</span>(), </a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">            <span class="dt">msg =</span> <span class="st">"This is false"</span>)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; Warning: This is false</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="../reference/messagehandler.html">message_if</a></span>(<span class="dt">.x =</span> <span class="kw">true</span>(), </a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">            <span class="dt">msg =</span> <span class="st">"Huray!"</span>)</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; Huray!</span></a></code></pre></div>
-<p>If you don’t specify a <code>.p</code>, the default test is <code>isTRUE</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">is.na</span>(airquality<span class="op">$</span>Ozone)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="../reference/messagehandler.html">message_if_any</a></span>(a, <span class="dt">msg =</span> <span class="st">"NA found"</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; NA found</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">x &lt;-<span class="st"> </span><span class="dv">12</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co"># Stop if .x is numeric</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw"><a href="../reference/messagehandler.html">stop_if</a></span>(<span class="dt">.x =</span> x, </a>
+<a class="sourceLine" id="cb1-4" title="4">        <span class="dt">.p =</span> is.numeric)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; Error: Test `is.numeric` on `x` returned an error.</span></a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7">y &lt;-<span class="st"> "20"</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co"># stop if .x is not numeric</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw"><a href="../reference/messagehandler.html">stop_if_not</a></span>(<span class="dt">.x =</span> y, </a>
+<a class="sourceLine" id="cb1-10" title="10">            <span class="dt">.p =</span> is.numeric, </a>
+<a class="sourceLine" id="cb1-11" title="11">            <span class="dt">msg =</span> <span class="st">"y should be numeric"</span>)</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="co">#&gt; Error: y should be numeric</span></a>
+<a class="sourceLine" id="cb1-13" title="13">a  &lt;-<span class="st"> "this is not numeric"</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="co"># Warn if .x is charcter</span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="kw"><a href="../reference/messagehandler.html">warn_if</a></span>(<span class="dt">.x =</span> a, </a>
+<a class="sourceLine" id="cb1-16" title="16">        <span class="dt">.p =</span> is.character)</a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="co">#&gt; Warning: Test `is.character` on `a` returned a warning.</span></a>
+<a class="sourceLine" id="cb1-18" title="18"></a>
+<a class="sourceLine" id="cb1-19" title="19">b  &lt;-<span class="st"> </span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="co"># Warn if .x is not equal to 10</span></a>
+<a class="sourceLine" id="cb1-21" title="21"><span class="kw"><a href="../reference/messagehandler.html">warn_if_not</a></span>(<span class="dt">.x =</span> b, </a>
+<a class="sourceLine" id="cb1-22" title="22">        <span class="dt">.p =</span> <span class="op">~</span><span class="st"> </span>.x <span class="op">==</span><span class="st"> </span><span class="dv">10</span> , </a>
+<a class="sourceLine" id="cb1-23" title="23">        <span class="dt">msg =</span> <span class="st">"b should be 10"</span>)</a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="co">#&gt; Warning: b should be 10</span></a>
+<a class="sourceLine" id="cb1-25" title="25"></a>
+<a class="sourceLine" id="cb1-26" title="26">c &lt;-<span class="st"> "a"</span></a>
+<a class="sourceLine" id="cb1-27" title="27"><span class="co"># Message if c is a character</span></a>
+<a class="sourceLine" id="cb1-28" title="28"><span class="kw"><a href="../reference/messagehandler.html">message_if</a></span>(<span class="dt">.x =</span> c, </a>
+<a class="sourceLine" id="cb1-29" title="29">           <span class="dt">.p =</span> is.character, </a>
+<a class="sourceLine" id="cb1-30" title="30">           <span class="dt">msg =</span> <span class="st">"You entered a character element"</span>)</a>
+<a class="sourceLine" id="cb1-31" title="31"><span class="co">#&gt; You entered a character element</span></a>
+<a class="sourceLine" id="cb1-32" title="32"></a>
+<a class="sourceLine" id="cb1-33" title="33"><span class="co"># Build more complex predicates</span></a>
+<a class="sourceLine" id="cb1-34" title="34">d &lt;-<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb1-35" title="35"><span class="kw"><a href="../reference/messagehandler.html">message_if</a></span>(<span class="dt">.x =</span> d, </a>
+<a class="sourceLine" id="cb1-36" title="36">           <span class="dt">.p =</span> <span class="op">~</span><span class="st"> </span><span class="kw">sqrt</span>(.x) <span class="op">&lt;</span><span class="st"> </span><span class="dv">42</span>, </a>
+<a class="sourceLine" id="cb1-37" title="37">           <span class="dt">msg =</span> <span class="st">"The square root of your element must be more than 42"</span>)</a>
+<a class="sourceLine" id="cb1-38" title="38"><span class="co">#&gt; The square root of your element must be more than 42</span></a>
+<a class="sourceLine" id="cb1-39" title="39"></a>
+<a class="sourceLine" id="cb1-40" title="40"><span class="co"># Or, if you're kind of old school, you can still pass classic functions</span></a>
+<a class="sourceLine" id="cb1-41" title="41"></a>
+<a class="sourceLine" id="cb1-42" title="42">e &lt;-<span class="st"> </span><span class="dv">30</span></a>
+<a class="sourceLine" id="cb1-43" title="43"><span class="kw"><a href="../reference/messagehandler.html">message_if</a></span>(<span class="dt">.x =</span> e, </a>
+<a class="sourceLine" id="cb1-44" title="44">           <span class="dt">.p =</span> <span class="cf">function</span>(vec){</a>
+<a class="sourceLine" id="cb1-45" title="45">             <span class="kw">return</span>(<span class="kw">sqrt</span>(vec) <span class="op">&lt;</span><span class="st"> </span><span class="dv">42</span>)</a>
+<a class="sourceLine" id="cb1-46" title="46">           }, </a>
+<a class="sourceLine" id="cb1-47" title="47">           <span class="dt">msg =</span> <span class="st">"The square root of your element must be more than 42"</span>)</a>
+<a class="sourceLine" id="cb1-48" title="48"><span class="co">#&gt; The square root of your element must be more than 42</span></a></code></pre></div>
+<p>If you need to call a function that takes no argument at <code>.p</code> (like <code><a href="http://www.rdocumentation.org/packages/curl/topics/nslookup">curl::has_internet()</a></code>), use this function as <code>.x</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/messagehandler.html">stop_if</a></span>(<span class="dt">.x =</span> curl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/curl/topics/nslookup">has_internet</a></span>(), <span class="dt">msg =</span> <span class="st">"You shouldn't have internet to do that"</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; Error: You shouldn't have internet to do that</span></a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw"><a href="../reference/messagehandler.html">warn_if</a></span>(<span class="dt">.x =</span> curl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/curl/topics/nslookup">has_internet</a></span>(), </a>
+<a class="sourceLine" id="cb2-5" title="5">            <span class="dt">msg =</span> <span class="st">"You shouldn't have internet to do that"</span>)</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="co">#&gt; Warning: You shouldn't have internet to do that</span></a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw"><a href="../reference/messagehandler.html">message_if</a></span>(<span class="dt">.x =</span> curl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/curl/topics/nslookup">has_internet</a></span>(), </a>
+<a class="sourceLine" id="cb2-9" title="9">            <span class="dt">msg =</span> <span class="st">"Huray, you have internet </span><span class="ch">\\</span><span class="st">o/"</span>)</a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="co">#&gt; Huray, you have internet \o/</span></a></code></pre></div>
+<p>If you don’t specify a <code>.p</code>, the default test is <code>isTRUE()</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">a &lt;-<span class="st"> </span><span class="kw">is.na</span>(airquality<span class="op">$</span>Ozone)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw"><a href="../reference/messagehandler.html">message_if_any</a></span>(a, <span class="dt">msg =</span> <span class="st">"NA found"</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#&gt; NA found</span></a></code></pre></div>
 <div id="in-function" class="section level3">
 <h3 class="hasAnchor">
 <a href="#in-function" class="anchor"></a>In function</h3>
-<p>That can come really handy inside a function :</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">my_fun &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw"><a href="../reference/messagehandler.html">warn_if_not</a></span>(x, </a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">          is.character, </a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">          <span class="dt">msg =</span>  <span class="st">"x is not a character vector. The output may not be what you're expecting."</span>)</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="kw">paste</span>(x, <span class="st">"is the value."</span>)</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">my_fun</span>(<span class="kw">head</span>(iris))</a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; Warning: x is not a character vector. The output may not be what you're</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; expecting.</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; [1] "c(5.1, 4.9, 4.7, 4.6, 5, 5.4) is the value."  </span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; [2] "c(3.5, 3, 3.2, 3.1, 3.6, 3.9) is the value."  </span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; [3] "c(1.4, 1.4, 1.3, 1.5, 1.4, 1.7) is the value."</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; [4] "c(0.2, 0.2, 0.2, 0.2, 0.2, 0.4) is the value."</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; [5] "c(1, 1, 1, 1, 1, 1) is the value."</span></a></code></pre></div>
+<p>That can come really handy inside a function:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">my_fun &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="kw"><a href="../reference/messagehandler.html">stop_if_not</a></span>(<span class="dt">.x =</span> curl<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/curl/topics/nslookup">has_internet</a></span>(), </a>
+<a class="sourceLine" id="cb4-3" title="3">              <span class="dt">msg =</span> <span class="st">"You should have internet to do that"</span>)</a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="kw"><a href="../reference/messagehandler.html">warn_if_not</a></span>(x, </a>
+<a class="sourceLine" id="cb4-5" title="5">          is.character, </a>
+<a class="sourceLine" id="cb4-6" title="6">          <span class="dt">msg =</span>  <span class="st">"x is not a character vector. The output may not be what you're expecting."</span>)</a>
+<a class="sourceLine" id="cb4-7" title="7">  <span class="kw">paste</span>(x, <span class="st">"is the value."</span>)</a>
+<a class="sourceLine" id="cb4-8" title="8">}</a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="kw">my_fun</span>(<span class="kw">head</span>(iris))</a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co">#&gt; Warning: x is not a character vector. The output may not be what you're</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">#&gt; expecting.</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">#&gt; [1] "c(5.1, 4.9, 4.7, 4.6, 5, 5.4) is the value."  </span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="co">#&gt; [2] "c(3.5, 3, 3.2, 3.1, 3.6, 3.9) is the value."  </span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="co">#&gt; [3] "c(1.4, 1.4, 1.3, 1.5, 1.4, 1.7) is the value."</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="co">#&gt; [4] "c(0.2, 0.2, 0.2, 0.2, 0.2, 0.4) is the value."</span></a>
+<a class="sourceLine" id="cb4-17" title="17"><span class="co">#&gt; [5] "c(1, 1, 1, 1, 1, 1) is the value."</span></a></code></pre></div>
 </div>
 <div id="none-all-any" class="section level3">
 <h3 class="hasAnchor">
 <a href="#none-all-any" class="anchor"></a>none, all, any</h3>
-<p><code>stop_if</code>, <code>warn_if</code> and <code>message_if</code> all have complementary tests with <code>_all</code>, <code>_any</code> and <code>_none</code>, which combine the <code>if_*</code> and the <code>warn_*</code>, <code>stop_*</code> and <code>message_*</code> seen before. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/messagehandler.html">stop_if_any</a></span>(iris, is.factor, <span class="dt">msg =</span> <span class="st">"Factors here. This might be due to stringsAsFactors."</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; Error: Factors here. This might be due to stringsAsFactors.</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="../reference/messagehandler.html">warn_if_none</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">~</span><span class="st"> </span>.x <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">msg =</span> <span class="st">"You need to have at least one number under zero."</span>)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; Warning: You need to have at least one number under zero.</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="../reference/messagehandler.html">message_if_all</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, is.numeric, <span class="dt">msg =</span> <span class="st">"That makes a lot of numbers."</span>)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; That makes a lot of numbers.</span></a></code></pre></div>
+<p><code><a href="../reference/messagehandler.html">stop_if()</a></code>, <code><a href="../reference/messagehandler.html">warn_if()</a></code> and <code><a href="../reference/messagehandler.html">message_if()</a></code> all have complementary tests with <code>_all</code>, <code>_any</code> and <code>_none</code>, which combine the <code>if_*</code> and the <code>warn_*</code>, <code>stop_*</code> and <code>message_*</code> seen before. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="../reference/messagehandler.html">stop_if_any</a></span>(iris, is.factor, <span class="dt">msg =</span> <span class="st">"Factors here. This might be due to stringsAsFactors."</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; Error: Factors here. This might be due to stringsAsFactors.</span></a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="kw"><a href="../reference/messagehandler.html">warn_if_none</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">~</span><span class="st"> </span>.x <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="dt">msg =</span> <span class="st">"You need to have at least one number under zero."</span>)</a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#&gt; Warning: You need to have at least one number under zero.</span></a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="kw"><a href="../reference/messagehandler.html">message_if_all</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">100</span>, is.numeric, <span class="dt">msg =</span> <span class="st">"That makes a lot of numbers."</span>)</a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#&gt; That makes a lot of numbers.</span></a></code></pre></div>
 </div>
+</div>
+<div id="on_error" class="section level2">
+<h2 class="hasAnchor">
+<a href="#on_error" class="anchor"></a><code><a href="../reference/on_error.html">on_error()</a></code>
+</h2>
+<p><code><a href="../reference/on_error.html">on_error()</a></code> behaves as <code>on.exit()</code> except it happens only when there is an error in the function.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">y &lt;-<span class="st"> </span><span class="cf">function</span>(x){</a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="kw"><a href="../reference/on_error.html">on_error</a></span>(<span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"ouch"</span>))</a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="kw">log</span>(x)</a>
+<a class="sourceLine" id="cb6-4" title="4">}</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">y</span>(<span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb6-6" title="6">[<span class="dv">1</span>] <span class="fl">2.484907</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="kw">y</span>(<span class="st">"a"</span>)</a>
+<a class="sourceLine" id="cb6-8" title="8">Error <span class="cf">in</span> <span class="kw">log</span>(x) <span class="op">:</span><span class="st"> </span>non<span class="op">-</span>numeric argument to mathematical <span class="cf">function</span></a>
+<a class="sourceLine" id="cb6-9" title="9">[<span class="dv">1</span>] <span class="st">"ouch"</span></a></code></pre></div>
 </div>
   </div>
 
@@ -213,6 +235,7 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#warnings-and-messages">warnings and messages</a></li>
+      <li><a href="#on_error"><code><a href="--/reference/on_error-html">on_error()</a></code></a></li>
       </ul>
 </div>
       </div>

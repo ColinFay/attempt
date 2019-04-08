@@ -6,7 +6,7 @@ status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travi
 status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/attempt?branch=master)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)
-[![](https://cranlogs.r-pkg.org/badges/attempt)](https://cran.rstudio.com/web/packages/attempt/index.html)
+[![](https://cranlogs.r-pkg.org/badges/attempt)](https://CRAN.R-project.org/package=attempt)
 
 # {attempt}
 
@@ -44,7 +44,7 @@ install.packages("attempt")
 The dev version:
 
 ``` r
-remotes::install_github("ColinFay/attempt")
+install.packages("attempt", repo = "https://colinfay.me/ran")
 ```
 
 # Reference
@@ -97,7 +97,7 @@ You can check if the result is an error with `is_try_error()`
 a <- attempt(log("a"), msg = "Nop !", verbose = FALSE)
 #> Error: Nop !
 is_try_error(a)
-#> Error in is_try_error(a): could not find function "is_try_error"
+#> [1] TRUE
 ```
 
 ## silent\_attempt
@@ -356,8 +356,8 @@ if_any(1:10, is.numeric, ~ "Yay!")
 #> [1] "Yay!"
 
 if_none(1:10, is.character, ~ rnorm(10))
-#>  [1] -0.1700617  0.5646615 -0.0625102 -0.4314964 -1.0501272  0.1658236
-#>  [7]  0.7586666  1.3206924  0.8549140  0.4568230
+#>  [1] -0.62041260  1.18903502  0.34425236  0.40211829 -0.89651209
+#>  [6]  0.08673175 -0.65066136  0.47734033 -1.34301785 -0.20193553
 ```
 
 The defaut for all `.p` is `isTRUE()`. So you can:

@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">attempt</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -75,7 +75,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ColinFay/attempt">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -90,9 +97,9 @@
       <h1>If</h1>
                         <h4 class="author">Colin Fay</h4>
             
-            <h4 class="date">2018-11-15</h4>
+            <h4 class="date">2019-04-08</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/ColinFay/attempt/blob/master/vignettes/d_if.Rmd"><code>vignettes/d_if.Rmd</code></a></small>
       <div class="hidden name"><code>d_if.Rmd</code></div>
 
     </div>
@@ -102,32 +109,32 @@
 <div id="if_-conditions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#if_-conditions" class="anchor"></a><code>if_</code> conditions</h2>
-<p><code>if_none</code>, <code>if_any</code> and <code>if_all</code> test the elements of the list.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="../reference/scopedif.html">if_all</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">~</span><span class="st"> </span>.x <span class="op">&lt;</span><span class="st"> </span><span class="dv">11</span>, <span class="op">~</span><span class="st"> </span><span class="kw">return</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]))</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="../reference/scopedif.html">if_any</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, is.numeric, <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"Yay!"</span>))</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">#&gt; [1] "Yay!"</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="../reference/scopedif.html">if_none</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, is.character, <span class="op">~</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>))</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="co">#&gt;  [1]  0.3772628  0.1800836  1.9702201  2.1718289  0.7693132  0.5502764</span></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">#&gt;  [7] -0.6560258 -0.1870441 -1.1239829  0.3197856</span></a></code></pre></div>
-<p>The defaut for all <code>.p</code> is <code>isTRUE</code>. So you can:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw"><a href="../reference/scopedif.html">if_any</a></span>(a, <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"nop!"</span>))</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; [1] "nop!"</span></a></code></pre></div>
-<p><code>if_then</code> performs a simple “if this then do that”:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/ifthenelse.html">if_then</a></span>(<span class="dv">1</span>, is.numeric, <span class="op">~</span><span class="st"> </span><span class="kw">return</span>(<span class="st">"nop!"</span>))</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; [1] "nop!"</span></a></code></pre></div>
-<p><code>if_not</code> runs <code>.f</code> if <code>.p(.x)</code> is not TRUE :</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/ifthenelse.html">if_not</a></span>(<span class="dt">.x =</span> <span class="dv">1</span>, <span class="dt">.p =</span> is.character, <span class="op">~</span><span class="st"> ".x is not a character"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; [1] ".x is not a character"</span></a></code></pre></div>
-<p>And <code>if_else</code> is a wrapper around <code><a href="http://www.rdocumentation.org/packages/base/topics/ifelse">base::ifelse()</a></code> that works with mappers.</p>
+<p><code><a href="../reference/scopedif.html">if_none()</a></code>, <code><a href="../reference/scopedif.html">if_any()</a></code> and <code><a href="../reference/scopedif.html">if_all()</a></code> test the elements of the list.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="../reference/scopedif.html">if_all</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, <span class="op">~</span><span class="st"> </span>.x <span class="op">&lt;</span><span class="st"> </span><span class="dv">11</span>, <span class="op">~</span><span class="st"> </span><span class="kw">return</span>(letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]))</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co">#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j"</span></a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="../reference/scopedif.html">if_any</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, is.numeric, <span class="op">~</span><span class="st"> "Yay!"</span>)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; [1] "Yay!"</span></a>
+<a class="sourceLine" id="cb1-6" title="6"></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw"><a href="../reference/scopedif.html">if_none</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>, is.character, <span class="op">~</span><span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co">#&gt;  [1]  0.53801721 -0.31497399 -0.04184760 -0.68733126  1.91832222</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="co">#&gt;  [6] -0.67862247  0.18664413 -0.03591026 -1.13483403  0.65430853</span></a></code></pre></div>
+<p>The defaut for all <code>.p</code> is <code>isTRUE()</code>. So you can:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">a &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw"><a href="../reference/scopedif.html">if_any</a></span>(a, <span class="dt">.f =</span> <span class="op">~</span><span class="st"> "nop!"</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">#&gt; [1] "nop!"</span></a></code></pre></div>
+<p><code><a href="../reference/ifthenelse.html">if_then()</a></code> performs a simple “if this then do that”:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/ifthenelse.html">if_then</a></span>(<span class="dv">1</span>, is.numeric, <span class="op">~</span><span class="st"> "nop!"</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; [1] "nop!"</span></a></code></pre></div>
+<p><code><a href="../reference/ifthenelse.html">if_not()</a></code> runs <code>.f</code> if <code>.p(.x)</code> is not TRUE :</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw"><a href="../reference/ifthenelse.html">if_not</a></span>(<span class="dt">.x =</span> <span class="dv">1</span>, <span class="dt">.p =</span> is.character, <span class="op">~</span><span class="st"> ".x is not a character"</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; [1] ".x is not a character"</span></a></code></pre></div>
+<p>And <code><a href="../reference/ifthenelse.html">if_else()</a></code> is a wrapper around <code><a href="http://www.rdocumentation.org/packages/base/topics/ifelse">base::ifelse()</a></code>.</p>
 <p>If you want these function to return a value, you need to wrap these values into a mapper / a function. E.g, to return a vector, you’ll need to write <code><a href="../reference/ifthenelse.html">if_then(1, is.numeric, ~ "Yay")</a></code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ifthenelse.html">if_else</a></span>(<span class="dv">1</span>, is.numeric, <span class="op">~</span><span class="st"> </span><span class="kw">return</span>(<span class="st">"Yay"</span>), <span class="op">~</span><span class="st"> </span><span class="kw">return</span>(<span class="st">"Nay"</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">a</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [1] "Yay"</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/ifthenelse.html">if_else</a></span>(<span class="dv">1</span>, is.numeric, <span class="op">~</span><span class="st"> "Yay"</span>, <span class="op">~</span><span class="st"> "Nay"</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2">a</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">#&gt; [1] "Yay"</span></a></code></pre></div>
 </div>
   </div>
 

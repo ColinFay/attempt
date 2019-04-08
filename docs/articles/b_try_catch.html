@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">attempt</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.3.0</span>
       </span>
     </div>
 
@@ -75,7 +75,14 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/ColinFay/attempt">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -90,9 +97,9 @@
       <h1>Try Catch</h1>
                         <h4 class="author">Colin Fay</h4>
             
-            <h4 class="date">2018-11-15</h4>
+            <h4 class="date">2019-04-08</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/ColinFay/attempt/blob/master/vignettes/b_try_catch.Rmd"><code>vignettes/b_try_catch.Rmd</code></a></small>
       <div class="hidden name"><code>b_try_catch.Rmd</code></div>
 
     </div>
@@ -102,45 +109,54 @@
 <div id="attempt" class="section level2">
 <h2 class="hasAnchor">
 <a href="#attempt" class="anchor"></a>attempt</h2>
-<p><code>attempt</code> is a wrapper around base <code>try</code> that allows you to insert a custom messsage on error.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(attempt)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>))</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co"># Error: argument non numérique pour une fonction mathématique</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co"># Error: Nop !</span></a></code></pre></div>
+<p><code><a href="../reference/attempt.html">attempt()</a></code> is a wrapper around base <code>try()</code> that allows you to insert a custom messsage on error.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>))</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="co">#&gt; Error: non-numeric argument to mathematical function</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co"># Error: non-numeric argument to mathematical function</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>)</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co">#&gt; Error: Nop !</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># Error: Nop !</span></a></code></pre></div>
 <p>You can make it verbose (i.e. returning the expression):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># Error in log("a"): Nop !</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">#&gt; Error in log("a"): Nop !</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co"># Error in log("a"): Nop !</span></a></code></pre></div>
 <p>Of course the result is returned if there is one:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="dv">1</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; [1] 0</span></a></code></pre></div>
-<p>As with <code>try</code>, the result cant be saved as an error object :</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">a</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; [1] "Error in log(\"a\"): Nop !\n"</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; attr(,"class")</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; [1] "try-error"</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; attr(,"condition")</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; &lt;simpleError in log("a"): Nop !&gt;</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co"># [1] "Error in log(\"a\"): Nop !\n"</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co"># attr(,"class")</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co"># [1] "try-error"</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co"># attr(,"condition")</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co"># &lt;simpleError in log("a"): Nop !&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="dv">1</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">#&gt; [1] 0</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co"># [1] 0</span></a></code></pre></div>
+<p>As with <code>try()</code>, the result can be saved as an error object:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#&gt; Error in log("a"): Nop !</span></a>
+<a class="sourceLine" id="cb4-3" title="3">a</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co">#&gt; [1] "Error in log(\"a\"): Nop !\n"</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">#&gt; attr(,"class")</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="co">#&gt; [1] "try-error"</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co">#&gt; attr(,"condition")</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">#&gt; &lt;simpleError in log("a"): Nop !&gt;</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co"># [1] "Error in log(\"a\"): Nop !\n"</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="co"># attr(,"class")</span></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="co"># [1] "try-error"</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co"># attr(,"condition")</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co"># &lt;simpleError in log("a"): Nop !&gt;</span></a></code></pre></div>
+<p>You can check if the result is an error with <code><a href="../reference/is_try_error.html">is_try_error()</a></code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">a &lt;-<span class="st"> </span><span class="kw"><a href="../reference/attempt.html">attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), <span class="dt">msg =</span> <span class="st">"Nop !"</span>, <span class="dt">verbose =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#&gt; Error: Nop !</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw"><a href="../reference/is_try_error.html">is_try_error</a></span>(a)</a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
 </div>
 <div id="silent_attempt" class="section level2">
 <h2 class="hasAnchor">
 <a href="#silent_attempt" class="anchor"></a>silent_attempt</h2>
-<p><code>silent_attempt</code> is a wrapper around <code>silently</code> (see the adverbs vignette for more info) and <code>attempt</code>. It attempts to run the expr, stays silent if the expression succeeds, and returns error or warnings if any.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/silent_attempt.html">silent_attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>))</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co"># Error: argument non numérique pour une fonction mathématique</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw"><a href="../reference/silent_attempt.html">silent_attempt</a></span>(<span class="kw">log</span>(<span class="dv">1</span>))</a></code></pre></div>
+<p><code><a href="../reference/silent_attempt.html">silent_attempt()</a></code> is a wrapper around <code><a href="../reference/silently.html">silently()</a></code> (see further down for more info) and <code><a href="../reference/attempt.html">attempt()</a></code>. It attempts to run the expr, stays silent if the expression succeeds, and returns error or warnings if any.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw"><a href="../reference/silent_attempt.html">silent_attempt</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>))</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co">#&gt; Error: non-numeric argument to mathematical function</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co"># Error: non-numeric argument to mathematical function</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw"><a href="../reference/silent_attempt.html">silent_attempt</a></span>(<span class="kw">log</span>(<span class="dv">1</span>))</a></code></pre></div>
 </div>
 <div id="try-catch" class="section level2">
 <h2 class="hasAnchor">
 <a href="#try-catch" class="anchor"></a>try catch</h2>
-<p>You can write a try catch with these params :</p>
+<p>You can write a try catch with these params:</p>
 <ul>
 <li>
 <code>expr</code> the expression to be evaluated</li>
@@ -155,147 +171,149 @@
 <div id="with-mappers" class="section level3">
 <h3 class="hasAnchor">
 <a href="#with-mappers" class="anchor"></a>With mappers</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="dt">expr =</span> <span class="kw">log</span>(<span class="st">"a"</span>), </a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">          <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">"There is an error: "</span>, .x), </a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">          <span class="dt">.w =</span> <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">"This is a warning: "</span>, .x))</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#[1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), </a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">          <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">stop</span>(.x), </a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">          <span class="dt">.w =</span> <span class="op">~</span><span class="st"> </span><span class="kw">warning</span>(.x))</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; Error in log("a"): non-numeric argument to mathematical function</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co"># Error in log("a") : argument non numérique pour une fonction mathématique</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb6-13" data-line-number="13"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">nrow=</span> <span class="dv">2</span>), </a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">          <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(.x), </a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">          <span class="dt">.w =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(.x))</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16"><span class="co">#&gt; &lt;simpleWarning in matrix(1:3, nrow = 2): data length [3] is not a sub-multiple or multiple of the number of rows [2]&gt;</span></a>
-<a class="sourceLine" id="cb6-17" data-line-number="17"><span class="co">#&lt;simpleWarning in matrix(1:3, nrow = 2): la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]&gt;</span></a>
-<a class="sourceLine" id="cb6-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb6-19" data-line-number="19"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="dt">expr =</span> <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> , </a>
-<a class="sourceLine" id="cb6-20" data-line-number="20">          <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"Using R for addition... ok I'm out!"</span>))</a>
-<a class="sourceLine" id="cb6-21" data-line-number="21"><span class="co">#&gt; [1] "Using R for addition... ok I'm out!"</span></a>
-<a class="sourceLine" id="cb6-22" data-line-number="22"><span class="co">#&gt; [1] 4</span></a>
-<a class="sourceLine" id="cb6-23" data-line-number="23"><span class="co"># [1] "Using R for addition... ok I'm out!"</span></a>
-<a class="sourceLine" id="cb6-24" data-line-number="24"><span class="co"># [1] 4</span></a></code></pre></div>
-<p>As usual, the handlers are set only if you call them :</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">nrow =</span> <span class="dv">2</span>), <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"error"</span>))</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; Warning in matrix(1:3, nrow = 2): data length [3] is not a sub-multiple or</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; multiple of the number of rows [2]</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;      [,1] [,2]</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; [1,]    1    3</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; [2,]    2    1</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#      [,1] [,2]</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co"># [1,]    1    3</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co"># [2,]    2    1</span></a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co"># Warning message:</span></a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># In matrix(1:3, nrow = 2) :</span></a>
-<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#   la longueur des données [3] n'est pas un diviseur ni un multiple du nombre de lignes [2]</span></a></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">nrow =</span> <span class="dv">2</span>), <span class="dt">.w =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"warning"</span>))</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; [1] "warning"</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># [1] "warning"</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="dt">expr =</span> <span class="kw">log</span>(<span class="st">"a"</span>), </a>
+<a class="sourceLine" id="cb7-2" title="2">          <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">"There is an error: "</span>, .x), </a>
+<a class="sourceLine" id="cb7-3" title="3">          <span class="dt">.w =</span> <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">"This is a warning: "</span>, .x))</a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="co">#&gt; [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="co">#[1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), </a>
+<a class="sourceLine" id="cb7-8" title="8">          <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">stop</span>(.x), </a>
+<a class="sourceLine" id="cb7-9" title="9">          <span class="dt">.w =</span> <span class="op">~</span><span class="st"> </span><span class="kw">warning</span>(.x))</a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="co">#&gt; Error in log("a"): non-numeric argument to mathematical function</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co"># Error in log("a") : non-numeric argument to mathematical function</span></a>
+<a class="sourceLine" id="cb7-12" title="12"></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">nrow=</span> <span class="dv">2</span>), </a>
+<a class="sourceLine" id="cb7-14" title="14">          <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(.x), </a>
+<a class="sourceLine" id="cb7-15" title="15">          <span class="dt">.w =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(.x))</a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="co">#&gt; &lt;simpleWarning in matrix(1:3, nrow = 2): data length [3] is not a sub-multiple or multiple of the number of rows [2]&gt;</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="co">#&lt;simpleWarning in matrix(1:3, nrow = 2): data length [3] is not a sub-multiple or multiple of the number of rows [2]&gt;</span></a>
+<a class="sourceLine" id="cb7-18" title="18"></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="dt">expr =</span> <span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span> , </a>
+<a class="sourceLine" id="cb7-20" title="20">          <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"Using R for addition... ok I'm out!"</span>))</a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="co">#&gt; [1] "Using R for addition... ok I'm out!"</span></a>
+<a class="sourceLine" id="cb7-22" title="22"><span class="co">#&gt; [1] 4</span></a>
+<a class="sourceLine" id="cb7-23" title="23"><span class="co"># [1] "Using R for addition... ok I'm out!"</span></a>
+<a class="sourceLine" id="cb7-24" title="24"><span class="co"># [1] 4</span></a></code></pre></div>
+<p>As usual, the handlers are set only if you call them:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">nrow =</span> <span class="dv">2</span>), <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"error"</span>))</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co">#&gt; Warning in matrix(1:3, nrow = 2): data length [3] is not a sub-multiple or</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">#&gt; multiple of the number of rows [2]</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">#&gt;      [,1] [,2]</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co">#&gt; [1,]    1    3</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">#&gt; [2,]    2    1</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">#      [,1] [,2]</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="co"># [1,]    1    3</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co"># [2,]    2    1</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="co"># Warning message:</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="co"># In matrix(1:3, nrow = 2) :</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co"># data length [3] is not a sub-multiple or multiple of the number of rows [2]</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">nrow =</span> <span class="dv">2</span>), <span class="dt">.w =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"warning"</span>))</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co">#&gt; [1] "warning"</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co"># [1] "warning"</span></a></code></pre></div>
 </div>
 <div id="traditionnal-way" class="section level3">
 <h3 class="hasAnchor">
 <a href="#traditionnal-way" class="anchor"></a>Traditionnal way</h3>
-<p>{attempt} is flexible in how you can specify your arguments.</p>
-<p>You can, as you do with {base} <code>tryCatch</code>, use a plain old function:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), </a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">          <span class="dt">.e =</span> <span class="cf">function</span>(e){</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">            <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">"There is an error: "</span>, e))</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">            <span class="kw">print</span>(<span class="st">"Ok, let's save this"</span>)</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">            time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">            a &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"+ At"</span>,time, <span class="st">", </span><span class="ch">\n</span><span class="st">Error:"</span>,e)</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">            <span class="co"># write(a, "log.txt", append = TRUE) # commented to prevent log.txt creation </span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">            <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">"log saved on log.txt at"</span>, time))</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">            <span class="kw">print</span>(<span class="st">"let's move on now"</span>)</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">          })</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">#&gt; [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co">#&gt; [1] "Ok, let's save this"</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="co">#&gt; [1] "log saved on log.txt at 2018-11-15 08:21:46"</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="co">#&gt; [1] "let's move on now"</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co"># [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"><span class="co"># [1] "Ok, let's save this"</span></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co"># [1] "log saved on log.txt at 2017-12-20 18:24:05"</span></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co"># [1] "let's move on now"</span></a></code></pre></div>
+<p><code>{attempt}</code> is flexible in how you can specify your arguments.</p>
+<p>You can, as you do with <code>{base}</code> <code>tryCatch()</code>, use a plain old function:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), </a>
+<a class="sourceLine" id="cb10-2" title="2">          <span class="dt">.e =</span> <span class="cf">function</span>(e){</a>
+<a class="sourceLine" id="cb10-3" title="3">            <span class="kw">print</span>(<span class="kw">paste0</span>(<span class="st">"There is an error: "</span>, e))</a>
+<a class="sourceLine" id="cb10-4" title="4">            <span class="kw">print</span>(<span class="st">"Ok, let's save this"</span>)</a>
+<a class="sourceLine" id="cb10-5" title="5">            time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</a>
+<a class="sourceLine" id="cb10-6" title="6">            a &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">"+ At"</span>,time, <span class="st">", </span><span class="ch">\n</span><span class="st">Error:"</span>,e)</a>
+<a class="sourceLine" id="cb10-7" title="7">            <span class="co"># write(a, "log.txt", append = TRUE) # commented to prevent log.txt creation </span></a>
+<a class="sourceLine" id="cb10-8" title="8">            <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">"log saved on log.txt at"</span>, time))</a>
+<a class="sourceLine" id="cb10-9" title="9">            <span class="kw">print</span>(<span class="st">"let's move on now"</span>)</a>
+<a class="sourceLine" id="cb10-10" title="10">          })</a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co">#&gt; [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="co">#&gt; [1] "Ok, let's save this"</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="co">#&gt; [1] "log saved on log.txt at 2019-04-08 08:47:55"</span></a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="co">#&gt; [1] "let's move on now"</span></a>
+<a class="sourceLine" id="cb10-15" title="15"></a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="co"># [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
+<a class="sourceLine" id="cb10-17" title="17"><span class="co"># [1] "Ok, let's save this"</span></a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="co"># [1] "log saved on log.txt at 2018-01-30 16:59:13"</span></a>
+<a class="sourceLine" id="cb10-19" title="19"><span class="co"># [1] "let's move on now"</span></a></code></pre></div>
 <p>You can even mix both:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), </a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">          <span class="dt">.e =</span> <span class="cf">function</span>(e){</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">            <span class="kw">paste0</span>(<span class="st">"There is an error: "</span>, e)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">          },</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">          <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"I'm not sure you can do that pal !"</span>))</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; [1] "I'm not sure you can do that pal !"</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt; [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co"># [1] "I'm not sure you can do that pal !"</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co"># [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), </a>
-<a class="sourceLine" id="cb10-12" data-line-number="12">          <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">"There is an error: "</span>, .x),</a>
-<a class="sourceLine" id="cb10-13" data-line-number="13">          <span class="dt">.f =</span> <span class="cf">function</span>() <span class="kw">print</span>(<span class="st">"I'm not sure you can do that pal !"</span>))</a>
-<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="co">#&gt; [1] "I'm not sure you can do that pal !"</span></a>
-<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="co">#&gt; [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
-<a class="sourceLine" id="cb10-16" data-line-number="16"><span class="co"># [1] "I'm not sure you can do that pal !"</span></a>
-<a class="sourceLine" id="cb10-17" data-line-number="17"><span class="co"># [1] "There is an error: Error in log(\"a\"): argument non numérique pour une fonction mathématique\n"</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), </a>
+<a class="sourceLine" id="cb11-2" title="2">          <span class="dt">.e =</span> <span class="cf">function</span>(e){</a>
+<a class="sourceLine" id="cb11-3" title="3">            <span class="kw">paste0</span>(<span class="st">"There is an error: "</span>, e)</a>
+<a class="sourceLine" id="cb11-4" title="4">          },</a>
+<a class="sourceLine" id="cb11-5" title="5">          <span class="dt">.f =</span> <span class="op">~</span><span class="st"> </span><span class="kw">print</span>(<span class="st">"I'm not sure you can do that pal !"</span>))</a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="co">#&gt; [1] "I'm not sure you can do that pal !"</span></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="co">#&gt; [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="co"># [1] "I'm not sure you can do that pal !"</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="co"># [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
+<a class="sourceLine" id="cb11-10" title="10"></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="kw"><a href="../reference/try_catch.html">try_catch</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>), </a>
+<a class="sourceLine" id="cb11-12" title="12">          <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span><span class="kw">paste0</span>(<span class="st">"There is an error: "</span>, .x),</a>
+<a class="sourceLine" id="cb11-13" title="13">          <span class="dt">.f =</span> <span class="cf">function</span>() <span class="kw">print</span>(<span class="st">"I'm not sure you can do that pal !"</span>))</a>
+<a class="sourceLine" id="cb11-14" title="14"><span class="co">#&gt; [1] "I'm not sure you can do that pal !"</span></a>
+<a class="sourceLine" id="cb11-15" title="15"><span class="co">#&gt; [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a>
+<a class="sourceLine" id="cb11-16" title="16"><span class="co"># [1] "I'm not sure you can do that pal !"</span></a>
+<a class="sourceLine" id="cb11-17" title="17"><span class="co"># [1] "There is an error: Error in log(\"a\"): non-numeric argument to mathematical function\n"</span></a></code></pre></div>
 </div>
 <div id="try_catch_df" class="section level3">
 <h3 class="hasAnchor">
-<a href="#try_catch_df" class="anchor"></a>try_catch_df</h3>
-<p><code>try_catch_df</code> returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or “error”. The values will always be contained in a list-column.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">res_log &lt;-<span class="st"> </span><span class="kw"><a href="../reference/try_catch.html">try_catch_df</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>))</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">res_log</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt;       call                                         error warning value</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="co">#&gt; 1 log("a") non-numeric argument to mathematical function      NA error</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">res_log<span class="op">$</span>value</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt; [1] "error"</span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">res_matrix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/try_catch.html">try_catch_df</a></span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">nrow =</span> <span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10">res_matrix</a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;                    call error</span></a>
-<a class="sourceLine" id="cb11-12" data-line-number="12"><span class="co">#&gt; 1 matrix(1:3, nrow = 2)    NA</span></a>
-<a class="sourceLine" id="cb11-13" data-line-number="13"><span class="co">#&gt;                                                                       warning</span></a>
-<a class="sourceLine" id="cb11-14" data-line-number="14"><span class="co">#&gt; 1 data length [3] is not a sub-multiple or multiple of the number of rows [2]</span></a>
-<a class="sourceLine" id="cb11-15" data-line-number="15"><span class="co">#&gt;        value</span></a>
-<a class="sourceLine" id="cb11-16" data-line-number="16"><span class="co">#&gt; 1 1, 2, 3, 1</span></a>
-<a class="sourceLine" id="cb11-17" data-line-number="17">res_matrix<span class="op">$</span>value</a>
-<a class="sourceLine" id="cb11-18" data-line-number="18"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb11-19" data-line-number="19"><span class="co">#&gt;      [,1] [,2]</span></a>
-<a class="sourceLine" id="cb11-20" data-line-number="20"><span class="co">#&gt; [1,]    1    3</span></a>
-<a class="sourceLine" id="cb11-21" data-line-number="21"><span class="co">#&gt; [2,]    2    1</span></a>
-<a class="sourceLine" id="cb11-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb11-23" data-line-number="23">res_success &lt;-<span class="st"> </span><span class="kw"><a href="../reference/try_catch.html">try_catch_df</a></span>(<span class="kw">log</span>(<span class="dv">1</span>))</a>
-<a class="sourceLine" id="cb11-24" data-line-number="24">res_success</a>
-<a class="sourceLine" id="cb11-25" data-line-number="25"><span class="co">#&gt;     call error warning value</span></a>
-<a class="sourceLine" id="cb11-26" data-line-number="26"><span class="co">#&gt; 1 log(1)    NA      NA     0</span></a>
-<a class="sourceLine" id="cb11-27" data-line-number="27">res_success<span class="op">$</span>value</a>
-<a class="sourceLine" id="cb11-28" data-line-number="28"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb11-29" data-line-number="29"><span class="co">#&gt; [1] 0</span></a></code></pre></div>
+<a href="#try_catch_df" class="anchor"></a><code><a href="../reference/try_catch.html">try_catch_df()</a></code>
+</h3>
+<p><code><a href="../reference/try_catch.html">try_catch_df()</a></code> returns a tibble with the call, the error message if any, the warning message if any, and the value of the evaluated expression or “error”. The values will always be contained in a list-column.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">res_log &lt;-<span class="st"> </span><span class="kw"><a href="../reference/try_catch.html">try_catch_df</a></span>(<span class="kw">log</span>(<span class="st">"a"</span>))</a>
+<a class="sourceLine" id="cb12-2" title="2">res_log</a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="co">#&gt;       call                                         error warning value</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co">#&gt; 1 log("a") non-numeric argument to mathematical function      NA error</span></a>
+<a class="sourceLine" id="cb12-5" title="5">res_log<span class="op">$</span>value</a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="co">#&gt; [1] "error"</span></a>
+<a class="sourceLine" id="cb12-8" title="8"></a>
+<a class="sourceLine" id="cb12-9" title="9">res_matrix &lt;-<span class="st"> </span><span class="kw"><a href="../reference/try_catch.html">try_catch_df</a></span>(<span class="kw">matrix</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">nrow =</span> <span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb12-10" title="10">res_matrix</a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="co">#&gt;                    call error</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="co">#&gt; 1 matrix(1:3, nrow = 2)    NA</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="co">#&gt;                                                                       warning</span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="co">#&gt; 1 data length [3] is not a sub-multiple or multiple of the number of rows [2]</span></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="co">#&gt;        value</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="co">#&gt; 1 1, 2, 3, 1</span></a>
+<a class="sourceLine" id="cb12-17" title="17">res_matrix<span class="op">$</span>value</a>
+<a class="sourceLine" id="cb12-18" title="18"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb12-19" title="19"><span class="co">#&gt;      [,1] [,2]</span></a>
+<a class="sourceLine" id="cb12-20" title="20"><span class="co">#&gt; [1,]    1    3</span></a>
+<a class="sourceLine" id="cb12-21" title="21"><span class="co">#&gt; [2,]    2    1</span></a>
+<a class="sourceLine" id="cb12-22" title="22"></a>
+<a class="sourceLine" id="cb12-23" title="23">res_success &lt;-<span class="st"> </span><span class="kw"><a href="../reference/try_catch.html">try_catch_df</a></span>(<span class="kw">log</span>(<span class="dv">1</span>))</a>
+<a class="sourceLine" id="cb12-24" title="24">res_success</a>
+<a class="sourceLine" id="cb12-25" title="25"><span class="co">#&gt;     call error warning value</span></a>
+<a class="sourceLine" id="cb12-26" title="26"><span class="co">#&gt; 1 log(1)    NA      NA     0</span></a>
+<a class="sourceLine" id="cb12-27" title="27">res_success<span class="op">$</span>value</a>
+<a class="sourceLine" id="cb12-28" title="28"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb12-29" title="29"><span class="co">#&gt; [1] 0</span></a></code></pre></div>
 </div>
-<div id="map-try_catch" class="section level3">
+<div id="map_try_catch" class="section level3">
 <h3 class="hasAnchor">
-<a href="#map-try_catch" class="anchor"></a>map try_catch</h3>
-<p><code>map_try_catch</code> and <code>map_try_catch_df</code> allow you to map on a list of arguments <code>l</code>, to be evaluated by the function in <code>fun</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/try_catch.html">map_try_catch</a></span>(<span class="dt">l =</span> <span class="kw">list</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="st">"a"</span>), <span class="dt">fun =</span> log, <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span>.x)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; [[1]]</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; [1] 0</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; [[2]]</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; [1] 1.098612</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; [[3]]</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; &lt;simpleError in .Primitive("log")("a"): non-numeric argument to mathematical function&gt;</span></a>
-<a class="sourceLine" id="cb12-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="kw"><a href="../reference/try_catch.html">map_try_catch_df</a></span>(<span class="kw">list</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="st">"a"</span>), log)</a>
-<a class="sourceLine" id="cb12-12" data-line-number="12"><span class="co">#&gt;                     call                                         error</span></a>
-<a class="sourceLine" id="cb12-13" data-line-number="13"><span class="co">#&gt; 1   .Primitive("log")(1)                                          &lt;NA&gt;</span></a>
-<a class="sourceLine" id="cb12-14" data-line-number="14"><span class="co">#&gt; 2   .Primitive("log")(3)                                          &lt;NA&gt;</span></a>
-<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="co">#&gt; 3 .Primitive("log")("a") non-numeric argument to mathematical function</span></a>
-<a class="sourceLine" id="cb12-16" data-line-number="16"><span class="co">#&gt;   warning    value</span></a>
-<a class="sourceLine" id="cb12-17" data-line-number="17"><span class="co">#&gt; 1      NA        0</span></a>
-<a class="sourceLine" id="cb12-18" data-line-number="18"><span class="co">#&gt; 2      NA 1.098612</span></a>
-<a class="sourceLine" id="cb12-19" data-line-number="19"><span class="co">#&gt; 3      NA    error</span></a></code></pre></div>
+<a href="#map_try_catch" class="anchor"></a><code><a href="../reference/try_catch.html">map_try_catch()</a></code>
+</h3>
+<p><code><a href="../reference/try_catch.html">map_try_catch()</a></code> and <code><a href="../reference/try_catch.html">map_try_catch_df()</a></code> allow you to map on a list of arguments <code>l</code>, to be evaluated by the function in <code>fun</code>.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw"><a href="../reference/try_catch.html">map_try_catch</a></span>(<span class="dt">l =</span> <span class="kw">list</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="st">"a"</span>), <span class="dt">fun =</span> log, <span class="dt">.e =</span> <span class="op">~</span><span class="st"> </span>.x)</a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="co">#&gt; [[1]]</span></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="co">#&gt; [1] 0</span></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="co">#&gt; [[2]]</span></a>
+<a class="sourceLine" id="cb13-6" title="6"><span class="co">#&gt; [1] 1.098612</span></a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="co">#&gt; [[3]]</span></a>
+<a class="sourceLine" id="cb13-9" title="9"><span class="co">#&gt; &lt;simpleError in .Primitive("log")("a"): non-numeric argument to mathematical function&gt;</span></a>
+<a class="sourceLine" id="cb13-10" title="10"></a>
+<a class="sourceLine" id="cb13-11" title="11"><span class="kw"><a href="../reference/try_catch.html">map_try_catch_df</a></span>(<span class="kw">list</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="st">"a"</span>), log)</a>
+<a class="sourceLine" id="cb13-12" title="12"><span class="co">#&gt;                     call                                         error</span></a>
+<a class="sourceLine" id="cb13-13" title="13"><span class="co">#&gt; 1   .Primitive("log")(1)                                          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb13-14" title="14"><span class="co">#&gt; 2   .Primitive("log")(3)                                          &lt;NA&gt;</span></a>
+<a class="sourceLine" id="cb13-15" title="15"><span class="co">#&gt; 3 .Primitive("log")("a") non-numeric argument to mathematical function</span></a>
+<a class="sourceLine" id="cb13-16" title="16"><span class="co">#&gt;   warning    value</span></a>
+<a class="sourceLine" id="cb13-17" title="17"><span class="co">#&gt; 1      NA        0</span></a>
+<a class="sourceLine" id="cb13-18" title="18"><span class="co">#&gt; 2      NA 1.098612</span></a>
+<a class="sourceLine" id="cb13-19" title="19"><span class="co">#&gt; 3      NA    error</span></a></code></pre></div>
 </div>
 </div>
   </div>
