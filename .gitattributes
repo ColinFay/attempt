@@ -1,1 +1,1 @@
-*.tex linguist-language=r
+*.tex  linguist-vendored=true
