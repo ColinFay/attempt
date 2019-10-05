@@ -10,7 +10,5 @@
 #' is_try_error(x)
 #'
 is_try_error <- function(.x){
-  any(
-    vapply(class(.x), function(x) x == "try-error", logical(1))
-  )
+  inherits(.x, "try-error")
 }
