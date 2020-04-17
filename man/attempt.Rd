@@ -9,15 +9,15 @@ attempt(expr, msg = NULL, verbose = FALSE, silent = FALSE)
 \arguments{
 \item{expr}{the expression to be evaluated}
 
-\item{msg}{the message to return if an error occurs}
+\item{msg}{the message to return if an error or warning occurs}
 
-\item{verbose}{wether or not to return to expression producing the error}
+\item{verbose}{whether to return the expression producing the error}
 
-\item{silent}{wether or not the error should be kept under silence}
+\item{silent}{whether the error should be silent}
 }
 \description{
 A wrapper around base try that allows you to set a custom message when an error/warning occurs.
-\code{attempt} returns the value if there is no error nor message.
+\code{attempt} returns the value if there are no errors or messages.
 }
 \examples{
 \dontrun{
