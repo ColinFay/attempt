@@ -13,23 +13,34 @@
 #' @rdname attempt
 #'
 #' @examples
-#'\dontrun{
+#' \dontrun{
 #' attempt(log("a"), msg = "Nop !")
-#'}
+#' }
 #' @export
 
-attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
-  res <- try_catch(expr,
-                   .e = function(.x) return(.x),
-                   .w = function(.x) return(.x))
-  if (any( class(res) %in% c("error", "warning"))) {
-    if (! is.null(msg)) {
+attempt <- function(
+  expr,
+  msg = NULL,
+  verbose = FALSE,
+  silent = FALSE
+) {
+  res <- try_catch(
+    expr,
+    .e = function(.x) {
+      return(.x)
+    },
+    .w = function(.x) {
+      return(.x)
+    }
+  )
+  if (any(class(res) %in% c("error", "warning"))) {
+    if (!is.null(msg)) {
       res$message <- msg
     }
-    if (! verbose) {
+    if (!verbose) {
       res$call <- NULL
     }
-    if (! silent) {
+    if (!silent) {
       cat(paste(res), file = getOption("try.outFile", default = stderr()))
     }
     invisible(structure(paste(res), class = "try-error", condition = res))
@@ -54,15 +65,28 @@ attempt <- function(expr, msg = NULL, verbose = FALSE, silent = FALSE){
 #' silent_log(1)
 #' silent_log("a")
 #' }
-
-
-silently <- function (.f) {
+#'
+silently <- function(.f) {
   .f <- as_function(.f)
   function(...) {
     res <- try(.f(...), silent = TRUE)
-    if (class(res) == "try-error") {
-      cat(paste(res), file = getOption("try.outFile", default = stderr()))
-      return(invisible(structure(paste(res), class = "try-error", condition = res)))
+    if (inherits(res, "try-error")) {
+      cat(
+        paste(res),
+        file = getOption(
+          "try.outFile",
+          default = stderr()
+        )
+      )
+      return(
+        invisible(
+          structure(
+            paste(res),
+            class = "try-error",
+            condition = res
+          )
+        )
+      )
     }
   }
 }
@@ -83,8 +107,8 @@ silently <- function (.f) {
 #' sure_log(1)
 #' sure_log("a")
 #' }
-
-surely <- function (.f) {
+#'
+surely <- function(.f) {
   .f <- as_function(.f)
   function(...) {
     attempt(.f(...))
@@ -106,8 +130,8 @@ surely <- function (.f) {
 #' discrete_mat <- discretly(matrix)
 #' discrete_mat(1:3, 2)
 #' }
-
-discretly <- function (.f) {
+#'
+discretly <- function(.f) {
   .f <- as_function(.f)
   function(...) {
     suppressMessages(suppressWarnings(.f(...)))
@@ -128,7 +152,7 @@ discretly <- function (.f) {
 #' \dontrun{
 #' silent_attempt(warn("nop!"))
 #' }
-
+#'
 silent_attempt <- silently(~ attempt(expr = .x, silent = TRUE))
 
 #' Manipulate messages and warnings
@@ -148,8 +172,11 @@ silent_attempt <- silently(~ attempt(expr = .x, silent = TRUE))
 #' @examples
 #' msg_as_num <- with_message(as.numeric, msg = "Numeric conversion")
 #' warn_as_num <- with_warning(as.numeric, msg = "Numeric conversion")
-
-with_message <- function (.f, msg) {
+#'
+with_message <- function(
+  .f,
+  msg
+) {
   .f <- as_function(.f)
   function(...) {
     message(msg)
@@ -161,7 +188,10 @@ with_message <- function (.f, msg) {
 #' @importFrom rlang as_function
 #' @rdname messagefunctions
 
-with_warning <- function (.f, msg) {
+with_warning <- function(
+  .f,
+  msg
+) {
   .f <- as_function(.f)
   function(...) {
     warning(msg)
@@ -175,7 +205,7 @@ with_warning <- function (.f, msg) {
 #' @rdname messagefunctions
 #'
 
-without_message <-  function (.f) {
+without_message <- function(.f) {
   .f <- as_function(.f)
   function(...) {
     suppressMessages(.f(...))
@@ -187,7 +217,7 @@ without_message <-  function (.f) {
 #'
 #' @rdname messagefunctions
 
-without_warning <-  function (.f) {
+without_warning <- function(.f) {
   .f <- as_function(.f)
   function(...) {
     suppressWarnings(.f(...))
@@ -195,7 +225,10 @@ without_warning <-  function (.f) {
 }
 
 
-finally <- function(.f, .what){
+finally <- function(
+  .f,
+  .what
+) {
   .f <- as_function(.f)
 
   function(...) {
@@ -203,5 +236,4 @@ finally <- function(.f, .what){
     as_function(.what)()
     res
   }
-
 }

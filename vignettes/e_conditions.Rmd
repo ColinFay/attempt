@@ -31,45 +31,59 @@ You can either choose a custom message or just let the built-in messages be prin
 ```{r eval = TRUE}
 x <- 12
 # Stop if .x is numeric
-stop_if(.x = x, 
-        .p = is.numeric)
+stop_if(
+  .x = x,
+  .p = is.numeric
+)
 
 y <- "20"
 # stop if .x is not numeric
-stop_if_not(.x = y, 
-            .p = is.numeric, 
-            msg = "y should be numeric")
-a  <- "this is not numeric"
+stop_if_not(
+  .x = y,
+  .p = is.numeric,
+  msg = "y should be numeric"
+)
+a <- "this is not numeric"
 # Warn if .x is charcter
-warn_if(.x = a, 
-        .p = is.character)
+warn_if(
+  .x = a,
+  .p = is.character
+)
 
-b  <- 20
+b <- 20
 # Warn if .x is not equal to 10
-warn_if_not(.x = b, 
-        .p = ~ .x == 10 , 
-        msg = "b should be 10")
+warn_if_not(
+  .x = b,
+  .p = ~ .x == 10,
+  msg = "b should be 10"
+)
 
 c <- "a"
 # Message if c is a character
-message_if(.x = c, 
-           .p = is.character, 
-           msg = "You entered a character element")
+message_if(
+  .x = c,
+  .p = is.character,
+  msg = "You entered a character element"
+)
 
 # Build more complex predicates
 d <- 100
-message_if(.x = d, 
-           .p = ~ sqrt(.x) < 42, 
-           msg = "The square root of your element must be more than 42")
+message_if(
+  .x = d,
+  .p = ~ sqrt(.x) < 42,
+  msg = "The square root of your element must be more than 42"
+)
 
 # Or, if you're kind of old school, you can still pass classic functions
 
 e <- 30
-message_if(.x = e, 
-           .p = function(vec){
-             return(sqrt(vec) < 42)
-           }, 
-           msg = "The square root of your element must be more than 42")
+message_if(
+  .x = e,
+  .p = function(vec) {
+    return(sqrt(vec) < 42)
+  },
+  msg = "The square root of your element must be more than 42"
+)
 ```
 
 If you need to call a function that takes no argument at `.p` (like `curl::has_internet()`), use this function as `.x`. 
@@ -77,11 +91,15 @@ If you need to call a function that takes no argument at `.p` (like `curl::has_i
 ```{r eval = TRUE}
 stop_if(.x = curl::has_internet(), msg = "You shouldn't have internet to do that")
 
-warn_if(.x = curl::has_internet(), 
-            msg = "You shouldn't have internet to do that")
+warn_if(
+  .x = curl::has_internet(),
+  msg = "You shouldn't have internet to do that"
+)
 
-message_if(.x = curl::has_internet(), 
-            msg = "Huray, you have internet \\o/")
+message_if(
+  .x = curl::has_internet(),
+  msg = "Huray, you have internet \\o/"
+)
 ```
 
 If you don't specify a `.p`, the default test is `isTRUE()`.
@@ -96,12 +114,16 @@ message_if_any(a, msg = "NA found")
 That can come really handy inside a function: 
 
 ```{r eval = TRUE}
-my_fun <- function(x){
-  stop_if_not(.x = curl::has_internet(), 
-              msg = "You should have internet to do that")
-  warn_if_not(x, 
-          is.character, 
-          msg =  "x is not a character vector. The output may not be what you're expecting.")
+my_fun <- function(x) {
+  stop_if_not(
+    .x = curl::has_internet(),
+    msg = "You should have internet to do that"
+  )
+  warn_if_not(
+    x,
+    is.character,
+    msg = "x is not a character vector. The output may not be what you're expecting."
+  )
   paste(x, "is the value.")
 }
 

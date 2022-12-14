@@ -20,4 +20,4 @@ Suggests:
 VignetteBuilder: knitr
 Imports: 
     rlang
-RoxygenNote: 6.1.0
+RoxygenNote: 7.2.3

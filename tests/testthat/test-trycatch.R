@@ -1,12 +1,10 @@
-context("trycatch")
-
 test_that("errors catching", {
   a <- try_catch(log("a"), .e = ~ return(paste0("There was an error: ", .x)))
   expect_is(a, "character")
   expect_match(a, "There was an error:")
   a <- try_catch(log(1), .e = ~ paste0("There was an error: ", .x))
   expect_equal(a, 0)
-  plop <- function(){
+  plop <- function() {
     try(log("a"))
     attempt(log("a"))
     return(12)
@@ -19,10 +17,12 @@ test_that("warning catching", {
   a <- try_catch(warning("a"), .w = ~ paste0("There was a warning: ", .x))
   expect_is(a, "character")
   expect_match(a, "There was a warning:")
-  a <- try_catch(log("a"),
-                 .e = function(e){
-                   return(e)
-                 })
+  a <- try_catch(
+    log("a"),
+    .e = function(e) {
+      return(e)
+    }
+  )
   expect_is(a, "simpleError")
   expect_is(a, "error")
   expect_is(a, "condition")
@@ -36,11 +36,9 @@ test_that("finally works", {
 
 test_that("trycatch works with an external variabel", {
   a <- 1
-  expect_equal(try_catch(log(a), .e = ~ .x), 0)
-  expect_is(try_catch(log("a"), .e = ~ .x), "simpleError")
+  expect_equal(try_catch(log(a), .e = ~.x), 0)
+  expect_is(try_catch(log("a"), .e = ~.x), "simpleError")
 })
-
-context("try_catch_df")
 
 test_that("try_catch_df works", {
   res_log <- try_catch_df(log("a"))
@@ -61,15 +59,13 @@ test_that("try_catch_df works", {
   expect_equal(res_log$value[[1]], 0)
 })
 
-context("map_try_catch")
-
 test_that("map_try_catch works", {
-  a <- map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~ .x)
+  a <- map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~.x)
   expect_is(a, "list")
   expect_equal(a[[1]], 0)
   expect_equal(round(a[[2]], 2), 1.1)
   expect_is(a[[3]], "error")
-  b <- map_try_catch_df(list(1,3,"a"), log)
+  b <- map_try_catch_df(list(1, 3, "a"), log)
   expect_is(b, "tbl_df")
   expect_is(b, "tbl")
   expect_is(b, "data.frame")
@@ -90,7 +86,6 @@ test_that("map_try_catch works", {
   expect_equal(c$value[[1]], "plop")
 })
 
-context("attempt")
 
 test_that("attempt works", {
   a <- attempt(log(1))
@@ -119,12 +114,12 @@ test_that("attempt and try work the same way", {
 })
 
 
-context("adverbs")
-
-test_that("silently works", {
-  silent_log <- silently(log)
-  a <- silent_log("a")
-  expect_is(a, "try-error")
+test_that(
+  "silently works",
+  {
+    silent_log <- silently(log)
+    a <- silent_log("a")
+    expect_is(a, "try-error")
   }
 )
 
@@ -135,31 +130,33 @@ test_that("surely works", {
   expect_length(b, 1)
 })
 
-test_that("silent_attempt works", {
-  expect_is(silent_attempt(log(1)), "NULL")
-  a <- silent_attempt(matrix(1:3, 2))
-  expect_is(a, "try-error")
-  b <- silent_attempt(log("a"))
-  expect_is(b, "try-error")
-
+test_that(
+  "silent_attempt works",
+  {
+    expect_is(silent_attempt(log(1)), "NULL")
+    a <- silent_attempt(matrix(1:3, 2))
+    expect_is(a, "try-error")
+    b <- silent_attempt(log("a"))
+    expect_is(b, "try-error")
   }
 )
 
-test_that("with_* works", {
-  as_num_msg <- with_message(as.numeric, msg = "We're performing a numeric conversion")
-  as_num_warn <- with_warning(as.numeric, msg = "We're performing a numeric conversion")
-  expect_message(as_num_msg("1"))
-  expect_warning(as_num_warn("1"))
-  expect_is(suppressMessages(as_num_msg("1")), "numeric")
-  expect_is(suppressWarnings(as_num_warn("1")), "numeric")
-  plop <- function() {
-    message("message")
-    warning("warning")
+test_that(
+  "with_* works",
+  {
+    as_num_msg <- with_message(as.numeric, msg = "We're performing a numeric conversion")
+    as_num_warn <- with_warning(as.numeric, msg = "We're performing a numeric conversion")
+    expect_message(as_num_msg("1"))
+    expect_warning(as_num_warn("1"))
+    expect_is(suppressMessages(as_num_msg("1")), "numeric")
+    expect_is(suppressWarnings(as_num_warn("1")), "numeric")
+    plop <- function() {
+      message("message")
+      warning("warning")
     }
-  nomess <- without_message(plop)
-  nowar <- without_warning(plop)
-  expect_message(nowar())
-  expect_warning( nomess())
+    nomess <- without_message(plop)
+    nowar <- without_warning(plop)
+    expect_message(nowar())
+    expect_warning(nomess())
   }
 )
-

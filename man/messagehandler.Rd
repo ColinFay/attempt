@@ -66,14 +66,21 @@ x <- 12
 stop_if(x, ~ .x > 13)
 stop_if_not(x, is.character)
 
-a  <- "this is not numeric"
-warn_if(a,  is.character )
-warn_if_not(a, is.numeric )
-b  <- 20
-warn_if(b ,  ~ . > 10 ,
-         msg = "Wow, that's a lot of b")
+a <- "this is not numeric"
+warn_if(a, is.character)
+warn_if_not(a, is.numeric)
+b <- 20
+warn_if(
+  b,
+  ~ . > 10,
+  msg = "Wow, that's a lot of b"
+)
 c <- "a"
-message_if(c, is.character,
-         msg = "You entered a character element")
+message_if(
+  c,
+  is.character,
+  msg = "You entered a character element"
+)
 }
+
 }

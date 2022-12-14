@@ -38,10 +38,22 @@ try_catch <- function(
   if (is.null(.e) & is.null(.w)) {
     tryCatch(expr)
   } else if (!is.null(.e) & is.null(.w)) {
-    tryCatch(expr, error = as_function(.e))
+    tryCatch(
+      expr,
+      error = as_function(.e)
+    )
   } else if (is.null(.e) & !is.null(.w)) {
-    tryCatch(expr, warning = as_function(.w))
-  } else if (!is.null(.e) & !is.null(.w)) tryCatch(expr, error = as_function(.e), warning = as_function(.w))
+    tryCatch(
+      expr,
+      warning = as_function(.w)
+    )
+  } else if (!is.null(.e) & !is.null(.w)) {
+    tryCatch(
+      expr,
+      error = as_function(.e),
+      warning = as_function(.w)
+    )
+  }
 }
 
 #' @rdname try_catch

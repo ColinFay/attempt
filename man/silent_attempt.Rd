@@ -19,4 +19,5 @@ A wrapper around silently and attempt
 \dontrun{
 silent_attempt(warn("nop!"))
 }
+
 }

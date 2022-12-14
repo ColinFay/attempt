@@ -1,5 +1,3 @@
-context("test-utils.R")
-
 test_that("try_catch_builder works", {
   a <- try_catch_builder(log, "a", .e = "error")
   expect_is(a, "call")
@@ -12,4 +10,3 @@ test_that("try_catch_builder works", {
   expect_match(as.character(a)[1], "try_catch")
   expect_match(as.character(a)[2], "log")
 })
-

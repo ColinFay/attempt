@@ -1,74 +1,110 @@
-context("if")
-
 test_that("any, all and none works", {
+  expect_message(message_if_all(
+    .l = LETTERS,
+    .p = is.character,
+    msg = "This is character only"
+  ))
 
-  expect_message(message_if_all(.l = LETTERS,
-                                .p = is.character,
-                                msg = "This is character only"))
+  expect_message(message_if_any(
+    .l = 1:10,
+    .p = function(vec) {
+      is.numeric(vec)
+    },
+    msg = "No numeric here"
+  ))
+  expect_message(message_if_none(
+    .l = letters,
+    .p = function(vec) {
+      is.numeric(vec)
+    }
+  ))
 
-  expect_message(message_if_any(.l = 1:10,
-                                 .p = function(vec){
-                                   is.numeric(vec)
-                                 },
-                                 msg = "No numeric here"))
-  expect_message(message_if_none(.l = letters,
-                                 .p = function(vec){
-                                   is.numeric(vec)
-                                 }))
+  expect_error(stop_if_all(
+    .l = 12:14,
+    .p = is.numeric
+  ))
+  expect_error(stop_if_all(
+    .l = 12:14,
+    .p = is.numeric,
+    msg = "nop"
+  ))
 
-  expect_error(stop_if_all(.l = 12:14,
-                           .p = is.numeric))
-  expect_error(stop_if_all(.l = 12:14,
-                           .p = is.numeric,
-                           msg = "nop"))
+  expect_error(stop_if_any(
+    .l = 12:14,
+    .p = is.numeric
+  ))
+  expect_error(stop_if_any(
+    .l = 12:14,
+    .p = is.numeric,
+    msg = "y should be numeric"
+  ))
 
-  expect_error(stop_if_any(.l = 12:14,
-                           .p = is.numeric))
-  expect_error(stop_if_any(.l = 12:14,
-                           .p = is.numeric,
-                           msg = "y should be numeric"))
+  expect_error(stop_if_none(
+    .l = 12:14,
+    .p = is.character
+  ))
+  expect_error(stop_if_none(
+    .l = 12:14,
+    .p = is.character,
+    msg = "y should be numeric"
+  ))
 
-  expect_error(stop_if_none(.l = 12:14,
-                            .p = is.character))
-  expect_error(stop_if_none(.l = 12:14,
-                            .p = is.character,
-                            msg = "y should be numeric"))
+  expect_warning(warn_if_all(
+    .l = 1:14,
+    .p = is.numeric
+  ))
+  expect_warning(warn_if_all(
+    .l = 1:14,
+    .p = is.numeric,
+    msg = "hey!"
+  ))
 
-  expect_warning(warn_if_all(.l = 1:14,
-                             .p = is.numeric))
-  expect_warning(warn_if_all(.l = 1:14,
-                             .p = is.numeric,
-                             msg = "hey!"))
+  expect_warning(warn_if_any(
+    .l = 1:13,
+    .p = ~ .x == 10
+  ))
+  expect_warning(warn_if_any(
+    .l = 1:13,
+    .p = ~ .x == 10,
+    msg = "b should be 10"
+  ))
 
-  expect_warning(warn_if_any(.l = 1:13,
-                             .p = ~ .x == 10))
-  expect_warning(warn_if_any(.l = 1:13,
-                             .p = ~ .x == 10 ,
-                             msg = "b should be 10"))
+  expect_warning(warn_if_none(
+    .l = 20:30,
+    .p = ~ .x == 10
+  ))
+  expect_warning(warn_if_none(
+    .l = 20:30,
+    .p = ~ .x == 10,
+    msg = "b should be 10"
+  ))
 
-  expect_warning(warn_if_none(.l = 20:30,
-                              .p = ~ .x == 10))
-  expect_warning(warn_if_none(.l = 20:30,
-                              .p = ~ .x == 10 ,
-                              msg = "b should be 10"))
+  expect_message(message_if_any(
+    .l = letters,
+    .p = is.character
+  ))
+  expect_message(message_if_any(
+    .l = letters,
+    .p = is.character,
+    msg = "You entered a character vector"
+  ))
 
-  expect_message(message_if_any(.l = letters,
-                                .p = is.character))
-  expect_message(message_if_any(.l = letters,
-                                .p = is.character,
-                                msg = "You entered a character vector"))
-
-  expect_message(message_if_all(.l = LETTERS,
-                                .p = is.character))
-
+  expect_message(message_if_all(
+    .l = LETTERS,
+    .p = is.character
+  ))
 })
 
 test_that("if_then work", {
-  a <- if_then(1,
-               is.numeric,
-               ~ return("lol"))
-  expect_is(a,
-            "character")
+  a <- if_then(
+    1,
+    is.numeric,
+    ~ return("lol")
+  )
+  expect_is(
+    a,
+    "character"
+  )
   expect_length(a, 1)
   expect_equal(a, "lol")
   ab <- if_then(1, ~ .x < 10, ~ return("lol"))
@@ -81,7 +117,9 @@ test_that("if_then work", {
   expect_is(ad, "character")
   expect_length(ad, 1)
   expect_equal(ad, "lol")
-  ae <- if_then(1, function(x) x < 10, function() return("lol"))
+  ae <- if_then(1, function(x) x < 10, function() {
+    return("lol")
+  })
   expect_is(a, "character")
   expect_length(a, 1)
   expect_equal(a, "lol")
@@ -93,19 +131,28 @@ test_that("if_then work", {
   expect_is(g, "character")
   expect_length(g, 1)
   expect_equal(g, "lol")
-  h <- if_then(1, function(x) is.numeric(x), function() return("lol"))
+  h <- if_then(1, function(x) is.numeric(x), function() {
+    return("lol")
+  })
   expect_is(h, "character")
   expect_length(h, 1)
   expect_equal(h, "lol")
-  i <- if_then(1, is.character, function() return("lol"))
+  i <- if_then(1, is.character, function() {
+    return("lol")
+  })
   expect_null(i)
-  j <- if_then(1, ~ .x > 10, function() return("lol"))
+  j <- if_then(1, ~ .x > 10, function() {
+    return("lol")
+  })
   expect_null(j)
-  k <- if_not(1, ~ .x > 10, function() return("lol"))
+  k <- if_not(1, ~ .x > 10, function() {
+    return("lol")
+  })
   expect_is(k, "character")
-  l <- if_not(1, ~ .x < 10, function() return("lol"))
+  l <- if_not(1, ~ .x < 10, function() {
+    return("lol")
+  })
   expect_null(l)
-
 })
 test_that("if_else work", {
   a <- if_else(TRUE, .f = ~ return("Yay"), .else = ~ return("Nay"))
@@ -114,11 +161,14 @@ test_that("if_else work", {
   b <- if_else(FALSE, .f = ~ return("Yay"), .else = ~ return("Nay"))
   expect_equal(b, "Nay")
   expect_is(b, "character")
-  c <- if_else(.x = TRUE, .f = function() return("lol"), .else = function() return("lol"))
+  c <- if_else(.x = TRUE, .f = function() {
+    return("lol")
+  }, .else = function() {
+    return("lol")
+  })
   expect_is(c, "character")
   expect_length(c, 1)
   expect_equal(c, "lol")
-
 })
 
 test_that("scoped if works", {
@@ -130,7 +180,9 @@ test_that("scoped if works", {
   expect_is(ba, "character")
   expect_length(ba, 10)
   expect_equal(ba, letters[1:10])
-  bb <- if_all(1:10, function(x) is.numeric(x), function() return(letters[1:10]))
+  bb <- if_all(1:10, function(x) is.numeric(x), function() {
+    return(letters[1:10])
+  })
   expect_is(bb, "character")
   expect_length(bb, 10)
   expect_equal(bb, letters[1:10])
@@ -142,7 +194,9 @@ test_that("scoped if works", {
   expect_is(ca, "character")
   expect_length(ca, 10)
   expect_equal(ca, letters[1:10])
-  cb <- if_any(1:10, function(x) is.numeric(x), function() return(letters[1:10]))
+  cb <- if_any(1:10, function(x) is.numeric(x), function() {
+    return(letters[1:10])
+  })
   expect_is(cb, "character")
   expect_length(cb, 10)
   expect_equal(cb, letters[1:10])
@@ -154,9 +208,10 @@ test_that("scoped if works", {
   expect_is(e, "character")
   expect_length(e, 10)
   expect_equal(e, letters[1:10])
-  f <- if_none(1:10, function(x) x < 5, function() return(letters[1:10]))
+  f <- if_none(1:10, function(x) x < 5, function() {
+    return(letters[1:10])
+  })
   expect_is(f, "character")
   expect_length(f, 10)
   expect_equal(f, letters[1:10])
 })
-
