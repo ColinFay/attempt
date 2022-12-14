@@ -41,6 +41,8 @@ any, and the value of the evaluated expression.
 try_catch(log("a"), .e = ~ paste0("There was an error: ", .x))
 try_catch(log(1), .f = ~ print("finally"))
 try_catch(log(1), .f = function() print("finally"))
+map_try_catch(list(1, 2, "a"), log, .e = ~ paste0("There was an error: ", .x))
+map_try_catch_df(list(1, 2, "a"), log)
 }
 
 }
