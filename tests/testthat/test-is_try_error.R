@@ -1,5 +1,3 @@
-context("test-is_try_error")
-
 test_that("is_try_error works", {
   x <- attempt(log("a"), silent = TRUE)
   expect_true(is_try_error(x))

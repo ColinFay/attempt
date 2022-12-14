@@ -29,4 +29,5 @@ Test for all, any or none
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
 if_any(1:10, is.numeric, ~ return(letters[1:10]))
 if_none(1:10, is.numeric, ~ return(letters[1:10]))
+
 }

@@ -25,7 +25,7 @@ library(attempt)
 ```{r eval=TRUE}
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
 
-if_any(1:10, is.numeric, ~ "Yay!")
+if_any(1:10, is.numeric, ~"Yay!")
 
 if_none(1:10, is.character, ~ rnorm(10))
 ```
@@ -35,19 +35,19 @@ The defaut for all `.p` is `isTRUE()`. So you can:
 ```{r eval=TRUE}
 a <- c(FALSE, TRUE, TRUE, TRUE)
 
-if_any(a, .f = ~ "nop!")
+if_any(a, .f = ~"nop!")
 ```
 
 `if_then()` performs a simple "if this then do that":
 
 ```{r eval=TRUE}
-if_then(1, is.numeric, ~ "nop!")
+if_then(1, is.numeric, ~"nop!")
 ```
 
 `if_not()` runs `.f` if `.p(.x)` is not TRUE : 
 
 ```{r eval = TRUE}
-if_not(.x = 1, .p = is.character, ~ ".x is not a character")
+if_not(.x = 1, .p = is.character, ~".x is not a character")
 ```
 
 And `if_else()` is a wrapper around `base::ifelse()`. 
@@ -55,6 +55,6 @@ And `if_else()` is a wrapper around `base::ifelse()`.
 If you want these function to return a value, you need to wrap these values into a mapper / a function. E.g, to return a vector, you'll need to write `if_then(1, is.numeric, ~ "Yay")`.
 
 ```{r eval=TRUE}
-a <- if_else(1, is.numeric, ~ "Yay", ~ "Nay")
+a <- if_else(1, is.numeric, ~"Yay", ~"Nay")
 a
 ```

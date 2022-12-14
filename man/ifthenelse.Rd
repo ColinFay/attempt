@@ -33,7 +33,8 @@ If you want these function to return a value,
   a vector, you'll need to write \code{if_then(1, is.numeric, ~ "Yay")}.
 }
 \examples{
-a <- if_then(1, is.numeric, ~ "Yay")
-a <- if_not(1, is.character, ~ "Yay")
-a <- if_else(.x = TRUE, .f = ~ "Yay", .else = ~ "Nay")
+a <- if_then(1, is.numeric, ~"Yay")
+a <- if_not(1, is.character, ~"Yay")
+a <- if_else(.x = TRUE, .f = ~"Yay", .else = ~"Nay")
+
 }

@@ -30,4 +30,5 @@ a function
 \examples{
 msg_as_num <- with_message(as.numeric, msg = "Numeric conversion")
 warn_as_num <- with_warning(as.numeric, msg = "Numeric conversion")
+
 }

@@ -22,4 +22,5 @@ silent_log <- silently(log)
 silent_log(1)
 silent_log("a")
 }
+
 }

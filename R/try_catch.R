@@ -23,56 +23,107 @@
 #' try_catch(log("a"), .e = ~ paste0("There was an error: ", .x))
 #' try_catch(log(1), .f = ~ print("finally"))
 #' try_catch(log(1), .f = function() print("finally"))
+#' map_try_catch(list(1, 2, "a"), log, .e = ~ paste0("There was an error: ", .x))
+#' map_try_catch_df(list(1, 2, "a"), log)
 #' }
+#'
+try_catch <- function(
+  expr,
+  .e = NULL,
+  .w = NULL,
+  .f = NULL
+) {
+  if (!is.null(.f)) as_function(.f)()
 
-try_catch <- function(expr, .e = NULL, .w = NULL, .f = NULL) {
-
-  if ( !is.null(.f) ) as_function(.f)()
-
-  if (is.null(.e) & is.null(.w)) tryCatch(expr)
-  else if (!is.null(.e) & is.null(.w)) tryCatch(expr, error = as_function(.e))
-  else if (is.null(.e) & !is.null(.w)) tryCatch(expr, warning = as_function(.w))
-  else if (!is.null(.e) & !is.null(.w)) tryCatch(expr, error = as_function(.e), warning = as_function(.w))
-
+  if (is.null(.e) & is.null(.w)) {
+    tryCatch(expr)
+  } else if (!is.null(.e) & is.null(.w)) {
+    tryCatch(
+      expr,
+      error = as_function(.e)
+    )
+  } else if (is.null(.e) & !is.null(.w)) {
+    tryCatch(
+      expr,
+      warning = as_function(.w)
+    )
+  } else if (!is.null(.e) & !is.null(.w)) {
+    tryCatch(
+      expr,
+      error = as_function(.e),
+      warning = as_function(.w)
+    )
+  }
 }
 
 #' @rdname try_catch
 #' @export
 
-try_catch_df <- function(expr){
-  default <- list(call = deparse(substitute(expr)),
-                  error = NA,
-                  warning = NA,
-                  value = NA)
-  a <- tryCatch(eval(expr),
-                error = function(err){
-                  default$error <<- err$message
-                  return("error")
-                },
-                warning = function(war){
-                  default$warning <<- war$message
-                  return(suppressWarnings(eval(expr)))
-                }
+try_catch_df <- function(expr) {
+  default <- list(
+    call = deparse(substitute(expr)),
+    error = NA,
+    warning = NA,
+    value = NA
+  )
+  a <- tryCatch(
+    eval(expr),
+    error = function(err) {
+      default$error <<- err$message
+      return("error")
+    },
+    warning = function(war) {
+      default$warning <<- war$message
+      return(suppressWarnings(eval(expr)))
+    }
   )
   default$value <- list(a)
-  structure(default, .Names = c("call", "error", "warning", "value"),
-            class = c("tbl_df", "tbl", "data.frame"), row.names = c(NA, -1L))
+  structure(
+    default,
+    .Names = c("call", "error", "warning", "value"),
+    class = c("tbl_df", "tbl", "data.frame"),
+    row.names = c(NA, -1L)
+  )
 }
 
 #' @rdname try_catch
 #' @export
 
-map_try_catch <- function(l, fun, .e = NULL, .w = NULL, .f = NULL) {
-
-  lapply(l, as_function(~ eval(try_catch_builder(.x, fun, .e = .e, .w = .e, .f = .f))))
-
+map_try_catch <- function(
+  l,
+  fun,
+  .e = NULL,
+  .w = NULL,
+  .f = NULL
+) {
+  lapply(
+    l,
+    as_function(
+      ~ eval(
+        try_catch_builder(
+          .x,
+          fun,
+          .e = .e,
+          .w = .e,
+          .f = .f
+        )
+      )
+    )
+  )
 }
 
 #' @rdname try_catch
 #' @export
 
-map_try_catch_df <- function(l, fun) {
-  do.call(rbind, lapply(l, function(x) eval(try_catch_df_builder(x, fun))))
+map_try_catch_df <- function(
+  l,
+  fun
+) {
+  do.call(
+    rbind,
+    lapply(
+      l,
+      function(x) eval(try_catch_df_builder(x, fun))
+    )
+  )
 }
-
-

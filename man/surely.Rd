@@ -21,4 +21,5 @@ sure_log <- surely(log)
 sure_log(1)
 sure_log("a")
 }
+
 }

@@ -9,16 +9,15 @@
 #'
 #' @examples
 #'
-#' y <- function(num){
-#'   on_error(~ write( Sys.time(), "error_log.txt", append = TRUE) )
+#' y <- function(num) {
+#'   on_error(~ write(Sys.time(), "error_log.txt", append = TRUE))
 #'   log(num)
-#'}
+#' }
 #'
-on_error <- function(f){
-
+on_error <- function(f) {
   f <- rlang::as_function(f)
 
-  old <- do.call(options, as.list( c("error" = f) ))
+  old <- do.call(options, as.list(c("error" = f)))
 
   do.call(
     options,
@@ -28,9 +27,10 @@ on_error <- function(f){
 
   do.call(
     on.exit,
-    list(substitute(options(old)),
-         add = TRUE),
+    list(
+      substitute(options(old)),
+      add = TRUE
+    ),
     envir = parent.frame()
   )
-
 }

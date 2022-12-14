@@ -20,4 +20,5 @@ Prevent a funtion from printing message or warning
 discrete_mat <- discretly(matrix)
 discrete_mat(1:3, 2)
 }
+
 }
