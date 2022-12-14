@@ -42,4 +42,5 @@ try_catch(log("a"), .e = ~ paste0("There was an error: ", .x))
 try_catch(log(1), .f = ~ print("finally"))
 try_catch(log(1), .f = function() print("finally"))
 }
+
 }
