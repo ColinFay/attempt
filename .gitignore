@@ -4,3 +4,8 @@ doc
 .Rhistory
 .RData
 inst/doc
+.Rdata
+.httr-oauth
+.DS_Store
+.quarto
+revdep/*
