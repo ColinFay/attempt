@@ -15,7 +15,7 @@
 #' @param .w a one side formula or a function evaluated when a warning occurs
 #' @param .f a one side formula or an expression evaluated before returning or exiting
 #'
-#' @importFrom rlang lang splice as_function
+#' @importFrom rlang splice as_function
 #' @rdname try_catch
 #'
 #' @examples
