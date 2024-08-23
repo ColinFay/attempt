@@ -3,14 +3,19 @@
 \docType{package}
 \name{attempt-package}
 \alias{attempt-package}
-\title{attempt package}
+\title{attempt: Tools for Defensive Programming}
 \description{
-Tools for defensive programming in R.
-'attempt' extends and facilitates defensive programming by providing a consistent grammar, and
-provides a set of easy to use functions for common tests and conditions. 'attempt' only depends
-on \code{rlang} & \code{withr}, and focuses on speed, so it can be easily integrated in other functions and used
-in data analysis.
+Tools for defensive programming, inspired by 'purrr' mappers and based on 'rlang'.'attempt' extends and facilitates defensive programming by providing a consistent grammar, and provides a set of easy to use functions for common tests and conditions. 'attempt' only depends on 'rlang', and focuses on speed, so it can be easily integrated in other functions and used in data analysis.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/ColinFay/attempt}
+}
+
 }
 \author{
-colin <contact@colinfay.me>
+\strong{Maintainer}: Colin Fay \email{contact@colinfay.me} (\href{https://orcid.org/0000-0001-7343-1846}{ORCID})
+
 }
+\keyword{internal}
