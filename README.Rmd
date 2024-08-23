@@ -6,8 +6,9 @@ output:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Travis build status](https://travis-ci.org/ColinFay/attempt.svg?branch=master)](https://travis-ci.org/ColinFay/attempt)   [![Coverage status](https://codecov.io/gh/ColinFay/attempt/branch/master/graph/badge.svg)](https://codecov.io/github/ColinFay/attempt?branch=master)  [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ColinFay/attempt?branch=master&svg=true)](https://ci.appveyor.com/project/ColinFay/attempt)  [![](https://cranlogs.r-pkg.org/badges/attempt)](https://CRAN.R-project.org/package=attempt)
-
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/ColinFay/attempt/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ColinFay/attempt/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
@@ -18,23 +19,23 @@ knitr::opts_chunk$set(
   eval = FALSE
 )
 ```
- 
-# {attempt} 
+
+# {attempt}
 
 ![](https://raw.githubusercontent.com/ColinFay/attempt/master/README-fig/attempt_hex_200.png)
 
 Tools for defensive programming, inspired by `{purrr}` mappers and based on `{rlang}`.
 
-`{attempt}` is designed to handle the cases when something / someone attempts to do something it shouldn't. 
+`{attempt}` is designed to handle the cases when something / someone attempts to do something it shouldn't.
 
-For example: 
+For example:
 
 + an attempt to run a `log("a")` (error)
 + an attempt to connect to a web API without an internet connexion (error)
 + an attempt to `paste()` `"good morning"` and `iris` (message/warning)
-+ ... 
++ ...
 
-`{attempt}` provides several condition handlers, from try catch to simple message printing. 
+`{attempt}` provides several condition handlers, from try catch to simple message printing.
 
 `{attempt}` only depends on `{rlang}`, and every function is design to be fast, making it easy to implement in other functions and packages.
 
@@ -52,15 +53,15 @@ The dev version:
 install.packages("attempt", repo = "https://colinfay.me/ran")
 ```
 
-# Reference 
+# Reference
 
 ```{r eval = TRUE}
 library(attempt)
 ```
 
-## attempt 
+## attempt
 
-`attempt()` is a wrapper around base `try()` that allows you to insert a custom messsage on error. 
+`attempt()` is a wrapper around base `try()` that allows you to insert a custom messsage on error.
 
 ```{r}
 attempt(log("a"))
@@ -69,21 +70,21 @@ attempt(log("a"), msg = "Nop !")
 # Error: Nop !
 ```
 
-You can make it verbose (i.e. returning the expression): 
+You can make it verbose (i.e. returning the expression):
 
 ```{r}
 attempt(log("a"), msg = "Nop !", verbose = TRUE)
 # Error in log("a"): Nop !
 ```
 
-Of course the result is returned if there is one: 
+Of course the result is returned if there is one:
 
 ```{r}
 attempt(log(1), msg = "Nop !", verbose = TRUE)
 # [1] 0
 ```
 
-As with `try()`, the result can be saved as an error object: 
+As with `try()`, the result can be saved as an error object:
 
 ```{r}
 a <- attempt(log("a"), msg = "Nop !", verbose = TRUE)
@@ -103,9 +104,9 @@ is_try_error(a)
 ```
 
 
-## silent_attempt 
+## silent_attempt
 
-`silent_attempt()` is a wrapper around `silently()` (see further down for more info) and `attempt()`. It attempts to run the expr, stays silent if the expression succeeds, and returns error or warnings if any. 
+`silent_attempt()` is a wrapper around `silently()` (see further down for more info) and `attempt()`. It attempts to run the expr, stays silent if the expression succeeds, and returns error or warnings if any.
 
 ```{r}
 silent_attempt(log("a"))
@@ -116,16 +117,16 @@ silent_attempt(log(1))
 
 ## try catch
 
-You can write a try catch with these params: 
+You can write a try catch with these params:
 
-+ `expr` the expression to be evaluated 
++ `expr` the expression to be evaluated
 + `.e` a mapper or a function evaluated when an error occurs
 + `.w` a mapper or a function evaluated when a warning occurs
 + `.f` a mapper or an expression which is always evaluated before returning or exiting
 
 In `.e` and `.f`, the `.x` refers to the error / warning object.
 
-### With mappers 
+### With mappers
 
 ```{r}
 try_catch(
@@ -157,7 +158,7 @@ try_catch(
 # [1] 4
 ```
 
-As usual, the handlers are set only if you call them: 
+As usual, the handlers are set only if you call them:
 
 ```{r}
 try_catch(matrix(1:3, nrow = 2), .e = ~ print("error"))
@@ -175,11 +176,11 @@ try_catch(matrix(1:3, nrow = 2), .w = ~ print("warning"))
 ```
 
 
-### Traditionnal way 
+### Traditionnal way
 
-`{attempt}` is flexible in how you can specify your arguments. 
+`{attempt}` is flexible in how you can specify your arguments.
 
-You can, as you do with `{base}` `tryCatch()`, use a plain old function: 
+You can, as you do with `{base}` `tryCatch()`, use a plain old function:
 
 ```{r}
 try_catch(
@@ -201,7 +202,7 @@ try_catch(
 # [1] "let's move on now"
 ```
 
-You can even mix both: 
+You can even mix both:
 
 ```{r}
 try_catch(
@@ -243,7 +244,7 @@ res_success$value
 
 ### `map_try_catch()`
 
-`map_try_catch()` and `map_try_catch_df()` allow you to map on a list of arguments `l`, to be evaluated by the function in `fun`. 
+`map_try_catch()` and `map_try_catch_df()` allow you to map on a list of arguments `l`, to be evaluated by the function in `fun`.
 
 ```{r eval = TRUE}
 map_try_catch(l = list(1, 3, "a"), fun = log, .e = ~.x)
@@ -255,7 +256,7 @@ map_try_catch_df(list(1, 3, "a"), log)
 
 Adverbs take a function and return a modified function.
 
-### `silently()` 
+### `silently()`
 
 `silently()` transforms a function so that when you call this new function, it returns nothing unless there is an error or a warning (contrary to `attempt` that returns the result). In a sense, the new function stay silent unless error or warning.
 
@@ -277,7 +278,7 @@ silent_matrix(1:3, 2)
 ```
 
 
-### `surely()` 
+### `surely()`
 
 `surely()` transforms a function so that when you call this new function, it calls `attempt()` - i.e. in the code below, calling `sure_log(1)` is the same as calling `attempt(log(1))`. In a sense, you're sure this new function will always work.
 
@@ -302,7 +303,7 @@ as_num_warn("1")
 
 ### `without_message()`, `without_warning()`, and `discretly()`
 
-These three functions do the opposite, as they remove warnings and messages: 
+These three functions do the opposite, as they remove warnings and messages:
 
 ```{r}
 matrix(1:3, ncol = 2)
@@ -312,7 +313,7 @@ no_warning_matrix(1:3, ncol = 2)
 
 ## `if_` conditions
 
-`if_none()`, `if_any()` and `if_all()` test the elements of the list. 
+`if_none()`, `if_any()` and `if_all()` test the elements of the list.
 
 ```{r eval=TRUE}
 if_all(1:10, ~ .x < 11, ~ return(letters[1:10]))
@@ -322,7 +323,7 @@ if_any(1:10, is.numeric, ~"Yay!")
 if_none(1:10, is.character, ~ rnorm(10))
 ```
 
-The defaut for all `.p` is `isTRUE()`. So you can: 
+The defaut for all `.p` is `isTRUE()`. So you can:
 
 ```{r eval=TRUE}
 a <- c(FALSE, TRUE, TRUE, TRUE)
@@ -336,13 +337,13 @@ if_any(a, .f = ~"nop!")
 if_then(1, is.numeric, ~"nop!")
 ```
 
-`if_not()` runs `.f` if `.p(.x)` is not TRUE : 
+`if_not()` runs `.f` if `.p(.x)` is not TRUE :
 
 ```{r eval = TRUE}
 if_not(.x = 1, .p = is.character, ~".x is not a character")
 ```
 
-And `if_else()` is a wrapper around `base::ifelse()`. 
+And `if_else()` is a wrapper around `base::ifelse()`.
 
 If you want these function to return a value, you need to wrap these values into a mapper / a function. E.g, to return a vector, you'll need to write `if_then(1, is.numeric, ~ "Yay")`.
 
@@ -419,7 +420,7 @@ message_if(
 )
 ```
 
-If you need to call a function that takes no argument at `.p` (like `curl::has_internet()`), use this function as `.x`. 
+If you need to call a function that takes no argument at `.p` (like `curl::has_internet()`), use this function as `.x`.
 
 ```{r eval = TRUE}
 stop_if(.x = curl::has_internet(), msg = "You shouldn't have internet to do that")
@@ -444,7 +445,7 @@ message_if_any(a, msg = "NA found")
 
 ### In function
 
-That can come really handy inside a function: 
+That can come really handy inside a function:
 
 ```{r eval = TRUE}
 my_fun <- function(x) {
@@ -465,7 +466,7 @@ my_fun(head(iris))
 
 ### none, all, any
 
-`stop_if()`, `warn_if()` and `message_if()` all have complementary tests with `_all`, `_any` and `_none`, which combine the `if_*` and the `warn_*`, `stop_*` and `message_*` seen before. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate. 
+`stop_if()`, `warn_if()` and `message_if()` all have complementary tests with `_all`, `_any` and `_none`, which combine the `if_*` and the `warn_*`, `stop_*` and `message_*` seen before. They take a list as first argument, and a predicate. They test if any, all or none of the elements validate the predicate.
 
 ```{r eval = TRUE}
 stop_if_any(iris, is.factor, msg = "Factors here. This might be due to stringsAsFactors.")
@@ -477,7 +478,7 @@ message_if_all(1:100, is.numeric, msg = "That makes a lot of numbers.")
 
 ## `on_error()`
 
-`on_error()` behaves as `on.exit()` except it happens only when there is an error in the function. 
+`on_error()` behaves as `on.exit()` except it happens only when there is an error in the function.
 
 ``` r
 y <- function(x){
@@ -497,7 +498,7 @@ Error in log(x) : non-numeric argument to mathematical function
 
 ## Acknowledgments
 
-Thanks to [Romain](http://romain.rbind.io/) for the name suggestion. 
+Thanks to [Romain](http://romain.rbind.io/) for the name suggestion.
 
 ## Contact
 
