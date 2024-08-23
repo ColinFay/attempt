@@ -14,3 +14,4 @@
 ^appveyor\.yml$
 ^docs$
 ^README-fig$
+^\.github$
