@@ -11,7 +11,6 @@ Description: Tools for defensive programming, inspired by 'purrr' mappers and
 License: MIT + file LICENSE
 Encoding: UTF-8
 URL: https://github.com/ColinFay/attempt
-LazyData: true
 Suggests:
     testthat,
     knitr,
